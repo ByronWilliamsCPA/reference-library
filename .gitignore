@@ -1,0 +1,15 @@
+# PDF source files (large binaries - keep locally, don't commit)
+legal-style/source-pdfs/*.pdf
+
+# Raw text intermediates (generated from PDFs - reproducible)
+legal-style/source-pdfs/raw-text/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# OS
+.DS_Store
+Thumbs.db
