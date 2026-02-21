@@ -1,0 +1,55 @@
+# Qlty code quality configuration for reference-library.
+# This is a documentation repository; plugin selection reflects that.
+# Mirrors org .github config (ripgrep, shellcheck, trivy config, trufflehog).
+# See https://qlty.sh/d/qlty-toml for full reference.
+config_version = "0"
+
+exclude_patterns = [
+  "**/.git/**",
+  "**/node_modules/**",
+  "legal-style/source-pdfs/**",
+  "samples/**",
+]
+
+[smells]
+mode = "comment"
+
+[[source]]
+name = "default"
+default = true
+
+# Python security linting (scripts/extract_legal_pdfs.py)
+[[plugin]]
+name = "bandit"
+
+# Markdown linting (primary content type for this repo)
+[[plugin]]
+name = "markdownlint"
+config_files = [".markdownlint.yaml"]
+
+# Pattern scanning — flags credential-shaped strings and policy violations
+[[plugin]]
+name = "ripgrep"
+mode = "comment"
+
+# Python linting (scripts/extract_legal_pdfs.py)
+[[plugin]]
+name = "ruff"
+drivers = [
+  "lint",
+]
+
+# Shell script linting (scripts/ directory)
+[[plugin]]
+name = "shellcheck"
+
+# Config-file vulnerability scanning (no fs-vuln; no package manifests here)
+[[plugin]]
+name = "trivy"
+drivers = [
+  "config",
+]
+
+# Secrets detection in commits and working tree
+[[plugin]]
+name = "trufflehog"

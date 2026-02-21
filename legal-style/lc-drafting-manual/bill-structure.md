@@ -40,7 +40,7 @@ uncommon and rarely used in modern Oregon bills.
 
 The heading is "AN ACT" in all capital letters, centered at the top of the bill.
 
-```
+```text
 AN ACT
 ```
 
@@ -51,13 +51,13 @@ is not a summary — it simply identifies the subject. It follows the heading.
 
 **Basic form:**
 
-```
+```text
 Relating to dogs;
 ```
 
 **With specific matter clauses:**
 
-```
+```text
 Relating to dogs; amending ORS 609.010 and 609.020; and prescribing an effective date.
 ```
 
@@ -96,7 +96,7 @@ revenue raising that requires approval by a three-fifths majority."
 
 The enacting clause is always:
 
-```
+```text
 Be It Enacted by the People of the State of Oregon:
 ```
 
@@ -123,7 +123,7 @@ them limited weight in statutory interpretation. When used:
 Chapter 6 of the manual prescribes the standard order of sections in a bill. Where all these
 elements are present, they should appear in this sequence:
 
-1. Definition section ("As used in sections ___ to ___ of this (year) Act...")
+1. Definition section ("As used in sections ___to___ of this (year) Act...")
 2. Act name (short title) section
 3. Policy or purpose statement
 4. Legislative findings
@@ -198,12 +198,12 @@ of unintended retroactive effects.
 
 **Standard saving clause (general):**
 
-> SECTION ___. The repeal of [ORS section] by section ___ of this (year) Act does not affect
+> SECTION ___. The repeal of [ORS section] by section___ of this (year) Act does not affect
 > any right, liability or proceeding that existed before the effective date of this (year) Act.
 
 **Preserving pending proceedings:**
 
-> SECTION ___. Any proceeding pending before the Director under ORS ___ on the effective
+> SECTION ___. Any proceeding pending before the Director under ORS___ on the effective
 > date of this (year) Act continues under ORS ___ as amended by this (year) Act.
 
 **Note:** ORS 174.070 provides that the repeal of a law does not affect pending actions or
@@ -307,7 +307,7 @@ Sunset a section by adding a subsection to the substantive provision:
 
 Or create a separate section:
 
-> SECTION ___. Section ___ of this (year) Act is repealed on January 2, [year].
+> SECTION ___. Section___ of this (year) Act is repealed on January 2, [year].
 
 The date is typically January 2 (rather than January 1) to allow for the filing of a final
 report or action before termination.
@@ -326,9 +326,9 @@ this standard language at the end of the substantive provision:
 
 If the new sections form a new series within the chapter:
 
-> SECTION ___. Sections ___ to ___ of this (year) Act are added to and made a part of ORS
-> chapter ___ and are designated as a series beginning with ORS ___ and ending with ORS
-> ___ .
+> SECTION ___. Sections___ to ___of this (year) Act are added to and made a part of ORS
+> chapter___ and are designated as a series beginning with ORS ___and ending with ORS
+>___ .
 
 ### 6.2 New Sections Not Assigned ORS Numbers
 
@@ -347,7 +347,7 @@ year:
 
 If the new sections form an entirely new ORS chapter:
 
-> SECTION ___. ORS chapter ___ , as created by this (year) Act, is entitled "[title of
+> SECTION ___. ORS chapter___ , as created by this (year) Act, is entitled "[title of
 > chapter]."
 
 ---
@@ -429,7 +429,7 @@ ORS sections into the same bill section.
 
 When a bill both creates a new section and then amends it in the same bill (double amending):
 
-> SECTION ___. Section ___ of this (year) Act is amended to read:
+> SECTION ___. Section___ of this (year) Act is amended to read:
 
 This is uncommon but occurs when a companion bill or contingency requires it.
 

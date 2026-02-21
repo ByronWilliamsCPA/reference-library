@@ -10,6 +10,15 @@ __pycache__/
 .venv/
 *.egg-info/
 
+# Qlty runtime artifacts (only qlty.toml belongs in the repo)
+.qlty/logs/
+.qlty/out/
+.qlty/plugin_cachedir/
+.qlty/results/
+.qlty/sources/
+
 # OS
 .DS_Store
 Thumbs.db
+
+.env

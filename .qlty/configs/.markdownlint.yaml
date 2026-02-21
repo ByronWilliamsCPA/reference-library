@@ -1,0 +1,15 @@
+# Markdownlint configuration for reference-library.
+# Line length set to 120 to match project standard (see CLAUDE.md).
+default: true
+
+MD013:
+  line_length: 120
+  heading_line_length: 120
+  code_block_line_length: 120
+  tables: false
+
+MD049: false
+
+MD050: false
+
+MD060: false

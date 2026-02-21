@@ -12,14 +12,16 @@
 ### In a court document (appellate opinion)
 
 **Narrative form** — spell out "to" for ranges:
-```
+
+```text
 ORS 161.155(1)(a)(A)              ← single section with subsections
 ORS 30.150 to 30.175              ← range, narrative
 ORS 30.866 and ORS 163.730        ← two sections
 ```
 
 **Citation form** — use " - " (hyphen with spaces) for ranges:
-```
+
+```text
 ORS 30.150 - 30.175               ← range, citation
 ORS 250.035(2)(a), (b)            ← two parts of same statute
 ORS ch 554                        ← entire chapter
@@ -27,8 +29,8 @@ ORS ch 554                        ← entire chapter
 
 **Never**: `ORS 30.150 et seq.` — always set out first and last section.
 
-**Sub-citation terminology** (appellate): Numbered paragraphs → subsections; lettered paragraphs → paragraphs.
-`ORS 305.220(1)(a)` = "paragraph (a) of subsection (1)."
+**Sub-citation terminology** (appellate): Numbered paragraphs → subsections; lettered paragraphs
+→ paragraphs. `ORS 305.220(1)(a)` = "paragraph (a) of subsection (1)."
 
 → Full rules: [`appellate-style-manual/citations.md`](appellate-style-manual/citations.md) § III.A.5
 
@@ -37,7 +39,8 @@ ORS ch 554                        ← entire chapter
 ### In a bill or statute (legislative drafting)
 
 **All forms use "to" for ranges:**
-```
+
+```text
 ORS 174.100                       ← single section
 ORS 174.010 to 174.100            ← range ("to" = to and including both endpoints)
 ORS 174.010, 174.020 and 174.030  ← three non-consecutive sections (no serial comma)
@@ -48,7 +51,8 @@ ORS chapter 174                   ← entire chapter
 **Never**: `et seq.` — set out first and last section.
 
 **String (mixed ranges and singles)** — separate with semicolons:
-```
+
+```text
 ORS 174.010 to 174.050; 174.100 and 174.110
 ```
 
@@ -59,22 +63,26 @@ ORS 174.010 to 174.050; 174.100 and 174.110
 ## 2. Case Citations (Court Documents Only)
 
 **Oregon Supreme Court:**
-```
+
+```text
 PGE v. Bureau of Labor and Industries, 317 Or 606, 859 P2d 1143 (1993).
 ```
 
 **Oregon Court of Appeals:**
-```
+
+```text
 Lesch v. DeWitt, 118 Or App 397, 847 P2d 888 (1993).
 ```
 
 **Short citation** (after first full citation in text):
-```
+
+```text
 Bates, 304 Or at 522.
 ```
 
 **Id.** (immediately preceding citation, same page):
-```
+
+```text
 Id. at 525.
 ```
 
@@ -89,13 +97,15 @@ Id. at 525.
 ## 3. Oregon Constitution Citations
 
 **In a court opinion:**
-```
+
+```text
 Or Const, Art I, § 17
 Or Const, Art IV, § 1(4)
 ```
 
 **In a bill or statute:**
-```
+
+```text
 Article IV, section 1, Oregon Constitution
 Article IV, section 1(4), Oregon Constitution
 subsection (4) of section 1, Article IV, Oregon Constitution
@@ -109,7 +119,8 @@ subsection (4) of section 1, Article IV, Oregon Constitution
 ## 4. OAR Citations
 
 **Both sources use the same form:**
-```
+
+```text
 OAR 137-003-0501
 OAR 253-004-0001
 ```
@@ -124,13 +135,15 @@ Three-part hyphenated number: `{agency code}-{division}-{rule number}`
 ## 5. ORCP Citations
 
 **In a bill or statute:**
-```
+
+```text
 ORCP 21 A          ← rule number + letter (space between number and letter)
 ORCP 21 A(1)       ← with subsection
 ```
 
 **In a court opinion:**
-```
+
+```text
 ORCP 21 A
 ```
 
@@ -141,7 +154,8 @@ ORCP 21 A
 ## 6. Self-Reference Within a Bill
 
 During a session, a bill refers to itself as:
-```
+
+```text
 this 2025 Act
 sections 1 to 7 of this 2025 Act
 section 3 of this 2025 Act
@@ -158,16 +172,19 @@ After codification, LC updates internal references to ORS citations.
 These four terms are non-interchangeable in Oregon legislative drafting:
 
 | Term | Use | Example |
-|------|-----|---------|
+| --- | --- | --- |
 | **shall** | Mandatory duty on an identified actor | `The Director shall issue a license within 30 days.` |
 | **may** | Discretionary permission | `The Director may waive the fee for good cause.` |
 | **must** | Condition precedent or passive imperative | `A vendor must be licensed to participate.` |
 | **may not** | Prohibition (preferred over "shall not") | `A person may not operate without a license.` |
 
 **Key distinctions:**
+
 - "shall" → active voice with a named actor bearing the duty
-- "must" → sets a condition that must be met before a result follows (or passive when no actor can be named)
-- "may not" is preferred over "shall not" because "shall" signals a duty; negating it is grammatically awkward
+- "must" → sets a condition that must be met before a result follows (or passive when no actor
+  can be named)
+- "may not" is preferred over "shall not" because "shall" signals a duty; negating it is
+  grammatically awkward
 - Never use "shall" for things that are not duties: write "is valid" not "shall be valid"
 
 → Full rules: [`lc-drafting-manual/sentence-construction.md`](lc-drafting-manual/sentence-construction.md) § 4
@@ -178,32 +195,43 @@ These four terms are non-interchangeable in Oregon legislative drafting:
 ## 8. Defined Terms
 
 ### When to define
-Define a term when its meaning differs from ordinary usage, when precision is essential, or when it needs to include or exclude specific things. Do not define terms that ORS chapter 174 already defines the way you need them.
+
+Define a term when its meaning differs from ordinary usage, when precision is essential, or when
+it needs to include or exclude specific things. Do not define terms that ORS chapter 174 already
+defines the way you need them.
 
 ### Placement
+
 - Terms used throughout the bill → definition section at the beginning, with scope clause:
-  ```
+
+  ```text
   As used in sections 1 to ___ of this 2025 Act:
   ```
+
 - Terms used only in one section → define at the start of that section:
-  ```
+
+  ```text
   As used in this section, "qualified voter" means...
   ```
 
 ### Format
-```
+
+```text
 (1) "Director" means the Director of the Department of Agriculture.
 (2) "Farm product" includes crops and livestock produced for sale.
 ```
 
-Defined terms: listed alphabetically, in quotation marks in the definition only, capitalized when used in operative text.
+Defined terms: listed alphabetically, in quotation marks in the definition only, capitalized when
+used in operative text.
 
 ### "Means" vs. "Includes"
+
 - **"means"** → exhaustive. The term means exactly and only what the definition states.
 - **"includes"** → expansive. The ordinary meaning still applies; the list adds to it.
 - **Never**: "means and includes" — contradictory and meaningless.
 
 ### ORS 174 automatic definitions (no need to redefine)
+
 - `ORS 174.100` — "Person" includes corporations, LLCs, partnerships, etc.
 - `ORS 174.104` — Singular includes plural and vice versa; masculine includes feminine
 - `ORS 174.110` — "May" is permissive; "shall" is mandatory
@@ -239,17 +267,20 @@ A standard bill follows this sequence:
 ## 10. Amending an ORS Section
 
 **Amending clause:**
-```
+
+```text
 SECTION 1. ORS 174.100 is amended to read:
 ```
 
 Then set out the full text of the section with:
+
 - **Boldfaced type** → new material being added
 - *[Brackets and italic type]* → material being deleted
 - Lightface (roman) → existing law left unchanged
 
 **Example:**
-```
+
+```text
 ORS 174.100. "Person" includes individuals, **limited liability companies,** corporations,
 associations, firms, [*partnerships,*] **and trusts.**
 ```
@@ -267,10 +298,12 @@ associations, firms, [*partnerships,*] **and trusts.**
 
 **Block omission** → five asterisks: `* * * * *`
 
-**Brackets** → indicate any change to quoted text (uppercase, lowercase, substituted words, added words)
+**Brackets** → indicate any change to quoted text (uppercase, lowercase, substituted words,
+added words)
 
 **Citation placement** → after block quotation, flush left, double spaced below:
-```
+
+```text
 "[Q]uoted text here."
 
 Case v. Name, 300 Or 100, 105, 860 P2d 998 (1993).
@@ -283,7 +316,7 @@ Case v. Name, 300 Or 100, 105, 860 P2d 998 (1993).
 ## 12. Key Punctuation Rules at a Glance
 
 | Rule | Legislative (LC) | Court (Appellate) |
-|------|-----------------|-------------------|
+| --- | --- | --- |
 | Serial comma | **Omitted**: A, B and C | Follows Chicago: A, B, and C |
 | Punctuation with quotation marks | **Outside**: "text", or "text". | **Inside**: "text," or "text." |
 | Abbreviations | ORS, OAR, ORCP — no periods | No periods: Or App, P3d, S Ct |
@@ -295,7 +328,7 @@ Case v. Name, 300 Or 100, 105, 860 P2d 998 (1993).
 ## Where to Look for More
 
 | Question | File |
-|----------|------|
+| --- | --- |
 | Case citation (full and short) | [`appellate-style-manual/citations.md`](appellate-style-manual/citations.md) |
 | ORS citation in court documents | [`appellate-style-manual/citations.md`](appellate-style-manual/citations.md) § III.A.5 |
 | ORS citation in bills | [`lc-form-style-manual/ors-citations.md`](lc-form-style-manual/ors-citations.md) |

@@ -33,25 +33,35 @@ statutory and bill text is quoted verbatim, and nothing is summarized or omitted
 
 | File | Content |
 |------|---------|
-| `ors-citations.md` | All rules for citing ORS, Oregon Laws, Oregon Constitution, OAR, ORCP, current-session measures, federal law, and internal cross-references |
-| `bill-formatting.md` | All rules for the physical format and structure of bills, resolutions, memorials, constitutional amendments, amendments to measures, and related document types |
-| `grammar-punctuation.md` | All grammar, style, and punctuation rules specific to Oregon legislative drafting |
+| `ors-citations.md` | All rules for citing ORS, Oregon Laws, Oregon Constitution, OAR, ORCP, |
+| | current-session measures, federal law, and internal cross-references |
+| `bill-formatting.md` | All rules for the physical format and structure of bills, resolutions, |
+| | memorials, constitutional amendments, amendments to measures, and related document types |
+| `grammar-punctuation.md` | All grammar, style, and punctuation rules specific to Oregon |
+| | legislative drafting |
 
 ## Manual Structure (Source Chapters and Appendices)
 
 The source manual is organized as follows:
 
 ### Chapters
-- **Chapter 1: Legislative Style** — Grammar, spelling, punctuation, numbers, citations, terminology (core drafting rules)
-- **Chapter 2: Types of Measures** — Bills, joint resolutions, concurrent resolutions, resolutions, joint memorials, memorials
-- **Chapter 3: Bills** — Formatting rules, components, amending/repealing/adding, definitions, special clauses
-- **Chapter 4: Resolutions and Memorials** — Joint resolutions, concurrent resolutions, resolutions, joint memorials, memorials
-- **Chapter 5: Amending Oregon Constitution** — Constitutional amendment and revision formatting
+
+- **Chapter 1: Legislative Style** — Grammar, spelling, punctuation, numbers, citations,
+  terminology (core drafting rules)
+- **Chapter 2: Types of Measures** — Bills, joint resolutions, concurrent resolutions,
+  resolutions, joint memorials, memorials
+- **Chapter 3: Bills** — Formatting rules, components, amending/repealing/adding, definitions,
+  special clauses
+- **Chapter 4: Resolutions and Memorials** — Joint resolutions, concurrent resolutions,
+  resolutions, joint memorials, memorials
+- **Chapter 5: Amending Oregon Constitution** — Constitutional amendment and revision
+  formatting
 - **Chapter 6: Amendments to Measures** — Floor and committee amendment writing rules
 - **Chapter 7: Introduction of Measures** — Numbering, bill backs, short titles, requesters
 - **Chapter 8: Measure Summaries** — Digest format, summary form and style, examples
 
 ### Appendices
+
 - **A**: Special session measures
 - **B**: Oregon Laws (session law) citation and amendment
 - **C**: Initiative measures
@@ -65,10 +75,12 @@ The source manual is organized as follows:
 - **K**: Oregon Rules of Civil Procedure (ORCP) citation and formatting
 - **L**: Oregon Administrative Rules (OAR) citation and formatting
 - **M**: Explanatory statements for ballot measures
-- **N**: Ballot titles, estimates of financial impact, and explanatory statements (legislative referrals)
+- **N**: Ballot titles, estimates of financial impact, and explanatory statements
+  (legislative referrals)
 - **O**: Interim committees and task forces (boilerplate and standard phrases)
 
 ### Back Matter
+
 - **Glossary** — Definitions of Oregon legislative process terms
 - **Index** — Comprehensive subject index to the manual
 
@@ -79,39 +91,55 @@ The source manual is organized as follows:
 - **Lightface (roman) type** in a bill denotes existing law left unchanged.
 - "This (year) Act" is the standard self-reference for a current-session bill referring to itself.
 - ORS citations use decimal notation: chapter.section (e.g., ORS 174.100).
-- The serial comma is omitted in Oregon legislative style (items listed A, B and C — no comma before "and").
-- "To" in a range means "to and including" (e.g., "ORS 174.010 to 174.100" includes both endpoints and all sections between them).
+- The serial comma is omitted in Oregon legislative style (items listed A, B and C — no comma
+  before "and").
+- "To" in a range means "to and including" (e.g., "ORS 174.010 to 174.100" includes both
+  endpoints and all sections between them).
 
 ## Glossary of Key Terms
 
-**Act** — A bill that has passed both houses and been signed by the Governor, allowed to become law without signature, or passed over a veto.
+**Act** — A bill that has passed both houses and been signed by the Governor, allowed to become
+law without signature, or passed over a veto.
 
-**Amendment of measure** — A change proposed to a measure by specifying changes by line and page number (floor or committee amendments).
+**Amendment of measure** — A change proposed to a measure by specifying changes by line and
+page number (floor or committee amendments).
 
-**Amendment of statute** — A change to an ORS section, session law, or ORCP by setting forth the full section text with insertions and deletions marked.
+**Amendment of statute** — A change to an ORS section, session law, or ORCP by setting forth
+the full section text with insertions and deletions marked.
 
-**Bill** — A measure that creates new law, amends or repeals existing law, appropriates money, prescribes fees, transfers agency functions, or provides penalties.
+**Bill** — A measure that creates new law, amends or repeals existing law, appropriates money,
+prescribes fees, transfers agency functions, or provides penalties.
 
-**Digest** — A paragraph at the beginning of a measure summary that summarizes the measure's contents simply, with a Flesch readability score of 60 or higher.
+**Digest** — A paragraph at the beginning of a measure summary that summarizes the measure's
+contents simply, with a Flesch readability score of 60 or higher.
 
-**Effective date** — In the absence of a contrary provision, the normal effective date for an Act is January 1 of the year following the session year.
+**Effective date** — In the absence of a contrary provision, the normal effective date for an Act
+is January 1 of the year following the session year.
 
 **Engross** — To incorporate adopted amendments into the text of a printed measure.
 
-**Joint memorial** — A measure adopted by both houses to address or petition Congress, the President, or officials of another governmental body.
+**Joint memorial** — A measure adopted by both houses to address or petition Congress, the
+President, or officials of another governmental body.
 
-**Joint resolution** — A measure adopted by both houses to propose a constitutional amendment, create an interim committee or task force, or give directions to state agencies.
+**Joint resolution** — A measure adopted by both houses to propose a constitutional amendment,
+create an interim committee or task force, or give directions to state agencies.
 
-**Measure** — A bill, joint resolution, concurrent resolution, resolution, joint memorial, or memorial.
+**Measure** — A bill, joint resolution, concurrent resolution, resolution, joint memorial, or
+memorial.
 
-**Memorial** — A measure adopted by a single house to address or petition Congress or other governmental bodies.
+**Memorial** — A measure adopted by a single house to address or petition Congress or other
+governmental bodies.
 
-**Oregon Laws** — The compilation of laws enacted during a single session (also called session laws).
+**Oregon Laws** — The compilation of laws enacted during a single session (also called session
+laws).
 
 **ORS** — Oregon Revised Statutes, the codified laws of the State of Oregon.
 
-**Referendum clause** — A provision at the end of a measure that refers a joint resolution proposing a constitutional amendment or an Act to the people for approval or rejection.
+**Referendum clause** — A provision at the end of a measure that refers a joint resolution
+proposing a constitutional amendment or an Act to the people for approval or rejection.
 
-**Resolution** — A measure adopted by a single house to affect its own concerns, procedures, or to express an opinion on a matter of public interest.
+**Resolution** — A measure adopted by a single house to affect its own concerns, procedures, or
+to express an opinion on a matter of public interest.
 
-**Sunset clause** — A provision that causes the repeal or termination of a duty, function, or power on a specified date.
+**Sunset clause** — A provision that causes the repeal or termination of a duty, function, or
+power on a specified date.

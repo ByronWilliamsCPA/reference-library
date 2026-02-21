@@ -7,7 +7,8 @@
 
 ## Cliché Blacklist
 
-Instant flags — these terms appear so frequently in AI output that their presence strongly suggests unrevised AI-generated content.
+Instant flags — these terms appear so frequently in AI output that their presence strongly suggests
+unrevised AI-generated content.
 
 ### Vague Qualifiers
 
@@ -69,6 +70,37 @@ These add no information and signal AI authorship.
 | in today's landscape | Padding | Delete entirely |
 | at the end of the day | Cliché | Delete |
 
+### Additional AI Puffery Terms
+
+Single words that inflate tone without adding meaning.
+
+| Term | Problem | Fix |
+| --- | --- | --- |
+| pivotal | Overstatement; every AI event is "pivotal" | State what actually changed as a result |
+| vital | Same problem as *crucial* | State the consequence of not doing it |
+| groundbreaking | Self-awarded; marketing | Describe what is specifically new |
+| testament | "A testament to X" — filler construction | State the evidence directly |
+| enduring legacy | Vague praise | Describe the specific lasting effect |
+| transformative | Same problem as *revolutionary* | Quantify or name the specific change |
+| unwavering | Praise word with no content | Remove or describe the specific commitment |
+| unparalleled | Absolute claim; rarely defensible | Name what makes it superior or remove |
+| exemplary | Praise word | Name the specific quality |
+
+### Empty Gerund Phrases
+
+These constructions appear constantly in AI-generated text. The gerund promises action but
+delivers nothing specific.
+
+| Pattern | Problem | Fix |
+| --- | --- | --- |
+| "ensuring reliability" | What reliability? What makes it reliable? | State the specific measure |
+| "showcasing features" | Vague | List which features and why they matter |
+| "fostering collaboration" | How? Between whom? | Name the mechanism |
+| "driving growth" | How much growth? By what means? | Quantify or specify |
+| "enhancing performance" | What performance metric? | State the before/after |
+| "delivering value" | To whom? What value? | Be specific |
+| "enabling success" | Vague cause-effect | State what the system actually does |
+
 ---
 
 ## Phrase-Level Patterns
@@ -100,6 +132,11 @@ These patterns appear in AI output but rarely in natural human writing.
 
 **Fix**: Vary deliberately. Add short punches. Let complex ideas build across longer sentences.
 
+**Quantified targets**: The authoritative stylometry targets (σ ≥ 8, TTR ≥ 0.40, hedge density
+5–10%) are in `style-profile.md`. The same violations that produce AI-sounding prose also
+depress these stylometry scores — the patterns and the metrics describe the same underlying
+problem from two angles.
+
 ### Repetitive Openers
 
 **Tell**: Multiple consecutive sentences starting with "This," "The," or "Additionally."
@@ -128,9 +165,12 @@ AI tends to produce documents with unnatural symmetry. Human writers don't.
 | --- | --- | --- |
 | Every section exactly the same length | Looks templated | Let content determine length |
 | Bullet points always in groups of 3 | Suspiciously neat | List what's actually there |
+| Bullet overuse (analytical prose converted to bullets) | Fragments reasoning; disconnects evidence from conclusion | Rewrite as prose; bullets only for genuinely enumerable, parallel items |
 | Overly symmetrical organization | Mechanical | Let the argument determine structure |
 | Every paragraph same number of sentences | Robotic | Vary — short paragraphs for emphasis, longer for development |
 | Every bullet point same length | AI pattern | Match length to content |
+| Excessive bolding (multiple phrases bolded per paragraph, or entire sentences bolded) | Substitutes formatting for prose structure; signals AI-generated emphasis | Bold only critical terms or key distinctions; one instance per section at most |
+| Emoji used as formatting decorators in professional documents | Signals unrevised AI output; undermines professional register | Remove entirely; use prose or structural elements for emphasis |
 
 ---
 
@@ -140,11 +180,14 @@ AI tends to produce documents with unnatural symmetry. Human writers don't.
 
 **Before (AI-generated)**:
 
-> "This innovative solution will significantly improve operational efficiency by leveraging cutting-edge technology to streamline workflows and create synergies across the organization."
+> "This innovative solution will significantly improve operational efficiency by leveraging
+> cutting-edge technology to streamline workflows and create synergies across the organization."
 
 **After**:
 
-> "The proposed platform reduces manual reconciliation from 60 to 6 hours per month. It connects three currently siloed systems — portfolio management, accounting, and risk — through a shared data layer."
+> "The proposed platform reduces manual reconciliation from 60 to 6 hours per month. It connects
+> three currently siloed systems — portfolio management, accounting, and risk — through a shared
+> data layer."
 
 ---
 
@@ -162,11 +205,14 @@ AI tends to produce documents with unnatural symmetry. Human writers don't.
 
 **Before (monotonous)**:
 
-> "The system provides real-time data access. The system enables better decision-making. The system reduces operational risk. The system improves compliance."
+> "The system provides real-time data access. The system enables better decision-making. The system
+> reduces operational risk. The system improves compliance."
 
 **After (varied rhythm)**:
 
-> "Real-time data access changes how decisions get made. Instead of waiting three days for reconciliation, analysts can rebalance same-day when conditions shift. Risk visibility improves. Compliance becomes proactive rather than reactive."
+> "Real-time data access changes how decisions get made. Instead of waiting three days for
+> reconciliation, analysts can rebalance same-day when conditions shift. Risk visibility improves.
+> Compliance becomes proactive rather than reactive."
 
 ---
 
@@ -179,6 +225,28 @@ AI tends to produce documents with unnatural symmetry. Human writers don't.
 **After**:
 
 > "This approach typically reduces costs by 20–30% in organizations with similar data volumes."
+
+---
+
+## Em-Dash Formulaic Patterns
+
+> **Note**: The PCP override (see `grammar-style/cross-reference.md` #21) bans em-dashes entirely.
+> This section aids detection of unrevised AI-generated text, not style enforcement.
+
+AI uses em-dashes in a single repeating pattern: parenthetical insertion between two parts of
+a sentence ("X — insertion — Y"). Human writers use em-dashes for several distinct purposes
+(amplification, attribution, abrupt break). When AI text contains em-dashes, they almost always
+follow the same parenthetical structure.
+
+**Detection signals**:
+
+- More than 2 em-dash pairs per page
+- Every em-dash use follows the same "X — insertion — Y" pattern
+- Em-dashes appear in multiple consecutive paragraphs
+
+**Cross-reference**: The `grammar-composition-editor` agent detects additional AI-mechanical
+patterns (nominalizations, gerund padding, downtoner accumulation) that frequently co-occur
+with em-dash overuse.
 
 ---
 

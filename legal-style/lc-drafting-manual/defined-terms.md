@@ -17,7 +17,7 @@
 | Definition placement | Beginning of act; or beginning of individual section if limited to that section |
 | Definition order | Alphabetical within the definition section |
 | Defined term format | Placed in quotation marks in the definition |
-| Scope limitation | "As used in this section..." or "As used in sections ___ to ___ of this (year) Act..." |
+| Scope limitation | "As used in this section..." or "As used in sections _**to**_ of this (year) Act..." |
 | Capitalization | Defined terms used in the text are capitalized |
 | ORS 174.100 | "Person" — includes corporations and other entities by default |
 | ORS 174.102 | "Written" and "in writing" — includes electronic records (conditions apply) |
@@ -112,7 +112,7 @@ of the bill's operative text:
 >
 > (2) "License" means a license issued under section ___ of this (year) Act.
 
-After codification, the scope clause becomes "As used in ORS ___ to ___:" and is updated by
+After codification, the scope clause becomes "As used in ORS _**to**_:" and is updated by
 Legislative Counsel.
 
 ### Section-Specific Definition
@@ -174,7 +174,7 @@ apply. Use precise language:
 
 After codification, this becomes:
 
-> As used in ORS ___ to ___:
+> As used in ORS _**to**_:
 
 **Applies only to this section:**
 
@@ -182,7 +182,7 @@ After codification, this becomes:
 
 **Applies to specific sections:**
 
-> As used in sections ___ and ___ of this (year) Act:
+> As used in sections _**and**_ of this (year) Act:
 
 **Never use "this Act" without specifying section range.** "This Act" is ambiguous once the
 act is codified across multiple ORS chapters.
@@ -256,7 +256,7 @@ significance to warrant a name that will be used in practice.
 
 **Standard language:**
 
-> SECTION ___. Sections ___ to ___ of this (year) Act may be known and cited as the "[Name]
+> SECTION _**. Sections**_ to ___ of this (year) Act may be known and cited as the "[Name]
 > Act."
 
 Or, if the act is to be codified under a specific ORS section:
@@ -264,6 +264,7 @@ Or, if the act is to be codified under a specific ORS section:
 > SECTION ___. This (year) Act may be known as the "[Name] Act."
 
 **Rules:**
+
 - The "may be known as" formulation avoids mandating use of the short title — it is a
   popular rather than official name.
 - Avoid creating act names for every bill — reserve them for major legislation.
@@ -288,11 +289,11 @@ provisions.
 >
 > (2) [finding].
 >
-> The purpose of sections ___ to ___ of this (year) Act is to [state the purpose].
+> The purpose of sections _**to**_ of this (year) Act is to [state the purpose].
 
 Or simply:
 
-> SECTION ___. The purpose of sections ___ to ___ of this (year) Act is to [state the
+> SECTION _**. The purpose of sections**_ to ___ of this (year) Act is to [state the
 > purpose].
 
 **When to include:**

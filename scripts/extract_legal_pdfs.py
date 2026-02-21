@@ -13,7 +13,8 @@ Outputs: legal-style/source-pdfs/raw-text/{name}.txt
 from __future__ import annotations
 
 import shutil
-import subprocess
+# qlty-ignore: bandit:B404 -- subprocess is used only to call trusted system binaries (pdftotext)
+import subprocess  # noqa: S404
 import sys
 from pathlib import Path
 
@@ -37,7 +38,8 @@ def extract_with_pdftotext(pdf_path: Path, output_path: Path) -> str | None:
     if not shutil.which("pdftotext"):
         return None
 
-    result = subprocess.run(
+    # qlty-ignore: bandit:B603, bandit:B607 -- pdftotext is a trusted system binary; no user input
+    result = subprocess.run(  # noqa: S603 S607
         ["pdftotext", "-layout", str(pdf_path), str(output_path)],
         capture_output=True,
         text=True,
@@ -129,7 +131,7 @@ def process_pdf(pdf_name: str) -> None:
         return
 
     metrics = assess_yield(text, pdf_path)
-    print(f"\n  Results:")
+    print("\n  Results:")
     print(f"    Characters extracted: {metrics['chars']:,}")
     print(f"    Non-empty lines:      {metrics['lines']:,}")
     print(f"    Estimated pages:      {metrics['estimated_pages']}")

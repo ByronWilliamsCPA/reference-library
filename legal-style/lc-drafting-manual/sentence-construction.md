@@ -97,7 +97,7 @@ These four terms are the core of Oregon drafting. They are not interchangeable.
 of performing the duty.
 
 > The Department **shall** issue a license within 30 days after receiving a complete application.
-
+>
 > A person who violates this section **shall** pay a civil penalty of $500.
 
 - Always active voice with "shall."
@@ -110,7 +110,7 @@ of performing the duty.
 "May" grants discretionary authority or permission. The actor chooses whether to act.
 
 > The Director **may** waive the fee for good cause shown.
-
+>
 > A person **may** appeal the determination under ORS 183.482.
 
 - Do not substitute "may" for "shall" to soften mandatory language.
@@ -124,7 +124,7 @@ passive imperative when no active legal subject can be identified.
 **Condition precedent:**
 
 > To qualify for the exemption, a person **must** submit an application before the deadline.
-
+>
 > A vendor **must** be licensed under ORS 670.600 to participate in the program.
 
 **Passive imperative (when actor cannot be named):**
@@ -141,7 +141,7 @@ passive imperative when no active legal subject can be identified.
 "May not" is the preferred prohibition. "Shall not" is acceptable but disfavored.
 
 > A person **may not** operate a vehicle without a valid license.
-
+>
 > The Director **may not** disclose the record without written consent.
 
 **Why "may not" over "shall not":** "Shall not" is grammatically awkward because "shall"
@@ -196,6 +196,7 @@ subsections or paragraphs (tabular form) rather than running the elements togeth
 ### When to Use Tabular Form
 
 Use tabular arrangement when a sentence contains:
+
 - Three or more items in a series
 - Multiple conditions or exceptions
 - Parallel alternatives that would be hard to read in a single sentence
@@ -287,6 +288,7 @@ be used in Oregon bills. Provisos create ambiguity about whether they limit the 
 preceding sentence or only the immediately preceding clause.
 
 **Replace provisos with:**
+
 - A separate sentence: "However, the Director may waive the requirement..."
 - An "except" clause at the beginning: "Except as provided in subsection (3)..."
 - A "notwithstanding" clause
@@ -448,11 +450,13 @@ unambiguous and consistent with drafting style throughout the Oregon Revised Sta
 ### When to Spell Out Numbers
 
 Spell out numbers that can be expressed in one or two words:
+
 - One through ninety-nine: "twenty-five days," "forty"
 - Round numbers: "one hundred," "five thousand"
 - Numbers at the beginning of a sentence (or restructure to avoid leading with a numeral)
 
 Use numerals for:
+
 - Numbers that require three or more words: "125," "$2,500"
 - Numbers used as codes, measurements, or technical values: "ORS 97.190," "Grade 8"
 - Percentages: "10 percent" (not "10%")
@@ -589,6 +593,7 @@ Oregon drafting follows Webster's Third New International Dictionary as the stan
 When a word appears in multiple acceptable spellings, prefer the first entry in Webster's.
 
 **Common style choices:**
+
 - "judgment" (not "judgement")
 - "acknowledgment" (not "acknowledgement")
 - "employee" (not "employe")
@@ -602,6 +607,7 @@ When a word appears in multiple acceptable spellings, prefer the first entry in 
 Abbreviations are generally not used in the body of a statute. Spell out words fully.
 
 **Exceptions:**
+
 - "ORS" for Oregon Revised Statutes — always use "ORS" in citations
 - "U.S.C." for United States Code
 - "$" for dollar amounts preceded by a numeral: "$500"

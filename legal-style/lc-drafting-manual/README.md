@@ -77,7 +77,7 @@ formatting. Covers:
 - Oregon Constitution citation format
 - "To and including" in ORS range citations
 - Amendment formatting: bracket deleted text, bold new text
-- String citations and "ORS ___ to ___" series notation
+- String citations and "ORS _**to**_" series notation
 
 ---
 
@@ -114,8 +114,8 @@ These principles appear throughout the manual and inform every drafting decision
 
 The raw text of the full manual used to produce these reference files is at:
 
-```
-/home/byron/dev/reference-library/legal-style/source-pdfs/raw-text/lc-drafting-manual.txt
+```text
+legal-style/source-pdfs/raw-text/lc-drafting-manual.txt
 ```
 
 The manual contains 19 chapters and multiple appendices covering all aspects of Oregon
