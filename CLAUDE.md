@@ -35,7 +35,8 @@ reference-library/
 ├── .claude/agents/
 │   ├── grammar-composition-editor.md  # Stage 1: Grammar, composition, plain language
 │   ├── document-validator.md          # Stage 2: Factual accuracy, assumptions, bias
-│   └── writing-style-editor.md        # Stage 3: Voice, AI detection, stylometry
+│   ├── writing-style-editor.md        # Stage 3: Voice, AI detection, stylometry
+│   └── style-analyzer.md             # Pre-pipeline: Analyze samples, calibrate profile
 └── scripts/
     └── extract_legal_pdfs.py     # PDF → raw text extraction (pdftotext → pymupdf fallback)
 ```
@@ -82,8 +83,28 @@ conflicting rules**. The source governs based on what you are *writing*, not wha
 
 ## Agent Architecture: Three-Stage Writing Quality Pipeline
 
-The three agents in `.claude/agents/` form a sequential pipeline with no project-specific content.
-Run them in order: Stage 1 → Stage 2 → Stage 3.
+The four agents in `.claude/agents/` include a pre-pipeline calibration agent and a
+sequential three-stage editing pipeline. No project-specific content lives in any agent.
+
+### Style Analyzer (Pre-Pipeline)
+
+| Agent | Scope | Analogy |
+| --- | --- | --- |
+| `style-analyzer` | Collect writing samples, compute stylometry, characterize voice, update profile | Tune the instrument |
+
+Run the style analyzer **once** when a new user adopts the library, or when the user's
+writing style has evolved. It analyzes the user's real writing samples and generates
+updated targets for `style-profile.md` plus adjustment notes for the three pipeline agents.
+This replaces the repository author's default style profile with one calibrated to the
+new user's voice.
+
+**Workflow**: Provide 3–5 writing samples (2,000+ words total) → analyzer computes
+stylometry and characterizes voice → review and approve recommendations → updated
+profile drives all future pipeline runs.
+
+### Editing Pipeline (Stages 1–3)
+
+Run the three editing agents in order: Stage 1 → Stage 2 → Stage 3.
 
 | Stage | Agent | Scope | Analogy |
 | --- | --- | --- | --- |
@@ -101,7 +122,7 @@ then Stage 2 to verify grammar and semantic preservation. Max 3 remediation cycl
 human review.
 
 **Installing agents**: Run `bash scripts/setup.sh` from the repository root. This installs
-the three agents to `~/.claude/agents/` with the correct absolute paths substituted. Agents
+all agents to `~/.claude/agents/` with the correct absolute paths substituted. Agents
 become globally available across all Claude Code projects with no per-project configuration.
 Re-run after moving or recloning the repository.
 
@@ -136,8 +157,10 @@ If a PDF is image-based (low character yield), the script instructs you to use t
 
 ### Agents (automatic after setup)
 
-After running `bash scripts/setup.sh`, the three pipeline agents are globally available in
-all Claude Code projects. No per-project configuration is required.
+After running `bash scripts/setup.sh`, all four agents (style analyzer + three pipeline
+stages) are globally available in all Claude Code projects. No per-project configuration
+is required. New users should run the `style-analyzer` agent first to calibrate the
+style profile before using the editing pipeline.
 
 ### Reference files in prompts or agents
 
