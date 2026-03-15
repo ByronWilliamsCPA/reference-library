@@ -36,7 +36,10 @@ reference-library/
 │   ├── grammar-composition-editor.md  # Stage 1: Grammar, composition, plain language
 │   ├── document-validator.md          # Stage 2: Factual accuracy, assumptions, bias
 │   ├── writing-style-editor.md        # Stage 3: Voice, AI detection, stylometry
-│   └── style-analyzer.md             # Pre-pipeline: Analyze samples, calibrate profile
+│   ├── style-analyzer.md             # Pre-pipeline: Analyze samples, calibrate profile
+│   ├── document-drafter.md           # Pre-pipeline: Voice-calibrated first-draft generation
+│   ├── audience-reaction-analyzer.md # Post-pipeline: Predict audience comprehension and response
+│   └── tone-rewriter.md             # Pre-pipeline: Transform register for different audiences
 └── scripts/
     └── extract_legal_pdfs.py     # PDF → raw text extraction (pdftotext → pymupdf fallback)
 ```
@@ -83,10 +86,11 @@ conflicting rules**. The source governs based on what you are *writing*, not wha
 
 ## Agent Architecture: Three-Stage Writing Quality Pipeline
 
-The four agents in `.claude/agents/` include a pre-pipeline calibration agent and a
-sequential three-stage editing pipeline. No project-specific content lives in any agent.
+The seven agents in `.claude/agents/` include pre-pipeline generators, a calibration agent,
+a sequential three-stage editing pipeline, and a post-pipeline analyzer. No project-specific
+content lives in any agent.
 
-### Style Analyzer (Pre-Pipeline)
+### Style Analyzer (Pre-Pipeline Calibration)
 
 | Agent | Scope | Analogy |
 | --- | --- | --- |
@@ -101,6 +105,30 @@ new user's voice.
 **Workflow**: Provide 3–5 writing samples (2,000+ words total) → analyzer computes
 stylometry and characterizes voice → review and approve recommendations → updated
 profile drives all future pipeline runs.
+
+### Pre-Pipeline Generators
+
+These agents produce text that feeds into the editing pipeline. Both apply `style-profile.md`
+targets and `ai-detection.md` constraints during generation to minimize downstream corrections.
+
+| Agent | Scope | Analogy |
+| --- | --- | --- |
+| `document-drafter` | Generate first drafts from outlines, bullet points, or contextual prompts, calibrated to the author's voice | Write the first draft |
+| `tone-rewriter` | Transform a document's register for a different audience while preserving all factual content | Same message, new audience |
+
+**Document drafter** accepts outlines, bullet points, prior documents, contextual prompts,
+emails with reply direction, or topic-plus-audience descriptions. It produces a complete first
+draft that already sounds like the author, reducing the remediation cycles Stage 3 needs to run.
+
+**Tone rewriter** takes a finished document and transforms it for a different audience or
+formality level. A formal tax analysis becomes a client-friendly summary. An internal memo
+becomes an executive brief. Factual content must survive the transformation; Stage 2
+re-verifies semantic preservation after every rewrite.
+
+Both agents tag their output with `ai_generated: true` metadata, which signals Stage 3 to
+apply heightened AI pattern scrutiny.
+
+**Generator flow**: Input → Generator Agent → Stage 1 → Stage 2 → Stage 3 → Submission
 
 ### Editing Pipeline (Stages 1–3)
 
@@ -120,6 +148,25 @@ for credibility. Style and persona are final polish on clean, verified text.
 **Remediation**: If Stage 3 rewrites text for voice, those sections flow back through Stage 1
 then Stage 2 to verify grammar and semantic preservation. Max 3 remediation cycles before
 human review.
+
+### Audience Reaction Analyzer (Post-Pipeline)
+
+| Agent | Scope | Analogy |
+| --- | --- | --- |
+| `audience-reaction-analyzer` | Predict audience comprehension, persuasion effectiveness, emotional response, and action clarity | Will this land? |
+
+Run the audience reaction analyzer **after** the editing pipeline passes. It reads the
+finished document from the perspective of a specified target audience and reports what they
+will understand, misunderstand, feel, and do.
+
+**Workflow**: Provide the finished document plus a target audience description and desired
+outcome → analyzer predicts comprehension gaps, persuasion weaknesses, emotional trajectory,
+and action clarity → revision recommendations ranked by impact on the desired outcome.
+
+The analyzer does not edit text. If its findings require revision, the document-drafter or
+tone-rewriter agents can generate updated content, which then re-enters the editing pipeline.
+
+**Full workflow**: Input → Generator → Stage 1 → Stage 2 → Stage 3 → Audience Analyzer → (revision if needed)
 
 **Installing agents**: Run `bash scripts/setup.sh` from the repository root. This installs
 all agents to `~/.claude/agents/` with the correct absolute paths substituted. Agents
@@ -157,10 +204,10 @@ If a PDF is image-based (low character yield), the script instructs you to use t
 
 ### Agents (automatic after setup)
 
-After running `bash scripts/setup.sh`, all four agents (style analyzer + three pipeline
-stages) are globally available in all Claude Code projects. No per-project configuration
-is required. New users should run the `style-analyzer` agent first to calibrate the
-style profile before using the editing pipeline.
+After running `bash scripts/setup.sh`, all seven agents (style analyzer, two generators,
+three pipeline stages, and the audience analyzer) are globally available in all Claude Code
+projects. No per-project configuration is required. New users should run the `style-analyzer`
+agent first to calibrate the style profile before using the generators or editing pipeline.
 
 ### Reference files in prompts or agents
 
