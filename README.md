@@ -3,7 +3,7 @@
 > **Purpose**: Base reference files and agents — general, reusable across personal, CPA, and investment
 > projects
 > **Version**: 1.0.0
-> **Last Updated**: 2026-02-20
+> **Last Updated**: 2026-03-15
 
 A centralized reference library for authoritative style, drafting, and writing standards. This repository
 contains no project-specific content. Individual project repositories extend what they need.
@@ -38,11 +38,18 @@ professional document context.
 General-purpose Claude agents with no project-specific content baked in. Install them globally
 with `scripts/setup.sh` — no per-project setup required.
 
-| Agent | Stage | Purpose |
+| Agent | Pipeline Position | Purpose |
 | --- | --- | --- |
-| `grammar-composition-editor` | 1 | Grammar, composition, plain language, AI-mechanical patterns |
-| `document-validator` | 2 | Factual accuracy, assumptions, hallucinations, bias, reasoning errors |
-| `writing-style-editor` | 3 | Voice alignment, AI pattern detection, stylometry |
+| `style-analyzer` | Pre-pipeline (calibration) | Analyze writing samples, compute stylometry, calibrate voice profile |
+| `document-drafter` | Pre-pipeline (generation) | Voice-calibrated first drafts from outlines, bullets, or prompts |
+| `tone-rewriter` | Pre-pipeline (generation) | Transform register for a different audience, preserve factual content |
+| `grammar-composition-editor` | Stage 1 (editing) | Grammar, composition, plain language, AI-mechanical patterns |
+| `document-validator` | Stage 2 (editing) | Factual accuracy, assumptions, hallucinations, bias, reasoning errors |
+| `writing-style-editor` | Stage 3 (editing) | Voice alignment, AI pattern detection, stylometry |
+| `audience-reaction-analyzer` | Post-pipeline (analysis) | Predict audience comprehension, persuasion, emotional response |
+
+New users should run the `style-analyzer` agent first to calibrate the style profile before
+using the generators or editing pipeline.
 
 ---
 
@@ -56,7 +63,7 @@ cd reference-library
 bash scripts/setup.sh
 ```
 
-This installs the three agents to `~/.claude/agents/`, making them available in every Claude
+This installs all seven agents to `~/.claude/agents/`, making them available in every Claude
 Code project without touching any project files. If you move or reclone the repository,
 re-run `setup.sh` to update the installed paths.
 
@@ -111,20 +118,30 @@ python scripts/extract_legal_pdfs.py
 reference-library/
 ├── README.md
 ├── agents/                        # Agent templates — installed globally by setup.sh
+│   ├── style-analyzer.md
+│   ├── document-drafter.md
+│   ├── tone-rewriter.md
 │   ├── grammar-composition-editor.md
 │   ├── document-validator.md
-│   └── writing-style-editor.md
+│   ├── writing-style-editor.md
+│   └── audience-reaction-analyzer.md
 ├── legal-style/
 │   ├── README.md
 │   ├── QUICK-START.md
+│   ├── cross-reference.md
 │   ├── appellate-style-manual/
 │   ├── lc-drafting-manual/
-│   ├── lc-form-style-manual/
-│   └── cross-reference.md
+│   └── lc-form-style-manual/
 ├── writing-style/
 │   ├── README.md
 │   ├── style-profile.md
-│   └── ai-detection.md
+│   ├── ai-detection.md
+│   ├── tone-voice.md
+│   ├── structural-formatting.md
+│   ├── plain-language-guide.md
+│   ├── logical-fallacies-guide.md
+│   ├── transition-words-reference.md
+│   └── grammar-style/
 └── scripts/
     ├── setup.sh                   # Install agents to ~/.claude/agents/
     └── extract_legal_pdfs.py
