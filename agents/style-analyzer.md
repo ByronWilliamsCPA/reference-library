@@ -323,11 +323,12 @@ After user confirmation:
 
 1. Write the updated `style-profile.md`
 2. If ai-detection.md exceptions exist, append the exceptions section
-3. Note agent adjustments in a summary for the user to apply manually or request
-   the agent to apply
+3. Present agent adjustment notes as recommendations. The user can either:
+   - Apply the changes to agent files in `agents/` themselves, or
+   - Ask this agent to generate the specific edits needed
 
 Do NOT modify agent files without explicit user approval. The agent adjustment notes
-are recommendations; the user decides whether to apply them.
+are recommendations; the user decides whether and how to apply them.
 
 ## Operating Instructions
 

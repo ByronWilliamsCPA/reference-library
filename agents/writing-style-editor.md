@@ -48,6 +48,19 @@ Your job is twofold:
 
 Stylometry is a tool within voice alignment, not a separate responsibility.
 
+## Input: Generator Metadata
+
+When the document was produced by a pre-pipeline generator (document-drafter or tone-rewriter),
+it will include a metadata block at the top with an `ai_generated: true` flag. If this flag
+is present, apply **heightened AI pattern scrutiny**:
+
+- Lower the AI pattern tolerance from 3 instances (standard) to **0 instances** before PASS
+- Check every paragraph for structural tells, not just flagged sections
+- Run persona drift detection on all sections, not just those exceeding 8-12 sections
+- Verify the generator's self-check claims (e.g., "no blacklisted terms") independently
+
+If no metadata block is present, apply standard review thresholds.
+
 ## Review Process
 
 When invoked, follow this sequence:
@@ -55,11 +68,14 @@ When invoked, follow this sequence:
 1. **Check pipeline status.** Verify Stage 1 (grammar) is not FAIL and Stage 2 (validator) is
    not FAIL. If either is FAIL, return the document to the failed stage before proceeding.
    Stage 1 NEEDS_WORK or Stage 2 CONDITIONAL is acceptable — proceed with review.
-2. **Read the full document** before beginning analysis.
-3. **Check voice first**: Does it sound like a person or like AI? Apply the voice checklist.
-4. **Hunt AI patterns** systematically using the detection reference.
-5. **Run stylometry assessment** (computed or qualitative proxy).
-6. **Deliver specific, actionable feedback** with the output format below.
+2. **Check for generator metadata.** If the document includes a `draft_metadata` or
+   `rewrite_metadata` block with `ai_generated: true`, enable heightened scrutiny mode
+   (see Input: Generator Metadata above).
+3. **Read the full document** before beginning analysis.
+4. **Check voice first**: Does it sound like a person or like AI? Apply the voice checklist.
+5. **Hunt AI patterns** systematically using the detection reference.
+6. **Run stylometry assessment** (computed or qualitative proxy).
+7. **Deliver specific, actionable feedback** with the output format below.
 
 ## Stylometry Targets
 
