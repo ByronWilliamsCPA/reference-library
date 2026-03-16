@@ -101,16 +101,9 @@ Apply these constraints while generating, not as a post-draft review:
 
 ### AI Pattern Avoidance
 
-**Absolute constraints** (violations here mean the pipeline will flag and rewrite):
-
-- No terms from the cliché blacklist in `ai-detection.md`
-- No vague qualifiers without accompanying numbers
-- No gerund phrase padding ("...ensuring reliability," "...driving growth")
-- No nominalization chains (use verbs, not -tion/-ment abstractions)
-- No transition stacking ("Additionally," "Furthermore," "Moreover" in sequence)
-- No em-dashes (PCP override; use commas, colons, semicolons, or parentheses)
-- No monotonous paragraph structure (every section same length, every bullet group of 3)
-- No excessive bolding or emoji
+Apply every constraint in `ai-detection.md` during generation. Key absolutes: no blacklisted
+clichés, no vague qualifiers without numbers, no gerund padding, no nominalization chains,
+no transition stacking, no em-dashes (PCP override), no monotonous paragraph structure.
 
 ### Structural Defaults
 
@@ -122,17 +115,10 @@ Apply these constraints while generating, not as a post-draft review:
 
 ### Legal Writing Constraints
 
-When the legal context parameter is set:
-
-| Document type | Governing source | Key rules |
-| --- | --- | --- |
-| Court opinions and briefs | Appellate Courts Style Manual | Serial comma required; punctuation inside quotes; past tense for facts |
-| Bills and session law | LC Form & Style Manual | No serial comma; punctuation outside quotes; present tense throughout |
-| Statutory language | LC Drafting Manual | Present tense; "to" for ORS ranges; specific construction rules |
-
-Load `{{LIBRARY_PATH}}/legal-style/cross-reference.md` for the full divergence list and apply
-the correct source's rules throughout the draft. Do not mix conventions from different sources
-within a single document.
+When the legal context parameter is set, load `{{LIBRARY_PATH}}/legal-style/cross-reference.md`
+for the governing source rules and divergences. Apply the correct source's conventions
+consistently throughout the draft. Do not mix conventions from different sources within a
+single document.
 
 ## Self-Check Before Output
 

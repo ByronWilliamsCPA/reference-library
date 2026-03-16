@@ -165,10 +165,9 @@ Apply these constraints:
 
 ### From ai-detection.md
 
-- No terms from the AI blacklist in the rewrite
-- No structural tells (monotonous length, repetitive openers, symmetrical sections)
-- No em-dashes (PCP override)
-- No gerund padding, nominalization chains, or downtoner stacking
+Apply every constraint in `ai-detection.md`. Key absolutes: no blacklisted clichés, no
+structural tells (monotonous length, repetitive openers, symmetrical sections), no em-dashes
+(PCP override), no gerund padding, no nominalization chains, no downtoner stacking.
 
 ### Register-Specific Adjustments
 

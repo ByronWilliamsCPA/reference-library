@@ -32,7 +32,7 @@ reference-library/
 │       ├── index.md              # Concept-to-file routing map
 │       ├── elements-of-style/    # EoS base rules (Tier 1, drafting baseline)
 │       └── chicago-manual/       # CMS rules (Tier 2, editing authority)
-├── .claude/agents/
+├── agents/
 │   ├── grammar-composition-editor.md  # Stage 1: Grammar, composition, plain language
 │   ├── document-validator.md          # Stage 2: Factual accuracy, assumptions, bias
 │   ├── writing-style-editor.md        # Stage 3: Voice, AI detection, stylometry
@@ -84,9 +84,9 @@ conflicting rules**. The source governs based on what you are *writing*, not wha
 - **Ellipsis**: Appellate uses `* * *`; LC uses `...`
 - **Tense**: LC uses present tense throughout; Appellate uses past for facts, present for legal rules
 
-## Agent Architecture: Three-Stage Writing Quality Pipeline
+## Agent Architecture: Writing Quality Pipeline
 
-The seven agents in `.claude/agents/` include pre-pipeline generators, a calibration agent,
+The seven agents in `agents/` include pre-pipeline generators, a calibration agent,
 a sequential three-stage editing pipeline, and a post-pipeline analyzer. No project-specific
 content lives in any agent.
 
