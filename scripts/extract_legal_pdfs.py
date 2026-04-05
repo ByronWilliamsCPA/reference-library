@@ -13,8 +13,9 @@ Outputs: legal-style/source-pdfs/raw-text/{name}.txt
 from __future__ import annotations
 
 import shutil
+
 # qlty-ignore: bandit:B404 -- subprocess is used only to call trusted system binaries (pdftotext)
-import subprocess  # noqa: S404
+import subprocess
 import sys
 from pathlib import Path
 
@@ -39,7 +40,7 @@ def extract_with_pdftotext(pdf_path: Path, output_path: Path) -> str | None:
         return None
 
     # qlty-ignore: bandit:B603, bandit:B607 -- pdftotext is a trusted system binary; no user input
-    result = subprocess.run(  # noqa: S603 S607
+    result = subprocess.run(  # noqa: S603
         ["pdftotext", "-layout", str(pdf_path), str(output_path)],
         capture_output=True,
         text=True,
@@ -107,7 +108,7 @@ def process_pdf(pdf_name: str) -> None:
     # Try pdftotext first
     print("  Trying pdftotext...", end=" ", flush=True)
     text = extract_with_pdftotext(pdf_path, output_path)
-    if text and len(text.strip()) > 500:  # noqa: PLR2004
+    if text and len(text.strip()) > 500:
         print("OK")
     else:
         print("insufficient yield" if text else "not available")
@@ -117,7 +118,7 @@ def process_pdf(pdf_name: str) -> None:
     if text is None:
         print("  Trying pymupdf...", end=" ", flush=True)
         text = extract_with_pymupdf(pdf_path, output_path)
-        if text and len(text.strip()) > 500:  # noqa: PLR2004
+        if text and len(text.strip()) > 500:
             print("OK")
         else:
             print("insufficient yield" if text else "not available")
