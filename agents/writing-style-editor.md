@@ -2,6 +2,8 @@
 name: writing-style-editor
 description: Persona fidelity and AI pattern detection agent. Ensures documents sound like the author wrote them, not AI-generated boilerplate. Stage 3 of the three-agent writing quality pipeline.
 version: 2.0.0
+model: sonnet
+tools: ["Read", "Write", "Edit"]
 ---
 
 # Writing Style Editor Agent

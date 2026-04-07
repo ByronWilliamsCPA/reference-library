@@ -2,6 +2,8 @@
 name: audience-reaction-analyzer
 description: Post-pipeline analysis agent. Reads a finished document from the perspective of a specified target audience and predicts how they will interpret, react to, and act on the content. Identifies gaps in persuasion, comprehension, and accessibility.
 version: 1.0.0
+model: sonnet
+tools: ["Read"]
 ---
 
 # Audience Reaction Analyzer Agent

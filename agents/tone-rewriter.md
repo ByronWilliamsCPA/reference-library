@@ -2,6 +2,8 @@
 name: tone-rewriter
 description: Pre-pipeline generative agent. Takes a document written in one tone palette and rewrites it for a different audience or register. Preserves factual content while transforming vocabulary, sentence complexity, structure, and formality level.
 version: 1.0.0
+model: sonnet
+tools: ["Read", "Write", "Edit"]
 ---
 
 # Tone Rewriter Agent

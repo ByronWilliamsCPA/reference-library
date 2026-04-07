@@ -2,6 +2,8 @@
 name: grammar-composition-editor
 description: Mechanical correctness review agent. Checks grammar, composition, plain language, and AI-mechanical patterns. Stage 1 of the three-agent writing quality pipeline.
 version: 1.0.0
+model: sonnet
+tools: ["Read", "Write", "Edit"]
 ---
 
 # Grammar and Composition Editor Agent
