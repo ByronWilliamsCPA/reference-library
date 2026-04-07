@@ -2,6 +2,8 @@
 name: document-drafter
 description: Pre-pipeline generative agent. Produces first drafts calibrated to the author's voice from outlines, bullet points, or contextual prompts. Outputs feed directly into the three-stage editing pipeline.
 version: 1.0.0
+model: sonnet
+tools: ["Read", "Write", "Edit"]
 ---
 
 # Document Drafter Agent

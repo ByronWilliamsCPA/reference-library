@@ -139,7 +139,9 @@ def process_pdf(pdf_name: str) -> None:
     print(f"    Chars per page (est): {metrics['chars_per_page']}")
 
     if metrics["needs_ocr"]:
-        print(f"\n  WARNING: Low character yield ({metrics['chars_per_page']} chars/page).")
+        print(
+            f"\n  WARNING: Low character yield ({metrics['chars_per_page']} chars/page)."
+        )
         print("  This PDF appears to be image-based (scanned).")
         print("  Use the Claude Code Read tool for OCR extraction:")
         print(f"    Read(file_path='{pdf_path}', pages='1-20')")
@@ -158,9 +160,13 @@ def main() -> None:
         for name in missing:
             print(f"  {SOURCE_DIR / name}")
         print("\nDownload with:")
-        print("  curl -O https://www.courts.oregon.gov/publications/Documents/UpdatedStyleManual2002.pdf")
+        print(
+            "  curl -O https://www.courts.oregon.gov/publications/Documents/UpdatedStyleManual2002.pdf"
+        )
         print("  curl -O https://www.oregonlegislature.gov/lc/PDFs/draftingmanual.pdf")
-        print("  curl -O https://www.oregonlegislature.gov/lc/PDFs/form-stylemanual.pdf")
+        print(
+            "  curl -O https://www.oregonlegislature.gov/lc/PDFs/form-stylemanual.pdf"
+        )
         sys.exit(1)
 
     for pdf_name in PDFS:

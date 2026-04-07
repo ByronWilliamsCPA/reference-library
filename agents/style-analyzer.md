@@ -2,6 +2,8 @@
 name: style-analyzer
 description: Analyzes a user's writing samples to build a personalized style profile. Generates recommended updates to style-profile.md and the three pipeline agents so they calibrate to the user's voice instead of the repository author's defaults.
 version: 1.0.0
+model: sonnet
+tools: ["Read", "Write", "Edit", "Glob"]
 ---
 
 # Style Analyzer Agent

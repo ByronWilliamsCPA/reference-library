@@ -25,7 +25,7 @@ import json
 import sys
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import TypedDict
 
@@ -216,7 +216,7 @@ def build_frontmatter(sample: Sample) -> str:
         trailing blank line before the content body.
     """
     system_label = "none" if sample["system_prompt"] is None else "sme-role"
-    timestamp = datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    timestamp = datetime.now(tz=UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     lines = [
         "---",
@@ -250,7 +250,9 @@ def save_sample(sample: Sample, content: str) -> Path:
 
 def main() -> None:
     """Generate all before-state samples and save to samples/before/."""
-    parser = argparse.ArgumentParser(description="Generate pipeline before-state samples.")
+    parser = argparse.ArgumentParser(
+        description="Generate pipeline before-state samples."
+    )
     parser.add_argument(
         "--only",
         metavar="FILENAME",
@@ -273,7 +275,9 @@ def main() -> None:
     print()
 
     for index, sample in enumerate(samples_to_run, start=1):
-        system_label = "no system prompt" if sample["system_prompt"] is None else "sme role"
+        system_label = (
+            "no system prompt" if sample["system_prompt"] is None else "sme role"
+        )
         print(
             f"[{index}/{len(samples_to_run)}] {sample['filename']} ({system_label})...",
             end=" ",
@@ -291,7 +295,9 @@ def main() -> None:
         print(f"OK ({word_count} words) -> {output_path.relative_to(REPO_ROOT)}")
 
     print()
-    print(f"Done. {len(samples_to_run)} sample(s) written to {SAMPLES_DIR.relative_to(REPO_ROOT)}/")
+    print(
+        f"Done. {len(samples_to_run)} sample(s) written to {SAMPLES_DIR.relative_to(REPO_ROOT)}/"
+    )
 
 
 if __name__ == "__main__":
