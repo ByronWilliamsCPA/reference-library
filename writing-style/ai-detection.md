@@ -320,6 +320,13 @@ or a second paraphrase pass to scrub patterns can introduce its own detection si
 Operational rule: rewrite at the sentence and paragraph level by hand (the Stage 3 loop).
 Do not route drafts through automated paraphrase or humanizer utilities.
 
+The humanizer trap: leading classifiers (Pangram in particular, per the August 2025
+Becker Friedman Institute audit) train on humanizer-tool output as explicit hard
+negatives. StealthGPT, Undetectable.ai, WriteHuman, and similar utilities now produce a
+distinctive humanizer fingerprint. Using them is more likely to raise detection
+confidence against current top-tier classifiers than to defeat it. Never route the
+pipeline through a humanizer, even as a final "cleaning" pass.
+
 ### Non-Native and Constrained-Register Bias
 
 Detectors that lean on low perplexity and reduced lexical variety historically flagged
@@ -358,6 +365,34 @@ surface and its provenance must reflect your own process, re-draft from the sour
 prompt in Claude or another non-watermarked model rather than running the watermarked
 output through paraphrase or voice editing.
 
+### Regulatory Context (EU AI Act Article 50)
+
+Article 50 of the EU AI Act becomes enforceable on 2 August 2026. It obligates
+providers of generative systems to mark generative text output in a machine-readable
+way, and it requires disclosure when AI-generated content is published on matters of
+public interest. The draft Code of Practice on marking and labelling AI-generated
+content (European Commission, December 2025; finalization expected mid-2026) carves
+out a material exemption: content that passes through substantive human editorial
+review, with the editor assuming responsibility, is not subject to the disclosure
+obligation.
+
+Operational implication: the three-stage pipeline is already an editorial-responsibility
+record. Keep the stage-1 grammar report, the stage-2 validation issues, the stage-3
+voice rewrite notes, and the pipeline status block with the final document rather than
+only the final prose. For documents distributed into EU audiences, and particularly
+for anything on matters of public interest, that editorial trail is the compliance
+posture. The detector score is secondary; documented human review is the operative
+legal question.
+
+### Maintenance
+
+Detector models update on short cycles. Major commercial tools have shipped new
+generations within a single quarter in 2025 and 2026 (GPTZero 3.7b in September 2025,
+Pangram 3.0 in December 2025). A benchmark score from six months ago is not current
+evidence. Re-score a frozen reference passage through the same detector set quarterly
+and record the drift; treat any new failure mode as a Stage 3 issue-log item for the
+next pipeline update.
+
 ### What Has Decayed as a Defense
 
 - Burstiness modulation as the primary shield. Still required per `style-profile.md`; no
@@ -389,3 +424,7 @@ Run this before finalizing any document:
 - [ ] Stage files retained alongside the final rewrite (drafting evidence)
 - [ ] Scaffolding (heading sequence, bullet counts, opener/closer lines) is not reused
       verbatim from a prior document heading into the same review pipeline
+- [ ] No routing through a humanizer tool (StealthGPT, Undetectable.ai, WriteHuman, or
+      equivalent) at any stage of the pipeline
+- [ ] For EU-distributed content on matters of public interest: editorial-responsibility
+      trail is preserved (stage files plus pipeline status block)
