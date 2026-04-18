@@ -263,13 +263,38 @@ now combine several signals rather than relying on perplexity alone:
 
 - Document-level, section-level, and sentence-level classification
 - Mixed-authorship categories (human, AI, AI-paraphrased, mixed)
+- Continuous-regression / edit-extent scoring (EditLens-family): detection framed as
+  "how much of this was AI-assisted" rather than a binary yes/no label
+- Retrieval matching against proprietary corpora of previously-scored AI output
+  (Copyleaks AI Source Match and similar approaches)
 - Explicit handling of humanizer and bypasser tool outputs
 - Broad model coverage: GPT-4o/5, Claude 3.5 and 4.x, Gemini 2.x/3.x, DeepSeek, Llama,
   Qwen, and open-weight fine-tunes
 
 Implication: a "low-perplexity, generic ChatGPT" profile is no longer the only profile
 that detectors flag. Claude, Gemini, and open-weight outputs are actively scored by
-current commercial stacks.
+current commercial stacks. Editing an AI draft for voice can reduce binary "looks like
+AI" scores while leaving edit-extent scores largely intact; a regression-style detector
+can still report "heavily AI-assisted" even after Stage 3 passes.
+
+Operational note on institutional thresholds: some platforms suppress low scores as
+statistically unreliable (Turnitin marks scores below 20% with an asterisk and hides the
+numeric value). Chasing a 5% versus 15% delta in that band is noise. Reviewers see the
+score above 20%; that is the threshold that matters.
+
+### Template and Structural Repetition
+
+Retrieval-based detectors fingerprint structural repetition across documents, not just
+surface vocabulary. If the same scaffolding appears across multiple documents generated
+from a fixed prompt template (identical heading sequences, same bullet counts, the same
+opening gambit, the same closing line), that repeated structure is itself a retrieval
+signal independent of the prose.
+
+Operational rule: rotate scaffolding between documents that will cross the same
+institutional detector. Avoid reusing identical header sequences, bullet counts, or
+formulaic opening and closing lines in two documents headed for the same review pipeline.
+The pipeline's own recap and stage-file templates are acceptable because they are
+internal artifacts; the submitted document should not inherit their scaffolding.
 
 ### Over-Engineering Caveat
 
@@ -325,6 +350,14 @@ Implication: for documents that may enter a watermark-checking workflow, process
 stylometry. The three-stage pipeline already produces that evidence as a byproduct; keep
 stage files rather than only the final rewrite.
 
+Edit-versus-regenerate distinction: paraphrasing or Stage-3 rewriting a watermarked
+draft preserves most of the original token sequence, which preserves the watermark.
+Regenerating the idea from scratch in a non-watermarked model produces a fully new
+token sequence and strips the signal. If a document started inside a watermarked
+surface and its provenance must reflect your own process, re-draft from the source
+prompt in Claude or another non-watermarked model rather than running the watermarked
+output through paraphrase or voice editing.
+
 ### What Has Decayed as a Defense
 
 - Burstiness modulation as the primary shield. Still required per `style-profile.md`; no
@@ -354,3 +387,5 @@ Run this before finalizing any document:
 - [ ] Every statistic has a source or is labeled as an estimate
 - [ ] Assumptions stated explicitly, not embedded
 - [ ] Stage files retained alongside the final rewrite (drafting evidence)
+- [ ] Scaffolding (heading sequence, bullet counts, opener/closer lines) is not reused
+      verbatim from a prior document heading into the same review pipeline
