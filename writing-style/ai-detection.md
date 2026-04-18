@@ -250,16 +250,107 @@ with em-dash overuse.
 
 ---
 
+## Detector Landscape Notes (2026)
+
+Context that shapes how the rules above should be weighted. The detection market has moved
+past "perplexity plus burstiness catches generic ChatGPT prose." Some once-useful defenses
+have decayed; a few have reversed into liabilities.
+
+### How Modern Detectors Score Text
+
+Commercial tools (GPTZero, Turnitin, Copyleaks, Originality, Pangram, Winston, Sapling)
+now combine several signals rather than relying on perplexity alone:
+
+- Document-level, section-level, and sentence-level classification
+- Mixed-authorship categories (human, AI, AI-paraphrased, mixed)
+- Explicit handling of humanizer and bypasser tool outputs
+- Broad model coverage: GPT-4o/5, Claude 3.5 and 4.x, Gemini 2.x/3.x, DeepSeek, Llama,
+  Qwen, and open-weight fine-tunes
+
+Implication: a "low-perplexity, generic ChatGPT" profile is no longer the only profile
+that detectors flag. Claude, Gemini, and open-weight outputs are actively scored by
+current commercial stacks.
+
+### Over-Engineering Caveat
+
+Stylometric adjustments that look too deliberate can register as text optimized against
+a detector rather than as human prose. Specific failure modes:
+
+- Sentence-length oscillation pushed well beyond the σ ≥ 8 floor, producing mechanical
+  alternation rather than natural rhythm
+- Punctuation cadences that repeat identically across paragraphs
+- Rare synonyms or lexical oddities clustered in predictable positions
+- Opener variety so complete that every sentence starts differently in an engineered way
+
+Hit the `style-profile.md` targets. Do not exceed them for theatrical effect. Authentic
+voice is more durable than optimized voice, because modern detectors are increasingly
+trained against humanizer-style revisions and will flag artifacts of that optimization.
+
+### Paraphrase and Humanizer Detection
+
+Turnitin, QuillBot, and Winston now flag paraphrase passes and humanizer-tool output as a
+distinct category, separate from "AI-generated." Running an AI draft through a humanizer
+or a second paraphrase pass to scrub patterns can introduce its own detection signature.
+
+Operational rule: rewrite at the sentence and paragraph level by hand (the Stage 3 loop).
+Do not route drafts through automated paraphrase or humanizer utilities.
+
+### Non-Native and Constrained-Register Bias
+
+Detectors that lean on low perplexity and reduced lexical variety historically flagged
+formal, technical, and non-native-English prose at elevated rates. Liang et al. (Patterns,
+2023) reported ~61% false-positive rates across seven detectors on TOEFL essays. Some
+vendors claim remediation; independent peer-reviewed replication lags the claims.
+
+Registers common to this library (tax analysis, statutory drafting, regulatory memos,
+bar-style exam prose) sit in the risk zone because they are formal, lexically constrained,
+and rely on stable defined terminology. Substituting synonyms for variety's sake would
+violate both the relevant Oregon style guides and the semantic-preservation rules in the
+pipeline.
+
+Operational guidance: when register legitimately constrains vocabulary (defined statutory
+terms, elements of a tax test, fixed citation forms), accept a narrower TTR. Let the
+register justify the constraint in a Stage 3 rewrite note when the document is likely to
+be screened.
+
+### Provenance Signals
+
+Text generated inside Google Gemini surfaces carries SynthID watermarking that survives
+light editing and does not get stripped by stylistic rewriting. OpenAI and Anthropic have
+not shipped text watermarks in production as of April 2026, though both have disclosed
+research work.
+
+Implication: for documents that may enter a watermark-checking workflow, process evidence
+(drafting history, revision timeline, source materials) matters more than surface
+stylometry. The three-stage pipeline already produces that evidence as a byproduct; keep
+stage files rather than only the final rewrite.
+
+### What Has Decayed as a Defense
+
+- Burstiness modulation as the primary shield. Still required per `style-profile.md`; no
+  longer sufficient on its own.
+- Automated paraphrase passes as a cleaning step. Now actively targeted by commercial
+  detectors.
+- The assumption that Claude output is harder to detect than ChatGPT output. Partially
+  true for some tools; no longer safe to rely on.
+- Score suppression as the whole strategy. Defensible authorship evidence plus a clean
+  draft beats an optimized score under institutional review.
+
+---
+
 ## Quick Scan Checklist
 
 Run this before finalizing any document:
 
 - [ ] No terms from the Cliché Blacklist
 - [ ] No vague qualifiers without accompanying numbers
-- [ ] Sentence length standard deviation ≥ 8
+- [ ] Sentence length standard deviation ≥ 8 (and not artificially inflated past ~15)
 - [ ] Short sentences (< 8 words) ≥ 15% of total
 - [ ] Long sentences (> 30 words) ≥ 15% of total
+- [ ] Sentence variation reads as natural, not as engineered alternation
 - [ ] No repetitive paragraph openers
 - [ ] Transition words used sparingly
+- [ ] No automated paraphrase or humanizer pass on the final draft
 - [ ] Every statistic has a source or is labeled as an estimate
 - [ ] Assumptions stated explicitly, not embedded
+- [ ] Stage files retained alongside the final rewrite (drafting evidence)
