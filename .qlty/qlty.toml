@@ -22,6 +22,10 @@ default = true
 [[plugin]]
 name = "bandit"
 
+# Python type checking (scripts/ directory)
+[[plugin]]
+name = "basedpyright"
+
 # Markdown linting (primary content type for this repo)
 [[plugin]]
 name = "markdownlint"

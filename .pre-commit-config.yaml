@@ -1,0 +1,85 @@
+# Pre-commit hooks configuration
+# See https://pre-commit.com for more information
+#
+# Hook stages:
+# - pre-commit: Fast checks on every commit (formatting, syntax, security)
+# - commit-msg: Conventional commit message validation
+#
+# This is a docs-only repository. Python-specific hooks (ruff, basedpyright,
+# bandit, darglint, interrogate) are not included.
+
+repos:
+  # ============================================================================
+  # Secret Detection - detect-secrets (PC-005)
+  # ============================================================================
+  # Catches high-entropy strings, API keys, tokens, and credentials.
+  # Uses baseline file to track known false positives.
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: "01886c8a910c64595c47f186ca1ffc0b77fa5458"  # v1.5.0  # pragma: allowlist secret
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        stages: [pre-commit]
+        exclude: (\.lock$|\.secrets\.baseline$)
+
+  # ============================================================================
+  # Conventional Commits Enforcement (PC-008)
+  # ============================================================================
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: "cc981fcb065527b6de0033b0cbf0432e69781901"  # v4.9.1  # pragma: allowlist secret
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]
+
+  # ============================================================================
+  # YAML Linting (PC-009)
+  # ============================================================================
+  - repo: https://github.com/adrienverge/yamllint
+    rev: "cba56bcde1fdd01c1deb3f945e69764c291a6530"  # v1.38.0  # pragma: allowlist secret
+    hooks:
+      - id: yamllint
+        stages: [pre-commit]
+
+  # ============================================================================
+  # Markdown Linting (PC-010)
+  # ============================================================================
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: "e72a3ca1632f0b11a07d171449fe447a7ff6795e"  # v0.48.0  # pragma: allowlist secret
+    hooks:
+      - id: markdownlint
+        stages: [pre-commit]
+
+  # ============================================================================
+  # Em-Dash Prevention (PC-011)
+  # ============================================================================
+  # Blocks the em-dash character (U+2014) in committed text files.
+  # See writing standards in ~/.claude/CLAUDE.md (writing style section).
+  #
+  # Pre-existing em-dashes were found in the following paths before this hook
+  # was added. Those paths are excluded until the content is cleaned up:
+  #   - agents/ (agent definition files)
+  #   - README.md (top-level readme)
+  #   - CLAUDE.md (project instructions)
+  #   - .github/ (workflow files)
+  #   - .qlty/ (qlty config)
+  #   - legal-style/ (source legal reference material)
+  #   - writing-style/ (reference material)
+  - repo: local
+    hooks:
+      - id: no-em-dash
+        name: No em-dashes
+        language: pygrep
+        entry: "—"
+        types: [text]
+        stages: [pre-commit]
+        exclude: |
+          (?x)^(
+            agents/|
+            README\.md|
+            CLAUDE\.md|
+            \.github/|
+            \.qlty/|
+            legal-style/|
+            writing-style/|
+            \.pre-commit-config\.yaml
+          )

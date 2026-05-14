@@ -22,3 +22,9 @@ __pycache__/
 Thumbs.db
 
 .env
+
+# Worktrees (always created inside project at .worktrees/<branch-slug>)
+.worktrees/
+
+# Compliance reports (generated, not committed)
+docs/compliance-reports/

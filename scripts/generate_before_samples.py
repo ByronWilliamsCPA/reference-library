@@ -5,7 +5,7 @@ Usage:
     python scripts/generate_before_samples.py --only 05-workforce-planning-analysis.md
 
 Calls the OpenRouter API with minimal prompts to produce natural AI-mechanical
-output — vague qualifiers, gerund padding, transition overuse — that the
+output (vague qualifiers, gerund padding, transition overuse) that the
 three-stage pipeline (grammar -> validation -> voice) is designed to catch.
 
 Model: minimax/minimax-m2 (top-used OpenRouter model, no house-style tuning)
@@ -109,7 +109,7 @@ SAMPLES: list[Sample] = [
             "distinct dimensions: (1) productivity and output effects, (2) role displacement "
             "and skill evolution, (3) talent acquisition and retention shifts, and "
             "(4) implementation costs and return on investment. Write in continuous prose "
-            "paragraphs — no bullet points, no numbered lists, no subheadings. Each dimension "
+            "paragraphs: no bullet points, no numbered lists, no subheadings. Each dimension "
             "should be its own paragraph, connected by transitions between them."
         ),
     },
