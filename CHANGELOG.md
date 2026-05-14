@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 - CONTRIBUTING.md with docs-only contribution guidelines
 - CHANGELOG.md (this file)
 - .github/CODEOWNERS assigning @ByronWilliamsCPA as default owner
@@ -20,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2026-03-15
 
 ### Added
+
 - Initial release of the reference library
 - Oregon legal style reference files extracted from three authoritative sources:
   Appellate Courts Style Manual (2002), LC Drafting Manual, and LC Form and Style Manual

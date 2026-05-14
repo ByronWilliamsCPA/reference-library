@@ -8,7 +8,7 @@ reusable_workflows:
   - id: python-security-analysis
     org_workflow: ByronWilliamsCPA/.github/.github/workflows/python-security-analysis.yml
     caller: .github/workflows/security-analysis.yml
-    pin: b29a870cb21a8f913e5c6c5f08740a4bdd94d0ca  # main
+    pin: b29a870cb21a8f913e5c6c5f08740a4bdd94d0ca  # main  # pragma: allowlist secret
     internal_jobs:
       - detect-changes
       - codeql
@@ -24,7 +24,7 @@ reusable_workflows:
   - id: python-qlty-coverage
     org_workflow: ByronWilliamsCPA/.github/.github/workflows/python-qlty-coverage.yml
     caller: .github/workflows/qlty.yml
-    pin: b29a870cb21a8f913e5c6c5f08740a4bdd94d0ca  # main
+    pin: b29a870cb21a8f913e5c6c5f08740a4bdd94d0ca  # main  # pragma: allowlist secret
     internal_jobs:
       - check-configuration
       - upload-coverage
@@ -35,7 +35,7 @@ reusable_workflows:
   - id: python-scorecard
     org_workflow: ByronWilliamsCPA/.github/.github/workflows/python-scorecard.yml
     caller: .github/workflows/scorecard.yml
-    pin: b29a870cb21a8f913e5c6c5f08740a4bdd94d0ca  # main
+    pin: b29a870cb21a8f913e5c6c5f08740a4bdd94d0ca  # main  # pragma: allowlist secret
     internal_jobs:
       - scorecard
     notes: >
