@@ -1,7 +1,7 @@
 # OpenSSF Scorecard for Claude Code Configuration
 # Delegates to the org-level reusable Scorecard workflow.
 #
-# Dashboard: https://securityscorecards.dev/viewer/?uri=github.com/ByronWilliamsCPA/.claude
+# Dashboard: https://securityscorecards.dev/viewer/?uri=github.com/ByronWilliamsCPA/reference-library
 # Documentation: https://github.com/ossf/scorecard
 name: OpenSSF Scorecard
 
@@ -29,4 +29,6 @@ jobs:
       actions: read
     uses: ByronWilliamsCPA/.github/.github/workflows/python-scorecard.yml@b29a870cb21a8f913e5c6c5f08740a4bdd94d0ca  # main
     with:
-      publish-results: true
+      # publish-results: false -- OIDC repository claim resolves to org .github repo
+      # when called as a reusable callee; setting true publishes to wrong repo.
+      publish-results: false
