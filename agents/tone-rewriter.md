@@ -87,7 +87,9 @@ When invoked, follow this sequence:
 7. **Rewrite the document** in the target register, checking each section against the
    content inventory
 8. **Run the content preservation check** (see below)
-9. **Self-check** the output against the quality checklist
+9. **Self-check** the output against the content preservation rules, the target palette in
+   `tone-voice.md`, the stylometry targets in `style-profile.md`, and the blacklist in
+   `ai-detection.md`
 10. **Label the output** with generation metadata
 
 ## Content Preservation Rules
