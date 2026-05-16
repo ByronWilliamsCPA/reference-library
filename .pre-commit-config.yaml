@@ -27,18 +27,20 @@ repos:
   # ============================================================================
   # Dual-layer secret scanning: trufflehog catches secrets detect-secrets misses.
   # Scans staged files only; fails closed if trufflehog is absent.
+  # Portability notes:
+  #   - Uses NUL-delimited names end-to-end (no tr round-trip through newlines)
+  #     so filenames with embedded newlines are preserved.
+  #   - Explicit empty-list guard avoids `xargs -r` (GNU-only; absent on
+  #     older macOS/BSD xargs).
   - repo: https://github.com/trufflesecurity/trufflehog
     rev: "37b77001d0174ebec2fcca2bd83ff83a6d45a3ab"  # v3.95.3  # pragma: allowlist secret
     hooks:
       - id: trufflehog
         entry: >-
-          bash -c 'git diff --cached -z --name-only --diff-filter=d 2>/dev/null
-          | tr "\0" "\n"
-          | grep -v "^CHANGELOG\.md$"
-          | grep -v "^\.submodules/"
-          | grep -v "^$"
-          | tr "\n" "\0"
-          | xargs -0 -r trufflehog filesystem --fail --no-update'
+          bash -c 'files=$(git diff --cached -z --name-only --diff-filter=d 2>/dev/null
+          | awk -v RS="\0" -v ORS="\0" "!/^CHANGELOG\\.md\$/ && !/^\\.submodules\\//");
+          [ -z "$files" ] && exit 0;
+          printf "%s" "$files" | xargs -0 trufflehog filesystem --fail --no-update'
         pass_filenames: false
         stages: [pre-commit]
 
