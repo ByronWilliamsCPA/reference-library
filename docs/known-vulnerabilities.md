@@ -9,8 +9,8 @@ tags:
   - dependencies
 ---
 
-> Tracks CVEs that cannot be immediately resolved. Review quarterly.
-> No entry may age past 60 days without reassessment; escalate or resolve.
+> Tracks CVEs and accepted compliance exceptions. Review quarterly.
+> No entry may age past 90 days without reassessment; escalate or resolve.
 
 ## Current Status
 
@@ -27,8 +27,8 @@ it below using the entry format from the template at
 ## Accepted Architectural Exceptions
 
 These entries document accepted Scorecard findings that are not CVEs but require
-explicit documentation as accepted exceptions. Each entry follows the same 60-day
-reassessment policy; no entry ages past 60 days without a dated review note.
+explicit documentation as accepted exceptions. Each entry follows the same 90-day
+reassessment policy; no entry ages past 90 days without a dated review note.
 
 ---
 
