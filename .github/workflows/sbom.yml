@@ -8,13 +8,13 @@ on:
   push:
     branches: [main]
   schedule:
-    # Weekly scan on Mondays at 06:00 UTC to track dependency drift
-    - cron: '0 6 * * 1'
+    # Weekly scan on Mondays at 06:17 UTC to track dependency drift.
+    # Non-zero minute offset reduces queue wait at the round-hour load spike.
+    - cron: '17 6 * * 1'
   workflow_dispatch:
 
 permissions:
   contents: read
-  id-token: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -41,7 +41,7 @@ jobs:
           persist-credentials: false
 
       - name: Generate SBOM
-        uses: anchore/sbom-action@f6c3d0fe42c3cf876e3462574e4c9416b5e0f07a  # v0.9.0
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610  # v0.24.0
         with:
           path: .
           format: cyclonedx-json
