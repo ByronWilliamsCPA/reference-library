@@ -67,8 +67,8 @@ jobs:
           fi
           echo "PR body is present."
 
-  pr-metadata-validation:
-    name: PR Metadata Validation
+  dependency-standards-validation:
+    name: Dependency & Standards Validation
     runs-on: ubuntu-latest
     needs: [title-check, body-check]
     if: always()
