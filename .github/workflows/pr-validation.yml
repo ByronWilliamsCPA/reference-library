@@ -77,16 +77,16 @@ jobs:
         uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450  # v2.19.1
         with:
           egress-policy: audit
-      - name: Check dependency and standards requirements
+      - name: Aggregate PR title and body validation results
         env:
           TITLE_RESULT: ${{ needs.title-check.result }}
           BODY_RESULT: ${{ needs.body-check.result }}
         run: |
           if [ "$TITLE_RESULT" != "success" ] || [ "$BODY_RESULT" != "success" ]; then
-            echo "::error::PR validation checks failed — dependency and standards gate blocked."
+            echo "::error::PR title or body validation failed; metadata gate blocked."
             exit 1
           fi
-          echo "Dependency and standards validation passed."
+          echo "PR metadata validation passed."
 
   pr-validation-gate:
     name: PR Validation Gate

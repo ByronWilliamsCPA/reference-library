@@ -215,6 +215,20 @@ Emotional Alignment: [score: ALIGNED / MIXED / MISALIGNED]
 - **SIGNIFICANT REWORK**: 4+ HIGH-priority items, or persuasion is WEAK, or emotional
   trajectory is MISALIGNED across multiple sections.
 
+### 8. Pipeline Notes (optional)
+
+Include this section only when the document appears to have a Stage 1, 2, or 3 issue
+that the editing pipeline missed (grammar error, factual concern, or AI pattern). Keep
+it brief and out of the audience-perspective analysis above.
+
+```text
+Pipeline Stage:  [1 / 2 / 3]
+Location:        [section or sentence]
+Observation:     [what looks like a pipeline miss]
+```
+
+Omit this section entirely when no pipeline misses are observed.
+
 ## Operating Instructions
 
 ### Scope Boundaries
