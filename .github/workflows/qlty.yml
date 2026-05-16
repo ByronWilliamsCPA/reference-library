@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   qlty:
-    uses: ByronWilliamsCPA/.github/.github/workflows/python-qlty-coverage.yml@e7781b38647e3ea2550758ea4d6666bf31026660  # main
+    uses: ByronWilliamsCPA/.github/.github/workflows/python-qlty-coverage.yml@de201234d10d1e0705e259e57e9d63e87a6ae0ac  # main
     permissions:
       contents: read
       actions: read
