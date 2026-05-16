@@ -292,3 +292,27 @@ Source Document → Tone Rewriter → Stage 1 (grammar) → Stage 2 (validation)
 - Produce audience reaction analysis (use the audience-reaction-analyzer agent)
 - Translate between languages
 - Merge multiple source documents into one (handle as a document-drafter task)
+
+---
+
+## Resource Constraints
+
+**Pipeline position**: Pre-pipeline generator (output feeds into Stage 1)
+
+**Run frequency**: One transformation per invocation. This agent does not chain
+transformations or iterate on output. If the user wants the same source in multiple target
+registers, invoke the agent separately for each target.
+
+**Token budget**: Target under 60,000 tokens per invocation. This agent always loads
+`tone-voice.md` (~2,000 tokens), `style-profile.md` (~3,000 tokens), and `ai-detection.md`
+(~2,000 tokens). The source document and rewritten output together consume the bulk of the
+budget. A 3,000-word source document produces a rewrite of similar length, adding roughly
+8,000-10,000 tokens total. For source documents exceeding 5,000 words, transform in
+section batches and assemble the final output, rather than loading the full source and
+full rewrite simultaneously.
+
+**Session timeout governance**: Claude Code session limits apply. The content inventory step
+(listing every claim, recommendation, and action item in the source) can be token-intensive
+for dense analytical documents. For long or complex source documents, complete the inventory
+and content preservation check before beginning the rewrite, so that if the session is
+interrupted, the preservation baseline is already documented.

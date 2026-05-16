@@ -285,4 +285,28 @@ stage_3_style:
 - **Remediation cycles**: Max 3 global cycles before escalating to human review. A cycle is:
   Stage 1 re-check → Stage 2 re-check → Stage 3 re-check of the same rewritten sections.
   If this is the third cycle, note it in the pipeline status block:
-  `remediation_cycles: 3 — escalate to human review`.
+  `remediation_cycles: 3, escalate to human review`.
+
+---
+
+## Resource Constraints
+
+**Pipeline position**: Stage 3 of 3 (Style)
+
+**Remediation cycles**: Maximum 3 global cycles across the full pipeline. This agent is the
+remediation trigger: when Stage 3 rewrites sections for voice, those sections loop back
+through Stage 1 and Stage 2. Count the loop, not the rewrite. On the third cycle, escalate
+to human review regardless of remaining issues.
+
+**Token budget**: Target under 50,000 tokens per invocation. This agent always loads
+`style-profile.md` (~3,000 tokens) and `ai-detection.md` (~2,000 tokens). Topic files add
+1,000-2,000 tokens each. When heightened scrutiny mode is active (ai_generated: true), the
+increased per-paragraph checking raises effective token use. For documents exceeding 20 pages,
+process stylometry and AI pattern detection in section batches rather than loading the full
+document at once.
+
+**Session timeout governance**: Claude Code session limits apply. Voice rewriting is the most
+token-intensive operation in the pipeline. If a document requires rewrites in many sections,
+prioritize HIGH-impact sections (persona drift, AI pattern density) and defer LOW-priority
+cosmetic changes to a second pass. Document which sections were deferred in the pipeline
+status block.

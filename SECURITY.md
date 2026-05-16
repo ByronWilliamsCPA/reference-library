@@ -32,4 +32,13 @@ The primary security concern is accidental credential or PII exposure in commits
 - **Pattern scanning**: Ripgrep flags credential-shaped strings
 - **Git-ignored locals**: PDF sources and extracted text are never committed
 
+## Secret Rotation Policy
+
+This repository uses two GitHub Actions secrets: `SONAR_TOKEN` (SonarCloud analysis) <!-- pragma: allowlist secret -->
+and `QLTY_COVERAGE_TOKEN` (Qlty coverage reporting). Both tokens are rotated annually <!-- pragma: allowlist secret -->
+or immediately upon any indicator of compromise (unexpected API activity, token exposure
+in logs, or repository access anomaly). To rotate, generate a new token from the
+respective service dashboard and update it at **Settings > Secrets and variables >
+Actions** in the GitHub repository settings.
+
 *Policy mirrors [ByronWilliamsCPA/.github SECURITY.md](https://github.com/ByronWilliamsCPA/.github/blob/main/SECURITY.md).*
