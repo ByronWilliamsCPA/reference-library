@@ -22,7 +22,7 @@ jobs:
       security-events: write
       pull-requests: write
       actions: read
-    uses: ByronWilliamsCPA/.github/.github/workflows/python-security-analysis.yml@e7781b38647e3ea2550758ea4d6666bf31026660 # main
+    uses: ByronWilliamsCPA/.github/.github/workflows/python-security-analysis.yml@3262aafb272959bf117143c29e3288e722c0acf6 # main
     with:
       python-version: "3.12"
       run-safety: false
