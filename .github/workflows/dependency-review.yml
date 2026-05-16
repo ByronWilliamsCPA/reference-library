@@ -37,3 +37,9 @@ jobs:
         uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48  # v4.9.0
         with:
           fail-on-severity: high
+          # Surface findings on the PR (uses the pull-requests: write permission above).
+          comment-summary-in-pr: on-failure
+          # Disable Scorecard lookups so harden-runner's block egress does not need
+          # api.securityscorecards.dev or api.osv.dev allowlisted; vulnerability
+          # detection itself uses GitHub's API which is already permitted.
+          show-openssf-scorecard: false
