@@ -1,0 +1,12 @@
+---
+# yamllint configuration for reference-library
+# Line length set to 130 to accommodate SHA-pinned GitHub Actions refs.
+# document-start disabled: many YAML files in this repo omit the --- marker.
+# truthy disabled: GitHub Actions uses "on:" as a key (YAML truthy value).
+extends: default
+
+rules:
+  line-length:
+    max: 130
+  document-start: disable
+  truthy: disable

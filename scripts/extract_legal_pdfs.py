@@ -59,7 +59,7 @@ def extract_with_pymupdf(pdf_path: Path, output_path: Path) -> str | None:
     try:
         import pymupdf  # type: ignore[import-untyped]  # noqa: PLC0415
     except ImportError:
-        print("  pymupdf not installed — skipping (run: pip install pymupdf)")
+        print("  pymupdf not installed; skipping (run: pip install pymupdf)")
         return None
 
     doc = pymupdf.open(str(pdf_path))

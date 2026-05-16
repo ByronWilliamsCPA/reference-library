@@ -1,18 +1,17 @@
-name: Repo Health
+name: CI
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
-    branches: [main, master]
-  workflow_dispatch:
+    branches: [main]
 
 permissions:
   contents: read
 
 jobs:
-  repo-health:
-    name: repo-health
+  ci-gate:
+    name: CI Gate
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner
@@ -25,12 +24,12 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Check required files exist
+      - name: Verify key documentation files exist
         run: |
           MISSING=0
-          for FILE in SECURITY.md CONTRIBUTING.md CHANGELOG.md CLAUDE.md README.md; do
+          for FILE in README.md CLAUDE.md SECURITY.md CONTRIBUTING.md CHANGELOG.md; do
             if [ ! -f "$FILE" ]; then
-              echo "::error::Required file missing: $FILE"
+              echo "::error::Required documentation file missing: $FILE"
               MISSING=1
             else
               echo "Found: $FILE"
@@ -39,4 +38,4 @@ jobs:
           if [ "$MISSING" -eq 1 ]; then
             exit 1
           fi
-          echo "Repository health check passed: all required files present."
+          echo "All required documentation files are present."

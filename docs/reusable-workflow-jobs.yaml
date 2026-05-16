@@ -1,0 +1,44 @@
+# Reusable Workflow Inventory for reference-library
+# Documents all org-level reusable workflows called by this repository.
+# Update this file whenever a workflow caller is added, removed, or re-pinned.
+# last_verified: 2026-05-13
+
+reusable_workflows:
+
+  - id: python-security-analysis
+    org_workflow: ByronWilliamsCPA/.github/.github/workflows/python-security-analysis.yml
+    caller: .github/workflows/security-analysis.yml
+    pin: b29a870cb21a8f913e5c6c5f08740a4bdd94d0ca  # main  # pragma: allowlist secret
+    internal_jobs:
+      - detect-changes
+      - codeql
+      - dependency-review
+      - python-security
+      - osv-scanner
+      - security-gate
+    notes: >
+      Security scan suite. Most scan types are disabled for this docs-only repo
+      (run-safety, run-codeql, run-dependency-review, run-osv, run-bandit all false).
+      The caller adds a local security-gate-validation job after the reusable completes.
+
+  - id: python-qlty-coverage
+    org_workflow: ByronWilliamsCPA/.github/.github/workflows/python-qlty-coverage.yml
+    caller: .github/workflows/qlty.yml
+    pin: b29a870cb21a8f913e5c6c5f08740a4bdd94d0ca  # main  # pragma: allowlist secret
+    internal_jobs:
+      - check-configuration
+      - upload-coverage
+    notes: >
+      Uploads coverage reports to Qlty. Triggers on push and pull_request to main.
+      Requires QLTY_COVERAGE_TOKEN secret.
+
+  - id: python-scorecard
+    org_workflow: ByronWilliamsCPA/.github/.github/workflows/python-scorecard.yml
+    caller: .github/workflows/scorecard.yml
+    pin: b29a870cb21a8f913e5c6c5f08740a4bdd94d0ca  # main  # pragma: allowlist secret
+    internal_jobs:
+      - scorecard
+    notes: >
+      OpenSSF Scorecard analysis. publish-results is false because the OIDC
+      repository claim resolves to the org .github repo when called as a
+      reusable callee; setting true would publish to the wrong repo.

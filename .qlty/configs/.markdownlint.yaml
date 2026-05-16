@@ -8,6 +8,9 @@ MD013:
   code_block_line_length: 120
   tables: false
 
+# Changelogs legitimately repeat ### Added, ### Changed, etc. across version sections.
+MD024: false
+
 MD049: false
 
 MD050: false

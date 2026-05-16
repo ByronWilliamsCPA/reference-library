@@ -8,6 +8,9 @@
 A centralized reference library for authoritative style, drafting, and writing standards. This repository
 contains no project-specific content. Individual project repositories extend what they need.
 
+**API reference**: Not applicable. This is a documentation-only repository with no programmatic interface
+or callable library.
+
 ---
 
 ## What's Here
