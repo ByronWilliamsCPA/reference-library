@@ -101,3 +101,21 @@ auditable.
   in this ADR before it takes effect.
 - New source additions (a fourth legal authority, a Tier 4 override category) require
   a new ADR rather than silent modification of existing rules.
+
+## Security Considerations
+
+This is a documentation-only architectural decision with no runtime code and no
+credentials, secrets, or user data involved. There are no network calls, no
+authentication surfaces, and no data persistence beyond static files in version
+control.
+
+One supply-chain analogue risk is worth noting: the agent files installed by
+`scripts/setup.sh` become executable context loaded into every Claude Code session
+across all projects that run the installer. If the authority hierarchy in those files
+were changed silently (for example, by substituting a different grammar authority or
+redirecting users to an outdated or incorrect source), every downstream AI-assisted
+writing session would receive the corrupted guidance without any visible error. This
+mirrors the trust-chain concern in software supply chains where a compromised shared
+dependency propagates silently. Mitigation: all changes to the hierarchy must go
+through a new or amended ADR, and the `setup.sh` installer is version-controlled
+alongside the agent files it deploys.

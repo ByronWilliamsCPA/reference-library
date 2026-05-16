@@ -13,7 +13,7 @@ repositories extend what they need.
 ```text
 reference-library/
 ├── legal-style/           # Oregon legal style and drafting rules
-│   ├── QUICK-START.md     # 80% of daily lookups — start here
+│   ├── QUICK-START.md     # 80% of daily lookups: start here
 │   ├── cross-reference.md # Where the three sources diverge (read this before drafting)
 │   ├── appellate-style-manual/   # Oregon Appellate Courts Style Manual (2002)
 │   ├── lc-drafting-manual/       # Oregon Legislative Counsel Drafting Manual
@@ -27,7 +27,7 @@ reference-library/
 │   ├── logical-fallacies-guide.md    # Common reasoning errors in professional documents
 │   ├── transition-words-reference.md # Transition categories, usage rules, AI overuse detection
 │   └── grammar-style/            # EoS + CMS grammar reference (14 files)
-│       ├── QUICK-START.md        # 80% of grammar questions — start here
+│       ├── QUICK-START.md        # 80% of grammar questions: start here
 │       ├── cross-reference.md    # 21 EoS/CMS/PCP divergences with resolution
 │       ├── index.md              # Concept-to-file routing map
 │       ├── elements-of-style/    # EoS base rules (Tier 1, drafting baseline)

@@ -1,6 +1,6 @@
 # Reference Library
 
-> **Purpose**: Base reference files and agents — general, reusable across personal, CPA, and investment
+> **Purpose**: Base reference files and agents, general, reusable across personal, CPA, and investment
 > projects
 > **Version**: 1.0.0
 > **Last Updated**: 2026-03-15
@@ -15,7 +15,7 @@ or callable library.
 
 ## What's Here
 
-### `legal-style/` — Oregon Legal Style and Drafting
+### `legal-style/`: Oregon Legal Style and Drafting
 
 Reference files extracted from three authoritative Oregon sources:
 
@@ -27,19 +27,19 @@ Reference files extracted from three authoritative Oregon sources:
 
 Start with [`legal-style/QUICK-START.md`](legal-style/QUICK-START.md) for the most common daily lookups.
 
-### `writing-style/` — Writing Style Reference
+### `writing-style/`: Writing Style Reference
 
-Quantified writing style profile and AI pattern detection reference. Not project-specific — applies to any
+Quantified writing style profile and AI pattern detection reference. Not project-specific; applies to any
 professional document context.
 
-- [`writing-style/style-profile.md`](writing-style/style-profile.md) — sentence metrics, rhythm targets, stylometry
-- [`writing-style/ai-detection.md`](writing-style/ai-detection.md) — blacklisted terms, structural tells,
+- [`writing-style/style-profile.md`](writing-style/style-profile.md): sentence metrics, rhythm targets, stylometry
+- [`writing-style/ai-detection.md`](writing-style/ai-detection.md): blacklisted terms, structural tells,
   rewrite examples
 
-### `agents/` — Base Agent Definitions
+### `agents/`: Base Agent Definitions
 
 General-purpose Claude agents with no project-specific content baked in. Install them globally
-with `scripts/setup.sh` — no per-project setup required.
+with `scripts/setup.sh`; no per-project setup required.
 
 | Agent | Pipeline Position | Purpose |
 | --- | --- | --- |
@@ -120,7 +120,7 @@ python scripts/extract_legal_pdfs.py
 ```text
 reference-library/
 ├── README.md
-├── agents/                        # Agent templates — installed globally by setup.sh
+├── agents/                        # Agent templates; installed globally by setup.sh
 │   ├── style-analyzer.md
 │   ├── document-drafter.md
 │   ├── tone-rewriter.md

@@ -230,3 +230,27 @@ Input → Document Drafter → Stage 1 (grammar) → Stage 2 (validation) → St
 - Generate content for purposes not specified in the input
 - Produce multiple draft variants (unless explicitly requested; default is one draft)
 - Translate between languages
+
+---
+
+## Resource Constraints
+
+**Pipeline position**: Pre-pipeline generator (output feeds into Stage 1)
+
+**Run frequency**: One drafting pass per invocation, followed by a single self-check. This
+agent does not iterate on its own output beyond the self-check. If the self-check reveals
+violations, fix them and output the draft. Do not cycle more than once.
+
+**Token budget**: Target under 100,000 tokens per invocation. This agent always loads
+`style-profile.md` (~3,000 tokens), `tone-voice.md` (~2,000 tokens), and `ai-detection.md`
+(~2,000 tokens). Legal drafting adds `QUICK-START.md` (~1,500 tokens) and optionally
+`cross-reference.md` (~2,000 tokens). The draft itself is the main token consumer; a 5,000-word
+document adds roughly 7,000 tokens. For very long documents (10,000+ words), consider
+drafting in major sections and assembling them, rather than generating the full document
+in a single pass.
+
+**Session timeout governance**: Claude Code session limits apply. Long-form generation (reports,
+legal briefs, proposals over 5,000 words) may approach session limits, especially when legal
+reference files are loaded. If generation is interrupted, the verification notes section
+should identify which sections were completed so the next session can resume without
+duplicating work.

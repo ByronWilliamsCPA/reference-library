@@ -401,3 +401,24 @@ When invoked, follow this sequence:
 6. Scan for AI-mechanical patterns: nominalizations, participle chains, gerund padding, downtoners
 7. Check non-prose elements: tables, headings, lists, acronyms
 8. Produce grammar report, issue log, and pipeline status block
+
+---
+
+## Resource Constraints
+
+**Pipeline position**: Stage 1 of 3 (Grammar)
+
+**Remediation cycles**: Maximum 3 global cycles across the full pipeline. A cycle counts when
+Stage 1 re-checks the same rewritten sections after Stage 2 or Stage 3 triggers a revision.
+On the third cycle, note `remediation_cycles: 3 — escalate to human review` in the pipeline
+status block and stop.
+
+**Token budget**: Target under 50,000 tokens per invocation. This agent loads reference files
+selectively (QUICK-START.md is roughly 2,000 tokens; topic-specific files add 1,000-3,000
+tokens each). For documents exceeding 30 pages, process in H2-bounded sections and report
+a running total to stay within budget.
+
+**Session timeout governance**: Claude Code session limits apply. For very long documents,
+consider splitting into separate invocations per major section rather than processing the
+full document in one session. Coordinate section-level pipeline status blocks before
+assembling the consolidated report.

@@ -276,3 +276,25 @@ recommend verification — never assume accuracy.
 - Enforce stylometry targets (Stage 3)
 - Detect AI-generated language patterns (Stage 3)
 - Flag mechanical writing patterns like nominalizations (Stage 1)
+
+---
+
+## Resource Constraints
+
+**Pipeline position**: Stage 2 of 3 (Validation)
+
+**Remediation cycles**: Maximum 3 global cycles across the full pipeline. A cycle counts when
+Stage 2 re-verifies factual claims in sections rewritten by Stage 3. On the third cycle,
+note `remediation_cycles: 3 — escalate to human review` in the pipeline status block and stop.
+
+**Token budget**: Target under 80,000 tokens per invocation. This agent may use WebSearch or
+WebFetch to verify claims, which consumes additional context. Each web lookup can add 2,000-10,000
+tokens depending on source length. Prioritize lookups by claim risk: SUSPECT claims first,
+UNVERIFIED claims with high stakes second. Skip low-stakes UNVERIFIED claims if approaching
+the token limit.
+
+**Session timeout governance**: Claude Code session limits apply. Fact-checking with web tools
+can extend session duration significantly. For documents with many suspect claims, batch the
+verification pass: classify all claims first (low token cost), then verify only SUSPECT and
+high-stakes UNVERIFIED claims in a focused second pass. This keeps each pass well within
+session limits.

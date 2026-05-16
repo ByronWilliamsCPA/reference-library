@@ -366,3 +366,26 @@ Writing samples may contain sensitive or confidential content. This agent:
 - Extracts only statistical and structural patterns, not content
 - Does not reproduce sample content except in brief illustrative quotes (with context)
   in Output B (ai-detection exceptions)
+
+---
+
+## Resource Constraints
+
+**Pipeline position**: Pre-pipeline calibration (run once before using the editing pipeline)
+
+**Run frequency**: One run per calibration event. This agent does not iterate or remediate;
+it analyzes once, presents findings for approval, then applies approved changes. If the user
+wants to refine the calibration, re-run the agent with additional samples rather than cycling
+within the same session.
+
+**Token budget**: Target under 40,000 tokens per invocation. The agent reads `style-profile.md`
+(~3,000 tokens), `ai-detection.md` (~2,000 tokens), and `tone-voice.md` (~2,000 tokens) plus
+the user-provided writing samples. At 2,000 words per sample, five samples add roughly 3,000
+tokens of sample text. The Python computation script is lightweight. Total context should
+remain well under budget for the recommended 3-5 sample set.
+
+**Session timeout governance**: Claude Code session limits apply. Analysis of large sample sets
+(10+ documents, 10,000+ words) may approach session duration limits during the computation
+and characterization steps. If sample volume is large, process metrics computation first,
+present interim findings, then proceed to voice characterization in the same or a follow-up
+session.
