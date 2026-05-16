@@ -18,6 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   three-tier grammar authority system and three-source Oregon legal system
 - docs/known-vulnerabilities.md (no known vulnerabilities at this time)
 
+### Changed
+
+- Bumped `actions/dependency-review-action` from v4.9.0 to v5.0.0. The new
+  release upgrades the action runtime from Node 20 to Node 24, which requires
+  Actions Runner v2.327.1 or newer. GitHub-hosted runners (`ubuntu-latest`)
+  meet this requirement automatically; self-hosted runners may need to update.
+
 ## [1.0.0] - 2026-03-15
 
 ### Added
