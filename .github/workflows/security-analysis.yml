@@ -12,7 +12,11 @@ on:
     - cron: '0 9 * * 1'
   workflow_dispatch:
 
-permissions: {}
+permissions: read-all
+
+concurrency:
+  group: security-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   security:

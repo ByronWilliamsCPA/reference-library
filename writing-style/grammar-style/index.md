@@ -28,6 +28,7 @@
 | Quotation mark punctuation placement | `QUICK-START.md` #19, or `chicago-manual/punctuation.md` |
 | Apostrophe and possessives | `QUICK-START.md` #12–13, or `chicago-manual/punctuation.md` |
 | Ellipsis | `cross-reference.md` #19 |
+| EoS elementary rules of usage (possessive, series comma, parenthetical comma, etc.) | `elements-of-style/rules-of-usage.md` |
 
 ### Grammar
 

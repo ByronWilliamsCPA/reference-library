@@ -201,7 +201,7 @@ pipeline:
     timestamp: 2026-02-20T23:55:00Z
     notes: >
       No suspect claims. Two priority items require author clarification before delivery:
-      (1) basis for "estimated 18% throughput improvement / stable quality" — measured
+      (1) basis for "estimated 18% throughput improvement / stable quality", measured
       or projected? (2) basis for "moderate" change readiness assessment. Two reasoning
       errors flagged (false precision, hasty generalization) are resolvable with minor
       reframing. "Key Sponsor" capitalization requires author confirmation against

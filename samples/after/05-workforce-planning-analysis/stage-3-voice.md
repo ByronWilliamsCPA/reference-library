@@ -17,9 +17,9 @@ Stage 2 validation: CONDITIONAL (acceptable per agent rules). Proceeding to Stag
 ```text
 Sentence Length:    Avg 33.0 words | σ = 9.5  | Target: 17-22, σ ≥ 8
 Short Sentences:    0.0% < 8 words            | Target: ≥ 15%    [FAIL]
-Long Sentences:     47.1% > 30 words          | Target: ≥ 15%    [pass — skewed high]
+Long Sentences:     47.1% > 30 words          | Target: ≥ 15%    [pass, skewed high]
 Lexical Diversity:  TTR = 0.609               | Target: ≥ 0.40   [pass]
-Hedge Density:      ~29% of sentences         | Target: 5-10%    [FAIL — over-hedged]
+Hedge Density:      ~29% of sentences         | Target: 5-10%    [FAIL, over-hedged]
 AI Patterns Found:  8 instances               | Target: 0        [FAIL]
 Burstiness:         1 flat paragraph (Para 2) | Target: 0        [FAIL]
 Persona Drift:      0 sections flagged        | Target: 0        [pass]
@@ -327,7 +327,7 @@ pipeline:
     timestamp: 2026-02-20T14:10:00Z
     notes_for_stage_3:
       - "Five unverified claims require qualification before or after Stage 3 rewrite"
-      - "Confirmation bias and Optimism bias require structural mitigation — add counterpoint
+      - "Confirmation bias and Optimism bias require structural mitigation, add counterpoint
          sentence(s) in paragraphs 2-3 before Stage 3 pass"
       - "Causal framing of ROI in paragraph 4 should be inverted: condition before outcome"
       - "Regulatory assumption (assumption #6) is highest-stakes hidden assumption in the

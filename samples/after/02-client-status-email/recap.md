@@ -1,4 +1,4 @@
-# Pipeline Recap: 02 — Client Status Email
+# Pipeline Recap: 02, Client Status Email
 
 ## Document Overview
 
@@ -15,14 +15,14 @@
 The original document is a four-paragraph client-facing progress email written in polished but
 formulaic consulting language. It opens with "We are pleased to report significant progress" and
 closes with "we remain confident the final recommendations will deliver measurable operational
-gains" — both stock AI phrases that carry no content. The body uses undefined acronyms (OEE, WIP),
+gains", both stock AI phrases that carry no content. The body uses undefined acronyms (OEE, WIP),
 non-standard business jargon ("these learnings will inform"), and a structural tell in the risks
 paragraph: all three risk statements follow an identical "[problem]; [mitigation]" semicolon
 pattern at nearly identical sentence lengths. No sentence runs under eight words. The headline
 quantitative claim ("an estimated 18% throughput improvement with stable quality") is stated
 without disclosing whether it is a measured result or a projection.
 
-## Stage 1 — Grammar and Composition
+## Stage 1, Grammar and Composition
 
 **Status**: NEEDS WORK
 
@@ -36,7 +36,7 @@ without disclosing whether it is a measured result or a projection.
 **Key fixes applied**:
 
 - Subject line em-dash removed: "Project Status Update – Operational Efficiency Review" became
-  "Project Status Update: Operational Efficiency Review (Month 4 of 6)" — the PCP Tier 3 override
+  "Project Status Update: Operational Efficiency Review (Month 4 of 6)", the PCP Tier 3 override
   bans em-dashes; a colon is the correct substitute here.
 - Numeral corrected: "now in month 4" became "now in month four" (CMS §9.2 requires spelling out
   one through one hundred in running prose; the label form "Month 4 of 6" in the subject line
@@ -44,14 +44,14 @@ without disclosing whether it is a measured result or a projection.
 - Compound adjective corrected: "a one-paged operating model" became "a one-page operating model"
   ("one-paged" is not standard edited prose).
 - Temporal ambiguity resolved: "a capacity matrix reviewed at our steering meeting" became "a
-  capacity matrix to be reviewed at our steering meeting" — the original left open whether the
+  capacity matrix to be reviewed at our steering meeting", the original left open whether the
   review was past or future.
 - Jargon replaced: "these learnings will inform the scale-up approach" became "these findings will
   inform the scale-up approach" ("learnings" is non-standard; "findings" carries the same meaning).
 - Acronyms expanded on first use: "OEE" became "overall equipment effectiveness (OEE)"; "WIP"
   became "work-in-process (WIP)".
 - Para 3 restructured: "Next steps for the next four weeks include [gerund]..." became "Over the
-  next four weeks, we will [finite verb]..." — removes "next...next" deadwood repetition and
+  next four weeks, we will [finite verb]...", removes "next...next" deadwood repetition and
   converts the gerund list to active parallel finite verbs.
 
 **Deferred to later stages**:
@@ -61,7 +61,7 @@ without disclosing whether it is a measured result or a projection.
 deferred to Stage 3. "Key Sponsor" capitalization was flagged for Stage 2 to verify against the
 engagement contract.
 
-## Stage 2 — Factual Validation
+## Stage 2, Factual Validation
 
 **Status**: CONDITIONAL
 
@@ -77,7 +77,7 @@ engagement contract.
 - "An estimated 18% throughput improvement with stable quality" (Issue 1, Reasoning Error 1):
   The document does not disclose whether this is a projection or a measured result. "Estimated"
   could mean either, and the epistemic weight is entirely different for each. No measurement
-  period, run count, or confidence interval is given — stating "18%" implies more statistical
+  period, run count, or confidence interval is given, stating "18%" implies more statistical
   rigor than the disclosure supports. Author must confirm: if measured, change "estimated" to
   "measured" and add a scope clause; if projected, state the basis.
 - "Organizational change readiness is moderate" (Issue 2): "Moderate" asserts an assessed
@@ -98,12 +98,12 @@ engagement contract.
 
 **Bias assessment**:
 
-The email shows moderate optimism bias — the 18% throughput figure and "strong overall trajectory"
+The email shows moderate optimism bias, the 18% throughput figure and "strong overall trajectory"
 framing lead the document, all three disclosed risks are presented with mitigations already in
 place, and no aspect of the pilot that underperformed is mentioned; mild confirmation and
 survivorship bias appear in the kaizen events summary.
 
-## Stage 3 — Voice and Style
+## Stage 3, Voice and Style
 
 **Status**: NEEDS WORK
 
@@ -123,21 +123,21 @@ survivorship bias appear in the kaizen events summary.
   became "Month four is on schedule." (7 words, declarative, specific). This also supplies the
   document's only sub-8-word sentence, which the original lacks entirely.
 - Vague qualifier removed: "significant progress" was dropped; the facts in the following
-  sentences demonstrate progress — the reader can assess significance without being told to.
+  sentences demonstrate progress, the reader can assess significance without being told to.
 - Semicolon monotony broken in Para 2: The original locks all three risk statements into an
   identical "[problem]; [mitigation]" structure at sentence lengths of ~27, ~26, and ~29 words.
-  The rewrite uses three different structures — a full sentence pair for the ERP risk, a
+  The rewrite uses three different structures, a full sentence pair for the ERP risk, a
   dash-introduced appositive for the resource risk, and a subordinate clause opener for the
-  change readiness risk — so the paragraph no longer reads as a template.
+  change readiness risk, so the paragraph no longer reads as a template.
 - Gerund padding cut: "to ensure sustainable adoption" (Stage 1's flagged AI-mechanical pattern)
   was replaced with "to build the foundation before the workshops begin," which describes what the
   operating model work actually does rather than asserting a hoped-for outcome.
 - Hasty generalization reframed: "expand the automation scope" (Stage 2 Reasoning Error 2)
-  became "test whether the Line 3 results generalize to those line configurations" — a one-phrase
+  became "test whether the Line 3 results generalize to those line configurations", a one-phrase
   change that reframes the pilots as validation rather than foregone expansion.
 - Generic closer replaced: "we remain confident the final recommendations will deliver measurable
   operational gains" became "The next four weeks are the pivot from diagnosis to decisions; we
-  will have the analysis ready" — specific to this engagement stage, confident without being a
+  will have the analysis ready", specific to this engagement stage, confident without being a
   formula.
 
 ## Final State
@@ -151,13 +151,13 @@ or projected, and the measurement scope; (2) the basis for the "moderate" change
 assessment; (3) quantification of the kaizen "quick wins" if data is available; and (4) whether
 "Key Sponsor" is a formally defined role name in the engagement contract. These are bracketed
 as author-resolve placeholders in the Stage 3 rewritten document and cannot be resolved by the
-pipeline — they require the author to supply factual information only they hold.
+pipeline, they require the author to supply factual information only they hold.
 
 ## What This Sample Demonstrates
 
-- **Claim-epistemic gap detection**: Stage 2's most significant finding — that "estimated 18%
+- **Claim-epistemic gap detection**: Stage 2's most significant finding, that "estimated 18%
   throughput improvement" does not disclose whether the estimate is a projection or a measured
-  pilot result — is a subtle but high-stakes distinction in a client-facing deliverable. This
+  pilot result, is a subtle but high-stakes distinction in a client-facing deliverable. This
   sample shows the pipeline catching issues that grammar and voice review would not flag.
 - **Structural tell identification**: Stage 3 identified the Para 2 semicolon monotony as a
   machine-composition pattern even though no individual sentence was grammatically wrong. The

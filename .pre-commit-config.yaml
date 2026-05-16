@@ -84,15 +84,20 @@ repos:
   # Blocks the em-dash character (U+2014) in committed text files.
   # See writing standards in ~/.claude/CLAUDE.md (writing style section).
   #
-  # Pre-existing em-dashes were found in the following paths before this hook
-  # was added. Those paths are excluded until the content is cleaned up:
-  #   - agents/ (agent definition files)
-  #   - README.md (top-level readme)
-  #   - CLAUDE.md (project instructions)
-  #   - .github/ (workflow files)
-  #   - .qlty/ (qlty config)
-  #   - legal-style/ (source legal reference material)
-  #   - writing-style/ (reference material)
+  # Excluded paths fall into two categories:
+  #
+  # PERMANENT exclusions (transcribed authority text; modifying corrupts
+  # reference value):
+  #   - legal-style/  Oregon courts and legislature source documents
+  #   - writing-style/  Elements of Style, CMS, and related reference material
+  #
+  # SCOPED cleanup (repo-authored content with pre-existing em-dashes;
+  # targeted for remediation, not permanent exclusion):
+  #   - agents/        agent definition files
+  #   - samples/       writing samples directory
+  #   - .github/       workflow and config files
+  #   - .qlty/         qlty config files
+  #   - .pre-commit-config.yaml  this file
   - repo: local
     hooks:
       - id: no-em-dash
@@ -101,6 +106,7 @@ repos:
         entry: "—"
         types: [text]
         stages: [pre-commit]
+        # Tracking: scoped cleanup target 2026-12-31
         exclude: |
           (?x)^(
             agents/|

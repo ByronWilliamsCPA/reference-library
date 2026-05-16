@@ -1,4 +1,4 @@
-# Pipeline Recap: 04 — Onboarding Proposal
+# Pipeline Recap: 04, Onboarding Proposal
 
 ## Document Overview
 
@@ -17,10 +17,10 @@ program. The writing is fluent and well-organized but reads as unrevised AI outp
 puffery ("a revitalized onboarding program"), leans on jargon ("outcomes-focused program"), and
 strings benefits together with gerund padding ("increasing utilization and reducing early-stage
 losses") that restates effects without explaining mechanism. The Benefits paragraph is the
-document's most significant weakness — five sentences each asserting a projected outcome as an
+document's most significant weakness, five sentences each asserting a projected outcome as an
 established fact, with no sources, no baselines, and no acknowledgment of risk or uncertainty.
 
-## Stage 1 — Grammar and Composition
+## Stage 1, Grammar and Composition
 
 **Status**: NEEDS WORK
 
@@ -33,16 +33,16 @@ established fact, with no sources, no baselines, and no acknowledgment of risk o
 
 **Key fixes applied**:
 
-- Em-dashes replaced with parentheses (Issue 1): "task force—HR, learning and development, IT,
-  practice leaders, and three coaches—tasked" became "task force (HR, learning and development
-  (L&D), IT, practice leaders, and three coaches) tasked" — required by the PCP Tier 3 override
+- Em-dashes replaced with parentheses (Issue 1): "task force, HR, learning and development, IT,
+  practice leaders, and three coaches, tasked" became "task force (HR, learning and development
+  (L&D), IT, practice leaders, and three coaches) tasked", required by the PCP Tier 3 override
   banning em-dashes, which also triggered the L&D expansion on first use.
 - Dangling modifier corrected (Issue 3): "Chargeable training hours are scheduled and monitored
   to avoid overburdening clients while providing supervised learning on real files" (hours cannot
   provide learning) became "Chargeable training hours are scheduled and monitored; associates
   receive supervised learning on real files without overburdening clients."
 - Fewer/less correction (Issue 4): "Fewer errors and rework improve the firm's risk profile"
-  became "Fewer errors and less rework improve the firm's risk profile" — "rework" is a mass noun
+  became "Fewer errors and less rework improve the firm's risk profile", "rework" is a mass noun
   requiring "less."
 - Ambiguous preposition fixed (Issue 2): "assigned a coach from a senior associate or manager"
   became "assigned a coach who is a senior associate or manager."
@@ -63,7 +63,7 @@ The word "revitalized" was flagged as an AI evaluative adjective and marked [S3]
 decision. Stage 1 also noted for Stage 2 that the Benefits paragraph lacked baselines and causal
 support, and that the five named metrics had no measurement methods defined.
 
-## Stage 2 — Factual Validation
+## Stage 2, Factual Validation
 
 **Status**: CONDITIONAL
 
@@ -76,14 +76,14 @@ support, and that the five named metrics had no measurement methods defined.
 
 **Key findings**:
 
-- The entire Benefits paragraph (five sentences) is unsourced. Every projected outcome — earlier
+- The entire Benefits paragraph (five sentences) is unsourced. Every projected outcome, earlier
   billable proficiency, fewer errors, buddy skill development, engagement gains, playbook
-  scalability — is stated as established fact with no firm data, no external citation, and no
+  scalability, is stated as established fact with no firm data, no external citation, and no
   causal mechanism. Zero claims in the document were independently verified.
 - Five false causation errors were logged, concentrated in the Benefits paragraph. Representative
   example: "Clear role expectations and a predictable support schedule enhance engagement and
-  reduce first-year attrition" (Reasoning Error #2) asserts two causal steps as fact — that the
-  program will produce role clarity, and that role clarity will reduce attrition — without
+  reduce first-year attrition" (Reasoning Error #2) asserts two causal steps as fact, that the
+  program will produce role clarity, and that role clarity will reduce attrition, without
   evidence for either link.
 - The five named success metrics ("shortened time to billable proficiency," "reduced first-year
   turnover," "fewer defects and chargebacks," "improved manager workload balance," "increased
@@ -104,7 +104,7 @@ modes or conditions of success acknowledged) and Optimism Bias (every projection
 expected improvement, with no conservative scenario, no acknowledgment that initial pilot results
 may be mixed, and no trigger criteria specified for the firmwide rollout decision).
 
-## Stage 3 — Voice and Style
+## Stage 3, Voice and Style
 
 **Status**: NEEDS WORK
 
@@ -120,7 +120,7 @@ may be mixed, and no trigger criteria specified for the firmwide rollout decisio
 - "revitalized" removed (Issue 1): Replaced with "new" and the opening restructured so the
   90-day path is the lead structural anchor rather than an evaluative adjective.
 - "outcomes-focused" removed (Issue 2): Replaced with "phased around three proficiency
-  milestones at days 30, 45, and 90" — specific and self-explanatory rather than jargon.
+  milestones at days 30, 45, and 90", specific and self-explanatory rather than jargon.
 - Gerund chain resolved simultaneously with Stage 2 epistemic correction (Issue 3): "Associates
   typically reach billable levels earlier, increasing utilization and reducing early-stage losses
   associated with low chargeable time" was rewritten as a complex sentence naming the expected
@@ -132,8 +132,8 @@ may be mixed, and no trigger criteria specified for the firmwide rollout decisio
   established outcomes. The paragraph grew substantially and carries the Stage 2 epistemic
   qualifications woven into the prose rather than appended as tags.
 - Risks paragraph added (after Benefits): A new paragraph explicitly names the three most
-  significant program assumptions — buddy/coach capacity constraints, partner governance
-  commitment, and pilot cohort size and representativeness — resolving Stage 2's Confirmation
+  significant program assumptions, buddy/coach capacity constraints, partner governance
+  commitment, and pilot cohort size and representativeness, resolving Stage 2's Confirmation
   Bias and Optimism Bias findings. This is new content added by Stage 3 per Stage 2's
   requirement for a Risks and Mitigations section.
 - Metrics sentence flagged for human completion rather than rewritten speculatively: Stage 3
@@ -160,7 +160,7 @@ paragraph and the new Risks paragraph before the document is cleared.
 - How the pipeline handles a factually thin Benefits paragraph: Stage 1 flags the gerunds and
   defers them; Stage 2 identifies five unsourced causal claims and five incomplete metrics;
   Stage 3 rewrites the paragraph to carry the epistemic corrections while simultaneously
-  resolving the rhythm and AI pattern issues — a single coordinated rewrite across all three
+  resolving the rhythm and AI pattern issues, a single coordinated rewrite across all three
   concerns.
 - Cross-stage coordination: the Stage 2 handoff note explicitly requested that voice rewrites
   and factual framing corrections be applied in the same pass rather than sequentially, and
@@ -174,5 +174,5 @@ paragraph and the new Risks paragraph before the document is cleared.
   addresses both patterns without undermining the proposal's case.
 - The em-dash fix as a tier-three override in practice: the document used two em-dashes as
   parenthetical delimiters, which is grammatically standard. Stage 1 replaced them with
-  parentheses because the PCP Tier 3 override bans em-dashes entirely — illustrating how
+  parentheses because the PCP Tier 3 override bans em-dashes entirely, illustrating how
   user-confirmed style preferences take precedence over CMS defaults.

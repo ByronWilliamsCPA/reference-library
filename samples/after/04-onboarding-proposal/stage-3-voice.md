@@ -22,7 +22,7 @@ Persona Drift:      0 sections flagged        | Target: 0
 sentences (19.2%). However, "often" and "frequently" in the Problem section are factual
 characterizations of observed patterns, not epistemic hedges. The genuine epistemic hedges are
 three: "should" (milestone sentence), "typically" (benefits), and "We expect" (benefits lead).
-That yields approximately 11.5% — just over target. Two of the three are Stage 2-mandated
+That yields approximately 11.5%, just over target. Two of the three are Stage 2-mandated
 qualifications that must be preserved. Stage 3 will not reduce them. The reported figure is
 therefore informational rather than a remediation target.
 
@@ -53,13 +53,13 @@ fixes elsewhere.
 
 | # | Location | Issue Type | Current Text | Suggested Revision |
 | --- | --- | --- | --- | --- |
-| 1 | Para 1, sentence 1 | AI pattern (blacklist) | "a revitalized onboarding program" | Replace "revitalized" — it is a Stage 1 advisory and an AI puffery term. "a restructured onboarding program" or "a new onboarding program" carry the meaning without the promotional register. |
+| 1 | Para 1, sentence 1 | AI pattern (blacklist) | "a revitalized onboarding program" | Replace "revitalized", it is a Stage 1 advisory and an AI puffery term. "a restructured onboarding program" or "a new onboarding program" carry the meaning without the promotional register. |
 | 2 | Para 3, sentence 1 | AI pattern (blacklist) | "a phased, outcomes-focused program" | "outcomes-focused" is AI jargon that describes no specific outcome. Replace with the actual design characteristic: "a phased, milestone-driven program" or name what outcomes the phases target ("a phased program structured around three proficiency milestones"). |
-| 3 | Para 4, sentence 2 | AI pattern (gerund chain) + Stage 1 advisory | "Associates typically reach billable levels earlier, increasing utilization and reducing early-stage losses associated with low chargeable time." | The gerund chain ("increasing... and reducing...") was flagged by Stage 1 and deferred to Stage 3. It strings two vague consequences onto a claim that Stage 2 requires reframing as a hypothesis. Rewrite resolves all three issues simultaneously — see Rewritten Sections below. |
-| 4 | Para 4 (entire) | Rhythm — flat paragraph (σ = 2.5) | Five consecutive sentences averaging 13 words, ranging only from 9 to 17 | The benefits paragraph reads like a bulleted list that forgot its bullets. Every sentence opens with a noun subject, runs 9-17 words, and closes with a nominalized outcome ("enhance engagement," "reduce attrition," "standardize quality"). Vary sentence length and opening structure. Rewrite also required to apply Stage 2 epistemic corrections. See Rewritten Sections. |
+| 3 | Para 4, sentence 2 | AI pattern (gerund chain) + Stage 1 advisory | "Associates typically reach billable levels earlier, increasing utilization and reducing early-stage losses associated with low chargeable time." | The gerund chain ("increasing... and reducing...") was flagged by Stage 1 and deferred to Stage 3. It strings two vague consequences onto a claim that Stage 2 requires reframing as a hypothesis. Rewrite resolves all three issues simultaneously, see Rewritten Sections below. |
+| 4 | Para 4 (entire) | Rhythm, flat paragraph (σ = 2.5) | Five consecutive sentences averaging 13 words, ranging only from 9 to 17 | The benefits paragraph reads like a bulleted list that forgot its bullets. Every sentence opens with a noun subject, runs 9-17 words, and closes with a nominalized outcome ("enhance engagement," "reduce attrition," "standardize quality"). Vary sentence length and opening structure. Rewrite also required to apply Stage 2 epistemic corrections. See Rewritten Sections. |
 | 5 | Para 4, sentence 3 | False confidence (Stage 2 preservation) | "Fewer errors and less rework improve the firm's risk profile and reputation with clients." | Stated as fact; Stage 2 tagged UNVERIFIED with two causal links. Voice rewrite must carry the epistemic qualification. See Rewritten Sections. |
 | 6 | Para 4, sentences 3-6 | False confidence (Stage 2 preservation) | All four benefit claims asserted as facts | Stage 2 requires reframing as pilot hypotheses. Any voice rewrite of this paragraph must apply the epistemic correction simultaneously, per the Stage 2 handoff note. See Rewritten Sections. |
-| 7 | Para 1, sentences 1-2 | Structural tell | "We propose... The plan focuses..." | Two consecutive sentences where the second opens with "The" immediately following "We." Minor — not a blocking issue, but restructuring para 1 sentence 2 into para 1 sentence 1 as a single complex sentence improves flow. See Rewritten Sections. |
+| 7 | Para 1, sentences 1-2 | Structural tell | "We propose... The plan focuses..." | Two consecutive sentences where the second opens with "The" immediately following "We." Minor, not a blocking issue, but restructuring para 1 sentence 2 into para 1 sentence 1 as a single complex sentence improves flow. See Rewritten Sections. |
 | 8 | Para 5, sentence 4 | Stage 1 advisory (sentence structure) | "Success will be measured by shortened time to billable proficiency, reduced first-year turnover, fewer defects and chargebacks, improved manager workload balance, and increased client satisfaction." | Stage 1 deferred restructuring of this sentence to Stage 3. The five metrics are stacked as noun phrases in a single list, which reads as a placeholder rather than a measurement plan. Stage 2 also requires baseline and target information for each metric. Because adding baselines and targets transforms this sentence into multiple sentences (or a structured list), and that transformation depends on actual firm data the author must supply, Stage 3 flags it for human completion rather than rewriting it speculatively. See note in Rewritten Sections. |
 | 9 | Para 2, sentence 1 | Short sentences absent from document | None | The document has zero sentences under 8 words across 26 sentences (0% against a 15% target). The problem paragraph is a reasonable candidate for adding a punchy short sentence. Inserted in the rewrite. |
 | 10 | Long sentences absent | Long sentences absent | 1 sentence over 30 words (4.2% against 15% target) | The solution paragraph (Para 3) already has one long sentence at 37 words. The rewritten document needs more. The opening and implementation paragraphs are restructured to add length variation. |
@@ -76,7 +76,7 @@ fixes elsewhere.
 - Stage 2 claim tags and ASSUMPTION markers removed from the running text (they belong in
   the validation document, not the final draft); their substance is preserved in the prose
 - Stage 1 advisory items resolved: "revitalized" (word-level fix), gerund chain (sentence
-  restructure), metrics sentence (flagged for human completion — see note)
+  restructure), metrics sentence (flagged for human completion, see note)
 - Short sentences added to bring the 0% figure toward target
 - Long sentences added or extended to bring the 4.2% figure toward target
 - Benefits paragraph restructured to break the flat σ = 2.5 rhythm
@@ -294,7 +294,7 @@ pipeline:
 
 ## Final Recommendation
 
-**Revision needed** — but the path is well-defined.
+**Revision needed**, but the path is well-defined.
 
 Stage 3 has completed its pass. The rewritten document resolves all three AI pattern hits,
 corrects the Benefits paragraph rhythm and epistemic framing simultaneously (as the Stage 2

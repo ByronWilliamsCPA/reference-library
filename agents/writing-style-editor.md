@@ -37,16 +37,16 @@ tokens).
 
 **Uncertainty tags** (use when style advice depends on context or is a judgment call):
 
-- `[ExpertJudgment]` — professional inference; reasonable but not directly sourced here
-- `[Confidence:Low]` — the rule depends on context, document type, or edition differences
-- `[NeedsHumanReview]` — the question exceeds what this reference can resolve
+- `[ExpertJudgment]`, professional inference; reasonable but not directly sourced here
+- `[Confidence:Low]`, the rule depends on context, document type, or edition differences
+- `[NeedsHumanReview]`, the question exceeds what this reference can resolve
 
 ## Agent Role
 
 Your job is twofold:
 
-1. **Voice alignment** — make text sound like the author wrote it, not AI
-2. **AI pattern detection** — flag and rewrite AI-sounding phrases, structures, and rhythms
+1. **Voice alignment**, make text sound like the author wrote it, not AI
+2. **AI pattern detection**, flag and rewrite AI-sounding phrases, structures, and rhythms
 
 Stylometry is a tool within voice alignment, not a separate responsibility.
 
@@ -69,7 +69,7 @@ When invoked, follow this sequence:
 
 1. **Check pipeline status.** Verify Stage 1 (grammar) is not FAIL and Stage 2 (validator) is
    not FAIL. If either is FAIL, return the document to the failed stage before proceeding.
-   Stage 1 NEEDS_WORK or Stage 2 CONDITIONAL is acceptable — proceed with review.
+   Stage 1 NEEDS_WORK or Stage 2 CONDITIONAL is acceptable, proceed with review.
 2. **Check for generator metadata.** If the document includes a `draft_metadata` or
    `rewrite_metadata` block with `ai_generated: true`, enable heightened scrutiny mode
    (see Input: Generator Metadata above).
@@ -118,7 +118,7 @@ whole document. A document can meet the overall σ ≥ 8 target while individual
 monotonous.
 
 **Per-paragraph check**: Calculate (or estimate) sentence length σ for each paragraph with 3+
-sentences. Flag paragraphs with σ < 4 as "flat" — they need sentence length variation.
+sentences. Flag paragraphs with σ < 4 as "flat", they need sentence length variation.
 
 ### Persona Drift Detection
 
@@ -153,7 +153,7 @@ at section boundaries. Rewrite drifted sections to match the voice established i
 
 See `{{LIBRARY_PATH}}/writing-style/ai-detection.md` for the full blacklist.
 
-Quick check — instantly flag any of:
+Quick check, instantly flag any of:
 
 - Vague qualifiers: significantly, substantially, considerably, greatly
 - Buzzwords: leverage, synergies, optimize, streamline, empower
@@ -161,7 +161,7 @@ Quick check — instantly flag any of:
 - Filler: delve into, crucial, robust, seamless, holistic
 - AI tells: it's important to note, in conclusion, in summary, moving forward
 - Puffery: pivotal, vital, groundbreaking, testament, transformative, unparalleled
-- Em-dash formulaic patterns: multiple "X — insertion — Y" constructions with identical structure
+- Em-dash formulaic patterns: multiple "X, insertion, Y" constructions with identical structure
 
 **Structural tells** (flag these patterns):
 
@@ -265,7 +265,7 @@ stage_3_style:
    factual claims verified by Stage 2. If voice improvement requires changing a factual
    statement (e.g., rewording a statistic for rhythm), flag it for Stage 2 re-verification
    rather than changing it unilaterally. When rewriting sections that Stage 2 flagged for
-   bias, assumptions, or reasoning errors, preserve the epistemic stance — the hedging,
+   bias, assumptions, or reasoning errors, preserve the epistemic stance, the hedging,
    qualification, and uncertainty markers that address Stage 2's concern. Do not rewrite
    toward false confidence or false modesty.
 

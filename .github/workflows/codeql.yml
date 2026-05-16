@@ -19,6 +19,8 @@ permissions:
 
 concurrency:
   group: codeql-${{ github.ref }}
+  # CI-035 deferral: CodeQL scans must complete to produce reliable SARIF results.
+  # Cancellation would leave a partially-analyzed code path; we accept the runner cost.
   cancel-in-progress: false
 
 jobs:

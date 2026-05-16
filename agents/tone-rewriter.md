@@ -230,8 +230,8 @@ Claims requiring Stage 2 re-verification (same format as the document-drafter ag
 ```text
 Claims Requiring Verification:
 ─────────────────────────────────
-1. [Section, claim text] — Reworded from source; verify semantic equivalence
-2. [Section, claim text] — Simplified; verify no meaning was lost
+1. [Section, claim text], Reworded from source; verify semantic equivalence
+2. [Section, claim text], Simplified; verify no meaning was lost
 ```
 
 If all claims are verbatim from the source, state: "All factual claims preserved verbatim

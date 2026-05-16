@@ -172,8 +172,8 @@ List any claims in the draft that need Stage 2 verification:
 ```text
 Claims Requiring Verification:
 ─────────────────────────────────
-1. [Section, claim text] — Source: [from input / inferred / needs external verification]
-2. [Section, claim text] — Source: [from input / inferred / needs external verification]
+1. [Section, claim text], Source: [from input / inferred / needs external verification]
+2. [Section, claim text], Source: [from input / inferred / needs external verification]
 ```
 
 If all claims are directly sourced from the user's input, state: "All factual claims are
