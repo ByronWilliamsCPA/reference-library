@@ -41,7 +41,8 @@ reference-library/
 │   ├── audience-reaction-analyzer.md # Post-pipeline: Predict audience comprehension and response
 │   └── tone-rewriter.md             # Pre-pipeline: Transform register for different audiences
 ├── samples/
-│   └── before/                   # AI-generated before-state samples for pipeline testing
+│   ├── before/                   # AI-generated before-state samples for pipeline testing
+│   └── after/                    # Post-pipeline output: per-stage transcripts plus recaps
 └── scripts/
     ├── extract_legal_pdfs.py     # PDF → raw text extraction (pdftotext → pymupdf fallback)
     └── generate_before_samples.py  # Generate AI-mechanical before-state samples via OpenRouter
