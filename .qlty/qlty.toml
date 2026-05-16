@@ -22,6 +22,12 @@ default = true
 [[plugin]]
 name = "bandit"
 
+# basedpyright is not registered in the default qlty plugin source and requires
+# a pyproject.toml [tool.basedpyright] block. This is a docs-only repository
+# with no pyproject.toml; type checking on the two scripts is overkill and the
+# pre-commit hook is exempt by the docs-only type profile. See
+# .claude/compliance-overrides.md for the TOOL-009 override rationale.
+
 # Markdown linting (primary content type for this repo)
 [[plugin]]
 name = "markdownlint"

@@ -215,6 +215,20 @@ Emotional Alignment: [score: ALIGNED / MIXED / MISALIGNED]
 - **SIGNIFICANT REWORK**: 4+ HIGH-priority items, or persuasion is WEAK, or emotional
   trajectory is MISALIGNED across multiple sections.
 
+### 8. Pipeline Notes (optional)
+
+Include this section only when the document appears to have a Stage 1, 2, or 3 issue
+that the editing pipeline missed (grammar error, factual concern, or AI pattern). Keep
+it brief and out of the audience-perspective analysis above.
+
+```text
+Pipeline Stage:  [1 / 2 / 3]
+Location:        [section or sentence]
+Observation:     [what looks like a pipeline miss]
+```
+
+Omit this section entirely when no pipeline misses are observed.
+
 ## Operating Instructions
 
 ### Scope Boundaries
@@ -268,3 +282,24 @@ This agent's output can inform revision work by other agents:
 
 This agent does not invoke other agents directly. It produces analysis; the user decides
 which agents to deploy for revision.
+
+---
+
+## Resource Constraints
+
+**Pipeline position**: Post-pipeline analysis (runs after Stage 3 passes)
+
+**Run frequency**: One analysis pass per audience per invocation. For documents with multiple
+target audiences, run the agent separately for each audience. Do not blend audience reactions
+within a single pass.
+
+**Token budget**: Target under 40,000 tokens per invocation. This agent loads `plain-language-guide.md`
+(~2,000 tokens) and `tone-voice.md` (~2,000 tokens) as defaults, plus topic files on demand.
+The finished document is read-only input and typically adds 3,000-8,000 tokens. The analysis
+output (six structured tables plus narrative) adds another 3,000-5,000 tokens. Total context
+should remain well under budget for typical professional documents.
+
+**Session timeout governance**: Claude Code session limits apply. This agent is read-only and
+analysis-only, so session interruption risk is low. If interrupted mid-analysis, restart from
+the Comprehension Scan (Section 1) rather than attempting to resume mid-framework, as partial
+tables produce misleading priorities.

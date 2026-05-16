@@ -19,13 +19,14 @@ jobs:
   title-check:
     name: PR Title Format
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       pull-requests: read
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@9ca718d3bf646d6534007c269a635b3e54cadf99  # v2.19.2
         with:
-          egress-policy: audit
+          egress-policy: block
       - name: Validate conventional commit title
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
@@ -45,13 +46,14 @@ jobs:
   body-check:
     name: PR Body Non-Empty
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       pull-requests: read
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@9ca718d3bf646d6534007c269a635b3e54cadf99  # v2.19.2
         with:
-          egress-policy: audit
+          egress-policy: block
       - name: Check PR body is non-empty
         env:
           PR_BODY: ${{ github.event.pull_request.body }}
@@ -70,34 +72,36 @@ jobs:
   dependency-standards-validation:
     name: Dependency & Standards Validation
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: [title-check, body-check]
     if: always()
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@9ca718d3bf646d6534007c269a635b3e54cadf99  # v2.19.2
         with:
-          egress-policy: audit
-      - name: Check dependency and standards requirements
+          egress-policy: block
+      - name: Aggregate PR title and body validation results
         env:
           TITLE_RESULT: ${{ needs.title-check.result }}
           BODY_RESULT: ${{ needs.body-check.result }}
         run: |
           if [ "$TITLE_RESULT" != "success" ] || [ "$BODY_RESULT" != "success" ]; then
-            echo "::error::PR validation checks failed — dependency and standards gate blocked."
+            echo "::error::PR title or body validation failed; metadata gate blocked."
             exit 1
           fi
-          echo "Dependency and standards validation passed."
+          echo "PR metadata validation passed."
 
   pr-validation-gate:
     name: PR Validation Gate
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [title-check, body-check]
     if: always()
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@9ca718d3bf646d6534007c269a635b3e54cadf99  # v2.19.2
         with:
-          egress-policy: audit
+          egress-policy: block
       - name: Check all PR validation results
         env:
           TITLE_RESULT: ${{ needs.title-check.result }}

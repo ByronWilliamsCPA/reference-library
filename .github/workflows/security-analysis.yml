@@ -22,7 +22,7 @@ jobs:
       security-events: write
       pull-requests: write
       actions: read
-    uses: ByronWilliamsCPA/.github/.github/workflows/python-security-analysis.yml@b29a870cb21a8f913e5c6c5f08740a4bdd94d0ca # main
+    uses: ByronWilliamsCPA/.github/.github/workflows/python-security-analysis.yml@e7781b38647e3ea2550758ea4d6666bf31026660 # main
     with:
       python-version: "3.12"
       run-safety: false
@@ -34,6 +34,7 @@ jobs:
   security-gate-validation:
     name: Security Gate Validation
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [security]
     if: always()
     steps:

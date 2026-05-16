@@ -13,7 +13,7 @@ repositories extend what they need.
 ```text
 reference-library/
 ├── legal-style/           # Oregon legal style and drafting rules
-│   ├── QUICK-START.md     # 80% of daily lookups — start here
+│   ├── QUICK-START.md     # 80% of daily lookups: start here
 │   ├── cross-reference.md # Where the three sources diverge (read this before drafting)
 │   ├── appellate-style-manual/   # Oregon Appellate Courts Style Manual (2002)
 │   ├── lc-drafting-manual/       # Oregon Legislative Counsel Drafting Manual
@@ -27,7 +27,7 @@ reference-library/
 │   ├── logical-fallacies-guide.md    # Common reasoning errors in professional documents
 │   ├── transition-words-reference.md # Transition categories, usage rules, AI overuse detection
 │   └── grammar-style/            # EoS + CMS grammar reference (14 files)
-│       ├── QUICK-START.md        # 80% of grammar questions — start here
+│       ├── QUICK-START.md        # 80% of grammar questions: start here
 │       ├── cross-reference.md    # 21 EoS/CMS/PCP divergences with resolution
 │       ├── index.md              # Concept-to-file routing map
 │       ├── elements-of-style/    # EoS base rules (Tier 1, drafting baseline)
@@ -83,6 +83,47 @@ conflicting rules**. The source governs based on what you are *writing*, not wha
 - **ORS ranges**: LC always uses "to"; Appellate uses " - " (hyphen with spaces) in citation form
 - **Ellipsis**: Appellate uses `* * *`; LC uses `...`
 - **Tense**: LC uses present tense throughout; Appellate uses past for facts, present for legal rules
+
+## Model Selection
+
+This is a docs-only repository with no production code. Choose the model based on what you are doing, not the size of the task.
+
+| Task type | Model | When |
+| --- | --- | --- |
+| Complex writing analysis, agent design, ADRs | Opus 4.7 | Reasoning about agent pipeline architecture, deep style analysis |
+| Standard edits, CLAUDE.md updates, agent file edits | Sonnet 4.6 | Most authoring and editing work in this repo |
+| Read-only exploration of style or legal content | Haiku 4.5 | File scanning, structure mapping, quick lookups |
+
+For subagents invoked from within this repo, set `model: haiku` for read-only discovery passes and `model: sonnet` for any subagent that writes or rewrites content.
+
+> Global model selection rules and orchestration patterns: see `~/.claude/.claude/rules/supervisor.md`
+
+---
+
+## Response-Aware Development (RAD)
+
+RAD tagging applies when editing agent files (`agents/`) or scripts (`scripts/`). Tag assumptions that could cause failures using `#CRITICAL`, `#ASSUME`, and `#EDGE` comment markers paired with `#VERIFY` instructions.
+
+Mandatory categories for this repository:
+
+- **External resources**: PDF source URLs in `scripts/extract_legal_pdfs.py` and any `curl` commands in CLAUDE.md. URLs rot; tag fetches with `#CRITICAL` if the content is irreplaceable.
+- **Data integrity**: Legal text extraction assumptions (character yield thresholds, page-count estimates, encoding). Tag with `#ASSUME` where the script guesses at PDF structure.
+
+Keep agent files free of unverified assumptions about file paths, token counts, and model availability. Those are the most common silent failures in this repo.
+
+> Full tagging syntax, verification workflow, and examples: see `~/.claude/docs/response-aware-development.md`
+
+---
+
+## See Also (Global Rules)
+
+These global rule files apply to work in this repository:
+
+- Writing rules (em-dash ban, AI pattern blacklist, grammar authority): `~/.claude/.claude/rules/writing.md`
+- Git workflow (branch naming, worktrees, conventional commits): `~/.claude/.claude/rules/git-workflow.md`
+- Supervisor and agent patterns (model assignment, subagent orchestration): `~/.claude/.claude/rules/supervisor.md`
+
+---
 
 ## Agent Architecture: Writing Quality Pipeline
 

@@ -1,0 +1,51 @@
+# SBOM Generation Workflow
+# Generates a CycloneDX SBOM for the repository on push to main and on a weekly schedule.
+# Captures the GitHub Actions and pre-commit hook dependency surface.
+# Documentation: https://github.com/anchore/sbom-action
+name: SBOM Generation
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Weekly scan on Mondays at 06:17 UTC to track dependency drift.
+    # Non-zero minute offset reduces queue wait at the round-hour load spike.
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sbom:
+    name: Generate SBOM
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450  # v2.19.1
+        with:
+          egress-policy: block
+          allowed-endpoints: >
+            github.com:443
+            objects.githubusercontent.com:443
+            toolbox-data.anchore.io:443
+
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Generate SBOM
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610  # v0.24.0
+        with:
+          path: .
+          format: cyclonedx-json
+          artifact-name: sbom-cyclonedx.json
+          upload-release-assets: false
+          upload-artifact: true
+          upload-artifact-retention: 90

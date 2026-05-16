@@ -1,41 +1,46 @@
-name: Repo Health
+name: CI
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
-    branches: [main, master]
-  workflow_dispatch:
+    branches: [main]
+  merge_group:
 
 permissions:
   contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name != 'merge_group' }}
 
 jobs:
-  repo-health:
-    name: repo-health
+  ci-gate:
+    name: CI Gate
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450  # v2.19.1
         with:
-          egress-policy: audit
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            github.com:443
+            objects.githubusercontent.com:443
+            codeload.github.com:443
 
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
         with:
           persist-credentials: false
 
-      - name: Check required files exist
+      - name: Verify key documentation files exist
         run: |
           MISSING=0
-          for FILE in SECURITY.md CONTRIBUTING.md CHANGELOG.md CLAUDE.md README.md; do
+          for FILE in README.md CLAUDE.md SECURITY.md CONTRIBUTING.md CHANGELOG.md; do
             if [ ! -f "$FILE" ]; then
-              echo "::error::Required file missing: $FILE"
+              echo "::error::Required documentation file missing: $FILE"
               MISSING=1
             else
               echo "Found: $FILE"
@@ -44,4 +49,4 @@ jobs:
           if [ "$MISSING" -eq 1 ]; then
             exit 1
           fi
-          echo "Repository health check passed: all required files present."
+          echo "All required documentation files are present."

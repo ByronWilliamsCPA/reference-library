@@ -1,0 +1,13 @@
+# Codecov configuration for reference-library
+# This is a docs-only repository; the only Python code is utility scripts in scripts/.
+# Coverage targets are set conservatively to reflect this.
+coverage:
+  status:
+    project:
+      default:
+        target: 80%
+        threshold: 1%
+flags:
+  unit:
+    paths:
+      - scripts/
