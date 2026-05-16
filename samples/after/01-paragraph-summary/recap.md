@@ -41,8 +41,8 @@ collaboration windows"), and nominalizations hiding simple verbs ("lower effecti
 
 **Key fixes applied**:
 
-- Nominalization repair (Issue 7): "lower effectiveness" replaced with "become less effective"
- , restoring the verb that was buried in the noun form.
+- Nominalization repair (Issue 7): "lower effectiveness" replaced with "become less effective",
+  restoring the verb that was buried in the noun form.
 - Nominalization repair (Issue 8): "performance clarity" replaced with "the clarity of
   performance expectations", a partial repair; full restructuring deferred to Stage 3.
 - Participial phrase attachment repair (Issue 9): the trailing clause ", requiring stronger
@@ -83,7 +83,7 @@ Stage 3. Stage 1 corrected only what was mechanical and unambiguous.
 - False causation (Issue 4, Reasoning Error 2): "ties that weaken innovation unless replaced
   by intentional rituals, knowledge platforms, and synchronous collaboration windows" presents
   the three interventions as causally sufficient to restore innovation. The causal mechanism
-  is not established, and the interventions are not defined. Fix: qualify as associative , 
+  is not established, and the interventions are not defined. Fix: qualify as associative:
   "which research links to reduced innovation capacity."
 - Undefined comparison (Issue 5): "hybrid or flexible models preserve cultural cohesion better"
   lacks a comparison baseline. Better than what? Fix: add "than fully remote arrangements."

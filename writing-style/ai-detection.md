@@ -7,7 +7,7 @@
 
 ## Cliché Blacklist
 
-Instant flags, these terms appear so frequently in AI output that their presence strongly suggests
+Instant flags: these terms appear so frequently in AI output that their presence strongly suggests
 unrevised AI-generated content.
 
 ### Vague Qualifiers
@@ -134,7 +134,7 @@ These patterns appear in AI output but rarely in natural human writing.
 
 **Quantified targets**: The authoritative stylometry targets (σ ≥ 8, TTR ≥ 0.40, hedge density
 5–10%) are in `style-profile.md`. The same violations that produce AI-sounding prose also
-depress these stylometry scores, the patterns and the metrics describe the same underlying
+depress these stylometry scores; the patterns and the metrics describe the same underlying
 problem from two angles.
 
 ### Repetitive Openers
@@ -234,14 +234,14 @@ AI tends to produce documents with unnatural symmetry. Human writers don't.
 > This section aids detection of unrevised AI-generated text, not style enforcement.
 
 AI uses em-dashes in a single repeating pattern: parenthetical insertion between two parts of
-a sentence ("X, insertion, Y"). Human writers use em-dashes for several distinct purposes
+a sentence ("X — insertion — Y"). Human writers use em-dashes for several distinct purposes
 (amplification, attribution, abrupt break). When AI text contains em-dashes, they almost always
 follow the same parenthetical structure.
 
 **Detection signals**:
 
 - More than 2 em-dash pairs per page
-- Every em-dash use follows the same "X, insertion, Y" pattern
+- Every em-dash use follows the same "X — insertion — Y" pattern
 - Em-dashes appear in multiple consecutive paragraphs
 
 **Cross-reference**: The `grammar-composition-editor` agent detects additional AI-mechanical

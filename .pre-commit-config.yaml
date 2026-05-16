@@ -86,18 +86,21 @@ repos:
   #
   # Excluded paths fall into two categories:
   #
-  # PERMANENT exclusions (transcribed authority text; modifying corrupts
-  # reference value):
-  #   - legal-style/  Oregon courts and legislature source documents
-  #   - writing-style/  Elements of Style, CMS, and related reference material
+  # PERMANENT exclusions (transcribed authority text or files that must
+  # illustrate em-dash patterns; modifying corrupts reference or
+  # illustrative value):
+  #   - legal-style/                       Oregon courts and legislature source documents
+  #   - writing-style/                     Elements of Style, CMS, ai-detection.md, and related reference material
+  #                                        (ai-detection.md retains em-dashes to illustrate the AI usage pattern)
+  #   - samples/before/                    intentionally AI-mechanical content used as pipeline test input
   #
   # SCOPED cleanup (repo-authored content with pre-existing em-dashes;
   # targeted for remediation, not permanent exclusion):
-  #   - agents/        agent definition files
-  #   - samples/       writing samples directory
-  #   - .github/       workflow and config files
-  #   - .qlty/         qlty config files
-  #   - .pre-commit-config.yaml  this file
+  #   - agents/                            agent definition files
+  #   - samples/after/                     post-pipeline transcripts; cleaned in PR #27
+  #   - .github/                           workflow and config files
+  #   - .qlty/                             qlty config files
+  #   - .pre-commit-config.yaml            this file
   - repo: local
     hooks:
       - id: no-em-dash

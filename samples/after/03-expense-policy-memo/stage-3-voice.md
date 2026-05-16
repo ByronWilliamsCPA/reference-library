@@ -59,7 +59,7 @@ section (all three sentences are 16-21 words; σ = 2.1).
 
 ## Summary Assessment
 
-The document reads mostly as a competent HR professional, not as AI, the vocabulary is
+The document reads mostly as a competent HR professional, not as AI; the vocabulary is
 concrete, the structure is functional, and the bullet architecture handles the policy-catalog
 sections well. The problems are narrower than a wholesale voice failure: four AI-blacklist
 terms survive ("robust," "streamline," "modern," "comprehensive"), the Executive Summary
@@ -132,7 +132,7 @@ changed, remote work has increased, and our audit and compliance expectations ha
 indicated confusion about what's covered, weak controls over high-risk categories (e.g.,
 ride-share, event fees, training), and slow or uneven reimbursements [UNVERIFIED, feedback
 referenced but not quantified or dated]. The underlying federal and state rules on
-accountable plans and substantiation have not materially changed since the last refresh , 
+accountable plans and substantiation have not materially changed since the last refresh;
 the three-prong test for non-taxable treatment remains the same, but enforcement scrutiny
 has increased [UNVERIFIED, cite enforcement evidence or qualify as professional judgment],
 which raises the cost of operating under an ambiguous policy.
@@ -182,24 +182,24 @@ Adopt an expense policy built around four pillars:
   §61 and Treas. Reg. §1.62-2(c)(5)].
 - **Limits and rates**:
   - Travel: Economy airfare; hotel within reasonable local rate (e.g., $200/night typical,
-    with market-adjusted exceptions; corporate negotiated rates when available) [ASSUMPTION
-   , $200/night not sourced; market rates vary by city]. Ride-share pre-approval required
+    with market-adjusted exceptions; corporate negotiated rates when available)
+    [ASSUMPTION: $200/night not sourced; market rates vary by city]. Ride-share pre-approval required
     for long-distance trips [EXPERT JUDGMENT]. Rail where feasible [EXPERT JUDGMENT].
   - Meals: Day trip per diem $50; Overnight per diem $80; Entertainment/meals with clients:
     $80 per person [EXPERT JUDGMENT, internal policy caps, not IRS-mandated rates]; 50%
-    business allocation required for billable client events where allowable [VERIFIED , 
-    IRC §274(n)(1) as applicable in 2025].
+    business allocation required for billable client events where allowable
+    [VERIFIED: IRC §274(n)(1) as applicable in 2025].
   - Phone/internet: Employer-provided or employer-approved reimbursement. Bring Your Own
-    Device (BYOD) stipend $50/month if device and plan are primarily personal [ASSUMPTION , 
-    tax treatment depends on accountable plan compliance; basis for $50 not stated].
+    Device (BYOD) stipend $50/month if device and plan are primarily personal
+    [ASSUMPTION: tax treatment depends on accountable plan compliance; basis for $50 not stated].
   - Office/equipment: Mandatory approval for all equipment purchases over $500 [EXPERT
     JUDGMENT]; standard IT list with approved vendors to avoid duplicate or incompatible
     purchases [EXPERT JUDGMENT].
   - Training/certification: Pre-approval for courses or exams not on the approved list;
     reimbursement upon proof of completion [EXPERT JUDGMENT].
   - Parking/tolls: Reimburse with receipts when practical [EXPERT JUDGMENT].
-  - Mileage: IRS standard rate annually (2025: 67.0 cents/mile) [AUTHOR MUST CORRECT , 
-    SUSPECT per Stage 2: correct rate is 70 cents/mile per IRS Notice 2025-5; this figure
+  - Mileage: IRS standard rate annually (2025: 67.0 cents/mile)
+    [AUTHOR MUST CORRECT, SUSPECT per Stage 2: correct rate is 70 cents/mile per IRS Notice 2025-5; this figure
     is the 2024 rate and must be updated before publication] when a personal vehicle is
     used; parking and tolls separate [VERIFIED, IRS Publication 463]; require route and
     business purpose [EXPERT JUDGMENT].
@@ -218,8 +218,8 @@ Adopt an expense policy built around four pillars:
 - **Client billing**: The engagement partner flags client-related expenses for bill-through
   approval, per client policy and firm gross margin targets [EXPERT JUDGMENT].
 - **Prohibited**: Personal travel tagged as business, duplicate claims, gifts intended to
-  improperly influence, and luxury upgrades absent prior approval [EXPERT JUDGMENT , 
-  consistent with IRS disallowance rules and FCPA/ethics principles].
+  improperly influence, and luxury upgrades absent prior approval
+  [EXPERT JUDGMENT: consistent with IRS disallowance rules and FCPA/ethics principles].
 - **Exceptions**: All exceptions require CFO or designated policy owner sign-off [EXPERT
   JUDGMENT, define "exception" to make this enforceable].
 
@@ -240,8 +240,8 @@ Adopt an expense policy built around four pillars:
     requirements [ASSUMPTION, assumes current system supports required configuration].
   - Integrate corporate card feeds to eliminate manual entry and cut reconciliation time
     [ASSUMPTION, assumes system integration capability].
-  - Ensure mobile capture and real-time feedback for missing documentation [ASSUMPTION , 
-    same].
+  - Ensure mobile capture and real-time feedback for missing documentation
+    [ASSUMPTION: same].
 - **Approvals and enforcement**:
   - Define approval thresholds and escalation paths; implement system checks for
     out-of-policy spend [EXPERT JUDGMENT].

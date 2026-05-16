@@ -69,7 +69,7 @@ When invoked, follow this sequence:
 
 1. **Check pipeline status.** Verify Stage 1 (grammar) is not FAIL and Stage 2 (validator) is
    not FAIL. If either is FAIL, return the document to the failed stage before proceeding.
-   Stage 1 NEEDS_WORK or Stage 2 CONDITIONAL is acceptable, proceed with review.
+   Stage 1 NEEDS_WORK or Stage 2 CONDITIONAL is acceptable; proceed with review.
 2. **Check for generator metadata.** If the document includes a `draft_metadata` or
    `rewrite_metadata` block with `ai_generated: true`, enable heightened scrutiny mode
    (see Input: Generator Metadata above).

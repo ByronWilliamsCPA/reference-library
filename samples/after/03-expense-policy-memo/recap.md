@@ -118,7 +118,7 @@ to Stage 2.
   across teams lead to perceptions of unfair treatment" (plausible but causal link unestablished).
 
 - **Reasoning errors**: (1) False certainty, "Updating the policy will reduce compliance risk,
-  speed reimbursements..." treats successful implementation as a given; (2) False causation , 
+  speed reimbursements..." treats successful implementation as a given; (2) False causation:
   "Standardizing thresholds...will shorten cycle time" ignores manager responsiveness and
   system reliability as co-factors; (3) Cherry-picking, all four analysis bullets present
   status-quo costs only; implementation risks, transition costs, and failure modes are absent.
