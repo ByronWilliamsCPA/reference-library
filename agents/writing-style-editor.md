@@ -285,7 +285,7 @@ stage_3_style:
 - **Remediation cycles**: Max 3 global cycles before escalating to human review. A cycle is:
   Stage 1 re-check → Stage 2 re-check → Stage 3 re-check of the same rewritten sections.
   If this is the third cycle, note it in the pipeline status block:
-  `remediation_cycles: 3 — escalate to human review`.
+  `remediation_cycles: 3, escalate to human review`.
 
 ---
 

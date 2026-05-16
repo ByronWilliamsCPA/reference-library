@@ -251,7 +251,7 @@ unmitigated Confirmation Bias or Optimism Bias.
 **Global remediation limit**: Remediation cycles are tracked globally across the pipeline.
 A cycle is: Stage 1 re-check → Stage 2 re-check → Stage 3 re-check of the same rewritten
 sections. Maximum 3 global cycles before escalating to human review. If this is the third
-cycle, note it in the pipeline status block: `remediation_cycles: 3 — escalate to human review`.
+cycle, note it in the pipeline status block: `remediation_cycles: 3, escalate to human review`.
 
 ### Review Process
 
@@ -285,7 +285,7 @@ recommend verification — never assume accuracy.
 
 **Remediation cycles**: Maximum 3 global cycles across the full pipeline. A cycle counts when
 Stage 2 re-verifies factual claims in sections rewritten by Stage 3. On the third cycle,
-note `remediation_cycles: 3 — escalate to human review` in the pipeline status block and stop.
+note `remediation_cycles: 3, escalate to human review` in the pipeline status block and stop.
 
 **Token budget**: Target under 80,000 tokens per invocation. This agent may use WebSearch or
 WebFetch to verify claims, which consumes additional context. Each web lookup can add 2,000-10,000

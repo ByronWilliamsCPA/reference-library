@@ -337,7 +337,7 @@ When this agent runs as part of a remediation cycle (Stage 2 or Stage 3 triggere
 **Global remediation limit**: Remediation cycles are tracked globally across the pipeline.
 A cycle is: Stage 1 re-check → Stage 2 re-check → Stage 3 re-check of the same rewritten
 sections. Maximum 3 global cycles before escalating to human review. If this is the third
-cycle, note it in the pipeline status block: `remediation_cycles: 3 — escalate to human review`.
+cycle, note it in the pipeline status block: `remediation_cycles: 3, escalate to human review`.
 
 ### Long Documents (Over 30 Pages)
 
@@ -410,7 +410,7 @@ When invoked, follow this sequence:
 
 **Remediation cycles**: Maximum 3 global cycles across the full pipeline. A cycle counts when
 Stage 1 re-checks the same rewritten sections after Stage 2 or Stage 3 triggers a revision.
-On the third cycle, note `remediation_cycles: 3 — escalate to human review` in the pipeline
+On the third cycle, note `remediation_cycles: 3, escalate to human review` in the pipeline
 status block and stop.
 
 **Token budget**: Target under 50,000 tokens per invocation. This agent loads reference files
