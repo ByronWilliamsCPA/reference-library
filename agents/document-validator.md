@@ -38,7 +38,7 @@ that signal factual problems.
 
 | Red Flag | Detection Question | Action |
 | --- | --- | --- |
-| Specific statistics without sources | "73% of organizations..." — where does this come from? | Tag `[SUSPECT]` unless source can be found |
+| Specific statistics without sources | "73% of organizations...", where does this come from? | Tag `[SUSPECT]` unless source can be found |
 | Vague authority appeals | "Studies show...", "Research indicates..." | Flag: which studies? Name them. |
 | Assumed consensus | "Industry best practice is..." | Flag: according to whom? Cite the standard. |
 | Universal quantifiers | "All," "never," "always," "every" | Flag: likely overstatement; qualify or cite evidence |
@@ -66,7 +66,7 @@ For each factual assertion, apply one tag:
 
 ### 2. Hallucination Detection
 
-High-risk patterns — investigate thoroughly:
+High-risk patterns, investigate thoroughly:
 
 | Pattern | Detection Question |
 | --- | --- |
@@ -267,7 +267,7 @@ cycle, note it in the pipeline status block: `remediation_cycles: 3, escalate to
 10. Provide verdict with specific remediation steps
 
 **Critical rule**: When uncertain whether a claim is valid, classify as `[UNVERIFIED]` and
-recommend verification — never assume accuracy.
+recommend verification, never assume accuracy.
 
 ### What This Agent Does NOT Do
 

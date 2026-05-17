@@ -32,7 +32,16 @@ from typing import TypedDict
 REPO_ROOT = Path(__file__).parent.parent
 SAMPLES_DIR = REPO_ROOT / "samples" / "before"
 ENV_FILE = REPO_ROOT / ".env"
+# #ASSUME: minimax/minimax-m2 is the target model; OpenRouter model IDs can change
+# without notice if the provider renames or versions the model.
+# #VERIFY: Check the OpenRouter model list quarterly at
+# https://openrouter.ai/models to confirm the model ID is still valid.
 MODEL = "minimax/minimax-m2"
+# #CRITICAL: This endpoint is an external OpenRouter API URL. The URL itself is
+# stable, but the API version path (/v1/) may be superseded and the service may
+# impose breaking schema changes without prior notice.
+# #VERIFY: Re-test against OpenRouter's API changelog annually and after any
+# HTTP 4xx/5xx errors indicate a structural response change.
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 
@@ -186,6 +195,12 @@ def call_openrouter(
 
     data: dict[str, object] = json.loads(body)
 
+    # #ASSUME: The OpenRouter response follows the OpenAI chat completions schema:
+    # {"choices": [{"message": {"content": "<text>"}}]}. Providers routed through
+    # OpenRouter are expected to conform to this schema, but non-conforming models
+    # may return a different top-level structure or omit the "choices" key entirely.
+    # #VERIFY: After adding any new model to SAMPLES, run a single-sample test and
+    # print the raw response body to confirm the schema before relying on the output.
     try:
         choices = data["choices"]
         if not isinstance(choices, list):

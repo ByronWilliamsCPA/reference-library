@@ -31,6 +31,10 @@ PDFS = [
 
 # If average chars per page falls below this threshold, the PDF is likely
 # image-based and requires the Claude Code Read tool for OCR extraction.
+# #ASSUME: 100 chars/page is a reasonable minimum for a text-based PDF; image-only
+# pages return near-zero, but lightly formatted pages may legitimately fall below
+# this threshold and trigger a false OCR warning.
+# #VERIFY: Spot-check the yield on each source PDF after any re-extraction run.
 MIN_CHARS_PER_PAGE = 100
 
 
@@ -78,6 +82,11 @@ def assess_yield(text: str, pdf_path: Path) -> dict[str, object]:
     lines = [ln for ln in text.splitlines() if ln.strip()]
     chars = len(text.strip())
 
+    # #ASSUME: 50 KB per page is a rough average for text-based Oregon legal PDFs;
+    # scanned image PDFs are much larger per page, so this estimate will under-count
+    # pages and inflate the chars-per-page metric, masking low-yield extractions.
+    # #VERIFY: Compare estimated_pages against the PDF viewer's page count on first use
+    # of each new source PDF.
     # Estimate page count from file size (rough: 50KB per page average for text PDFs)
     size_bytes = pdf_path.stat().st_size
     estimated_pages = max(1, size_bytes // 50_000)
@@ -160,6 +169,12 @@ def main() -> None:
         for name in missing:
             print(f"  {SOURCE_DIR / name}")
         print("\nDownload with:")
+        # #CRITICAL: These three URLs are the sole authoritative sources for Oregon
+        # legal style content. If any URL rots, the extracted text cannot be replaced
+        # from an equivalent online source; the content is irreplaceable Oregon legal
+        # authority. Store downloaded PDFs in version control or a durable backup.
+        # #VERIFY: Re-test all three URLs annually and after any Oregon court or
+        # legislature website redesign.
         print(
             "  curl -O https://www.courts.oregon.gov/publications/Documents/UpdatedStyleManual2002.pdf"
         )

@@ -42,9 +42,9 @@ grammar-style files at once (the full set exceeds 12,000 tokens).
 
 **Uncertainty tags** (use when grammar advice depends on context):
 
-- `[ExpertJudgment]` — professional inference; reasonable but not directly sourced here
-- `[Confidence:Low]` — the rule depends on context, document type, or edition differences
-- `[NeedsHumanReview]` — the question exceeds what this reference can resolve
+- `[ExpertJudgment]`, professional inference; reasonable but not directly sourced here
+- `[Confidence:Low]`, the rule depends on context, document type, or edition differences
+- `[NeedsHumanReview]`, the question exceeds what this reference can resolve
 
 ## Three-Tier Authority
 
@@ -70,7 +70,7 @@ Condensed from reference files for quick scanning. For detailed rules, load the 
 
 | # | Rule | Quick test |
 | --- | --- | --- |
-| 1 | Serial (Oxford) comma required | "red, white, and blue" — always |
+| 1 | Serial (Oxford) comma required | "red, white, and blue", always |
 | 2 | Comma before conjunction in compound sentence | Two independent clauses joined by and/but/or need a comma |
 | 3 | *That* (restrictive, no comma) vs. *which* (nonrestrictive, with comma) | Can you remove the clause without changing meaning? → *which* |
 | 4 | Active voice by default; passive when actor doesn't matter | "The motion was denied" is valid passive |

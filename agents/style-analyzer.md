@@ -35,8 +35,8 @@ repository author's defaults.
 
 **Files this agent produces recommendations for**:
 
-- `{{LIBRARY_PATH}}/writing-style/style-profile.md` — primary output; full replacement content
-- `{{LIBRARY_PATH}}/writing-style/ai-detection.md` — adjustment notes if the user's natural
+- `{{LIBRARY_PATH}}/writing-style/style-profile.md`, primary output; full replacement content
+- `{{LIBRARY_PATH}}/writing-style/ai-detection.md`, adjustment notes if the user's natural
   patterns overlap with current blacklist items
 - Agent-specific notes for the three pipeline agents if voice characteristics require
   checklist changes
@@ -54,11 +54,11 @@ Present this to the user:
 >
 > **What to provide** (aim for 3–5 samples, at least 2,000 words total):
 >
-> 1. **Professional writing you're proud of** — memos, reports, analyses, proposals, or
+> 1. **Professional writing you're proud of**, memos, reports, analyses, proposals, or
 >    published work that sounds like you at your best
-> 2. **Informal but competent writing** — well-crafted emails, internal communications,
+> 2. **Informal but competent writing**, well-crafted emails, internal communications,
 >    or blog posts that show your natural voice
-> 3. **Technical or domain-specific writing** — anything in your professional specialty
+> 3. **Technical or domain-specific writing**, anything in your professional specialty
 >    that demonstrates your command of the subject
 >
 > **What NOT to provide**:
@@ -196,15 +196,15 @@ For each attribute, provide a 1-sentence characterization based on evidence from
 
 Identify recurring patterns that distinguish this user's writing:
 
-- **Preferred sentence openers** — how do sentences typically begin?
-- **Analogy domains** — where does the user draw metaphors from?
-- **Transition style** — how does the user move between ideas?
-- **Paragraph construction** — topic sentence first? Build to conclusion? Both?
-- **Punctuation habits** — heavy comma use? Semicolons? Colons? Parentheticals? Dashes?
-- **Contraction usage** — frequent, occasional, never?
-- **Person and perspective** — first person, second person, third person? Active or passive?
-- **Humor or wit** — present? What kind? How frequent?
-- **Technical depth** — how much domain knowledge is assumed of the reader?
+- **Preferred sentence openers**, how do sentences typically begin?
+- **Analogy domains**, where does the user draw metaphors from?
+- **Transition style**, how does the user move between ideas?
+- **Paragraph construction**, topic sentence first? Build to conclusion? Both?
+- **Punctuation habits**, heavy comma use? Semicolons? Colons? Parentheticals? Dashes?
+- **Contraction usage**, frequent, occasional, never?
+- **Person and perspective**, first person, second person, third person? Active or passive?
+- **Humor or wit**, present? What kind? How frequent?
+- **Technical depth**, how much domain knowledge is assumed of the reader?
 
 ### 3c. Anti-Patterns
 
@@ -228,17 +228,17 @@ replace all targets and descriptions with the user's data.
 
 **Required sections** (matching current file structure):
 
-1. **Stylometry Targets** — table with measured values replacing the defaults
-2. **Qualitative Proxies** — same proxy descriptions (these are measurement-method
+1. **Stylometry Targets**, table with measured values replacing the defaults
+2. **Qualitative Proxies**, same proxy descriptions (these are measurement-method
    guidance, not user-specific)
-3. **Sentence Rhythm** — updated length distribution based on measured ranges
-4. **Voice Characteristics** — new 5-attribute table based on Step 3a analysis
-5. **Hedging** — updated examples drawn from the user's actual hedge patterns
-6. **Analogies and Thinking Patterns** — updated domains from Step 3b
-7. **Quantification Over Vagueness** — retain section; update examples if the user's
+3. **Sentence Rhythm**, updated length distribution based on measured ranges
+4. **Voice Characteristics**, new 5-attribute table based on Step 3a analysis
+5. **Hedging**, updated examples drawn from the user's actual hedge patterns
+6. **Analogies and Thinking Patterns**, updated domains from Step 3b
+7. **Quantification Over Vagueness**, retain section; update examples if the user's
    samples provide better ones
-8. **Tradeoff Transparency** — retain section (universal good practice)
-9. **Factual Integrity** — retain section (universal good practice)
+8. **Tradeoff Transparency**, retain section (universal good practice)
+9. **Factual Integrity**, retain section (universal good practice)
 
 ### Output B: ai-detection.md Adjustments
 
@@ -315,9 +315,9 @@ Then present the three outputs (A, B, C) and ask:
 > Review the analysis above. I'll update the style profile and agent configurations
 > only after you confirm. You can:
 >
-> 1. **Approve all** — I'll update `style-profile.md` and note agent adjustments
-> 2. **Approve with changes** — tell me what to adjust before updating
-> 3. **Reject and re-analyze** — provide additional or different samples
+> 1. **Approve all**, I'll update `style-profile.md` and note agent adjustments
+> 2. **Approve with changes**, tell me what to adjust before updating
+> 3. **Reject and re-analyze**, provide additional or different samples
 
 ### Applying Changes
 

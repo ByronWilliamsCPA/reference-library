@@ -7,7 +7,7 @@
 
 ## Cliché Blacklist
 
-Instant flags — these terms appear so frequently in AI output that their presence strongly suggests
+Instant flags: these terms appear so frequently in AI output that their presence strongly suggests
 unrevised AI-generated content.
 
 ### Vague Qualifiers
@@ -16,7 +16,7 @@ Replace with specific metrics or remove entirely.
 
 | Term | Problem | Fix |
 | --- | --- | --- |
-| significantly | Vague — how much? | Use a number or remove |
+| significantly | Vague, how much? | Use a number or remove |
 | substantially | Same problem | Use a number or remove |
 | considerably | Same problem | Use a number or remove |
 | greatly | Same problem | Use a number or remove |
@@ -62,7 +62,7 @@ These add no information and signal AI authorship.
 | seamless | Promises something; means nothing | Describe the actual integration |
 | holistic | Vague | Name the specific components |
 | comprehensive | Vague | List what's included |
-| it's important to note | Filler — everything in the document is important | Delete; state the point directly |
+| it's important to note | Filler, everything in the document is important | Delete; state the point directly |
 | in conclusion | Structural tell | Delete; let the conclusion speak |
 | in summary | Same problem | Delete |
 | to summarize | Same problem | Delete |
@@ -79,7 +79,7 @@ Single words that inflate tone without adding meaning.
 | pivotal | Overstatement; every AI event is "pivotal" | State what actually changed as a result |
 | vital | Same problem as *crucial* | State the consequence of not doing it |
 | groundbreaking | Self-awarded; marketing | Describe what is specifically new |
-| testament | "A testament to X" — filler construction | State the evidence directly |
+| testament | "A testament to X", filler construction | State the evidence directly |
 | enduring legacy | Vague praise | Describe the specific lasting effect |
 | transformative | Same problem as *revolutionary* | Quantify or name the specific change |
 | unwavering | Praise word with no content | Remove or describe the specific commitment |
@@ -105,7 +105,7 @@ delivers nothing specific.
 
 ## Phrase-Level Patterns
 
-More nuanced than single terms — these are common AI constructions.
+More nuanced than single terms, these are common AI constructions.
 
 | AI Pattern | Problem | Revision Strategy |
 | --- | --- | --- |
@@ -134,7 +134,7 @@ These patterns appear in AI output but rarely in natural human writing.
 
 **Quantified targets**: The authoritative stylometry targets (σ ≥ 8, TTR ≥ 0.40, hedge density
 5–10%) are in `style-profile.md`. The same violations that produce AI-sounding prose also
-depress these stylometry scores — the patterns and the metrics describe the same underlying
+depress these stylometry scores; the patterns and the metrics describe the same underlying
 problem from two angles.
 
 ### Repetitive Openers
@@ -167,7 +167,7 @@ AI tends to produce documents with unnatural symmetry. Human writers don't.
 | Bullet points always in groups of 3 | Suspiciously neat | List what's actually there |
 | Bullet overuse (analytical prose converted to bullets) | Fragments reasoning; disconnects evidence from conclusion | Rewrite as prose; bullets only for genuinely enumerable, parallel items |
 | Overly symmetrical organization | Mechanical | Let the argument determine structure |
-| Every paragraph same number of sentences | Robotic | Vary — short paragraphs for emphasis, longer for development |
+| Every paragraph same number of sentences | Robotic | Vary, short paragraphs for emphasis, longer for development |
 | Every bullet point same length | AI pattern | Match length to content |
 | Excessive bolding (multiple phrases bolded per paragraph, or entire sentences bolded) | Substitutes formatting for prose structure; signals AI-generated emphasis | Bold only critical terms or key distinctions; one instance per section at most |
 | Emoji used as formatting decorators in professional documents | Signals unrevised AI output; undermines professional register | Remove entirely; use prose or structural elements for emphasis |
@@ -186,7 +186,7 @@ AI tends to produce documents with unnatural symmetry. Human writers don't.
 **After**:
 
 > "The proposed platform reduces manual reconciliation from 60 to 6 hours per month. It connects
-> three currently siloed systems — portfolio management, accounting, and risk — through a shared
+> three currently siloed systems, portfolio management, accounting, and risk, through a shared
 > data layer."
 
 ---

@@ -4,7 +4,7 @@ stage: recap
 timestamp: 2026-02-20
 ---
 
-# Pipeline Recap: 03 — Expense Policy Memo
+# Pipeline Recap: 03, Expense Policy Memo
 
 ## Document Overview
 
@@ -19,17 +19,17 @@ timestamp: 2026-02-20
 ## Before State
 
 The document is a standard HR memo recommending a comprehensive overhaul of the firm's expense
-reimbursement policy. The structure — Executive Summary, Background, Analysis, Recommendation,
-Implementation Steps — is logical and the content is substantively correct in most areas, but
+reimbursement policy. The structure, Executive Summary, Background, Analysis, Recommendation,
+Implementation Steps, is logical and the content is substantively correct in most areas, but
 the draft contains seven grammar errors, no markdown heading hierarchy, and several AI-mechanical
 patterns. Representative phrases illustrate the problems: the Recommendation section lists "Robust
 substantiation and approvals" (AI filler adjective) and the Executive Summary promotes "a modern,
 business-friendly policy" (vague endorsement language with no substantive content). The Background
-section opens with "The firm's last comprehensive policy refresh was 2018" — missing the preposition
+section opens with "The firm's last comprehensive policy refresh was 2018", missing the preposition
 "in" and using "comprehensive" as empty filler. Underneath the surface errors sits a more serious
 problem the grammar stage cannot catch: the mileage rate is wrong.
 
-## Stage 1 — Grammar and Composition
+## Stage 1, Grammar and Composition
 
 **Status**: FAIL
 
@@ -82,10 +82,10 @@ corrected document rather than requiring a resubmission cycle.
 The stage flagged the Background sentence carrying three types of feedback as a non-prose
 readability note (Issue #17), with an advisory to consider splitting it into a short list.
 Stage 3 was noted as the authority to retain it for voice reasons. The factual accuracy of
-all policy figures — including the mileage rate — was out of scope for Stage 1 and deferred
+all policy figures, including the mileage rate, was out of scope for Stage 1 and deferred
 to Stage 2.
 
-## Stage 2 — Factual Validation
+## Stage 2, Factual Validation
 
 **Status**: FAIL
 
@@ -99,28 +99,28 @@ to Stage 2.
 
 **Key findings** (the two SUSPECT/blocking items lead):
 
-- **IRS mileage rate error (SUSPECT — blocking)**: The document states "2025: 67.0 cents/mile."
+- **IRS mileage rate error (SUSPECT, blocking)**: The document states "2025: 67.0 cents/mile."
   The correct 2025 IRS business standard mileage rate is 70 cents/mile per IRS Notice 2025-5,
   issued December 19, 2024. The 67-cent figure is the 2024 rate. This is a material factual
   error on a directly citable IRS figure in a compliance-focused memo.
 
-- **Missing IRC §274(b) gift deductibility limit (SUSPECT — blocking)**: The document states
+- **Missing IRC §274(b) gift deductibility limit (SUSPECT, blocking)**: The document states
   "client gifts limited to $100 with written justification" with no mention of the IRS
   deductibility cap of $25 per recipient per year under IRC §274(b), unchanged since 1962. A
   memo explicitly positioned as aligning with "IRS and state rules" cannot omit this limit in
-  the gifts section. The firm would reimburse up to $100 but only deduct $25 — a compliance gap
+  the gifts section. The firm would reimburse up to $100 but only deduct $25, a compliance gap
   the document creates without disclosing.
 
 - **Unverified claims**: "The firm's last comprehensive policy refresh was in 2018" (no citation
   to internal records); "the firm has grown to approximately 200 employees" (no HR data source);
   "costs spike in meals/entertainment and ad-hoc software/tooling" (no internal trend data cited);
-  "audit/compliance expectations have evolved" (vague — whose expectations?); "Inconsistent rules
+  "audit/compliance expectations have evolved" (vague, whose expectations?); "Inconsistent rules
   across teams lead to perceptions of unfair treatment" (plausible but causal link unestablished).
 
-- **Reasoning errors**: (1) False certainty — "Updating the policy will reduce compliance risk,
-  speed reimbursements..." treats successful implementation as a given; (2) False causation —
+- **Reasoning errors**: (1) False certainty, "Updating the policy will reduce compliance risk,
+  speed reimbursements..." treats successful implementation as a given; (2) False causation:
   "Standardizing thresholds...will shorten cycle time" ignores manager responsiveness and
-  system reliability as co-factors; (3) Cherry-picking — all four analysis bullets present
+  system reliability as co-factors; (3) Cherry-picking, all four analysis bullets present
   status-quo costs only; implementation risks, transition costs, and failure modes are absent.
 
 - **Assumption register**: Eight hidden assumptions surfaced, including that the current expense
@@ -132,14 +132,14 @@ to Stage 2.
 **Why this sample is important**:
 
 This is the only sample in the set with a Stage 2 FAIL, and it caught a verifiable factual
-error — a wrong IRS rate stated as current fact — that only Stage 2 could identify; Stage 1
+error, a wrong IRS rate stated as current fact, that only Stage 2 could identify; Stage 1
 has no mechanism to detect it, and Stage 3 would have passed it through to publication.
 
-## Stage 3 — Voice and Style
+## Stage 3, Voice and Style
 
 **Status**: NEEDS WORK
 
-**Pipeline note**: Stage 2 FAIL — the two blocking items are preserved as [AUTHOR MUST CORRECT]
+**Pipeline note**: Stage 2 FAIL, the two blocking items are preserved as [AUTHOR MUST CORRECT]
 markers in the rewritten document; Stage 3 proceeded for demonstration purposes only.
 
 **Stylometry** (before → after):
@@ -172,7 +172,7 @@ markers in the rewritten document; Stage 3 proceeded for demonstration purposes 
 
 - One long sentence added to Background to break the 28-word ceiling: "The underlying federal
   and state rules on accountable plans and substantiation have not materially changed since the
-  last refresh — the three-prong test for non-taxable treatment remains the same — but
+  last refresh, the three-prong test for non-taxable treatment remains the same, but
   enforcement scrutiny has increased..."
 
 - "This increases the firm's liability and can lead to penalties" folded into the prior sentence:
@@ -187,7 +187,7 @@ markers in the rewritten document; Stage 3 proceeded for demonstration purposes 
 
 After all three stages, the document is structurally clean (heading hierarchy, parallel
 construction throughout, no grammar errors), factually tagged with claim-level confidence
-ratings, and voiced as a competent HR director rather than an AI model — the four blacklisted
+ratings, and voiced as a competent HR director rather than an AI model, the four blacklisted
 AI terms have been replaced and the Executive Summary reads with appropriate sentence variety.
 The Implementation Steps section was flagged for persona drift (procedural enumeration with no
 authorial voice), a minor remaining weakness. Two items block final clearance and require author
@@ -199,7 +199,7 @@ deductibility cap before the document can be published.
 
 - **Stage 1 FAIL threshold in action**: Seven grammar errors cross the six-error FAIL threshold,
   making this the only sample in the set to fail Stage 1. The stage shows how to handle a FAIL
-  gracefully — by supplying a corrected document that lets Stage 2 proceed without a full
+  gracefully, by supplying a corrected document that lets Stage 2 proceed without a full
   resubmission cycle.
 
 - **Stage 2 FAIL on a verifiable factual error**: The 67.0 cents/mile mileage figure is the
@@ -207,13 +207,13 @@ deductibility cap before the document can be published.
   stage that can catch this; Stage 1 and Stage 3 have no mechanism to verify regulatory figures.
 
 - **Material omission as a SUSPECT claim**: The gift deductibility gap illustrates that Stage 2
-  catches not just wrong facts but missing required disclosures — the $100 policy ceiling is not
+  catches not just wrong facts but missing required disclosures, the $100 policy ceiling is not
   wrong on its face, but the omission of the §274(b) cap makes the section materially incomplete
   in context.
 
 - **Pipeline continuation under FAIL**: Stage 3 proceeding "for demonstration purposes only"
   with [AUTHOR MUST CORRECT] markers preserved shows how the pipeline handles a blocking FAIL
-  without discarding downstream work — the voice corrections are complete and ready to accept
+  without discarding downstream work, the voice corrections are complete and ready to accept
   once the author fixes the two blocking items.
 
 - **Confirmation bias and optimism bias as pipeline catches**: The one-sided analysis

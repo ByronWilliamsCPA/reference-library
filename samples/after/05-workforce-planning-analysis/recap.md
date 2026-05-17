@@ -1,4 +1,4 @@
-# Pipeline Recap: 05 — Workforce Planning Analysis
+# Pipeline Recap: 05, Workforce Planning Analysis
 
 ## Document Overview
 
@@ -26,7 +26,7 @@ The closing sentence trails off with a content-free gerund phrase: "ensuring tha
 strengthens competitiveness without eroding the professional judgment that defines mid-market
 firms."
 
-## Stage 1 — Grammar and Composition
+## Stage 1, Grammar and Composition
 
 **Status**: FAIL
 
@@ -69,7 +69,7 @@ Stage 3, which has authority to retain or rewrite for voice reasons. Jargon term
 "attraction levers," "retention mechanisms") were flagged as plain language warnings and
 deferred to Stage 3.
 
-## Stage 2 — Factual Validation
+## Stage 2, Factual Validation
 
 **Status**: CONDITIONAL
 
@@ -107,10 +107,10 @@ deferred to Stage 3.
 The document has a structural confirmation bias problem: three of four paragraphs develop the
 positive case for automation-driven workforce redesign, while failure conditions, failed
 implementations, deskilling outcomes, and regulatory barriers appear only in the final
-paragraph and even there are framed as manageable through good implementation — not as genuine
+paragraph and even there are framed as manageable through good implementation, not as genuine
 risks with their own probability distribution.
 
-## Stage 3 — Voice and Style
+## Stage 3, Voice and Style
 
 **Status**: NEEDS WORK
 
@@ -192,7 +192,7 @@ two introduced em-dashes remain as author action items before the document can r
   risk that the document framed as a technology question
 - **Sentence-final gerund padding as a structural tell**: The original closing sentence
   ("ensuring that automation strengthens competitiveness without eroding the professional
-  judgment that defines mid-market firms") is a canonical empty gerund closer — the main
+  judgment that defines mid-market firms") is a canonical empty gerund closer, the main
   clause was complete, the gerund phrase restated the goal in abstract terms without adding
   a mechanism, metric, or constraint; Stage 1 deleted it
 - **Stage 2 epistemic burden creating acceptable hedge density**: The five unverified

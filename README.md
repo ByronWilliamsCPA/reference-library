@@ -145,7 +145,11 @@ reference-library/
 │   ├── logical-fallacies-guide.md
 │   ├── transition-words-reference.md
 │   └── grammar-style/
+├── samples/
+│   ├── before/                   # AI-generated before-state samples for pipeline testing
+│   └── after/                    # Post-pipeline output: per-stage transcripts plus recaps
 └── scripts/
     ├── setup.sh                   # Install agents to ~/.claude/agents/
-    └── extract_legal_pdfs.py
+    ├── extract_legal_pdfs.py
+    └── generate_before_samples.py
 ```

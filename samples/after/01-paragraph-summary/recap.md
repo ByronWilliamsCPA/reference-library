@@ -4,7 +4,7 @@ stage: recap
 generated: 2026-02-20
 ---
 
-# Pipeline Recap: 01 — Paragraph Summary
+# Pipeline Recap: 01, Paragraph Summary
 
 ## Document Overview
 
@@ -19,7 +19,7 @@ generated: 2026-02-20
 ## Before State
 
 The original document is a single three-sentence paragraph averaging 49 words per sentence
-(sigma = 3.9) — a wall of text with almost no rhythmic variation. Every sentence chains two
+(sigma = 3.9), a wall of text with almost no rhythmic variation. Every sentence chains two
 or three independent ideas through semicolons, producing compound structures that read as
 compressed outlines rather than prose. The writing carries the signature patterns of unrevised
 AI output: vague authority appeals ("Most longitudinal studies report"), abstract noun clusters
@@ -28,7 +28,7 @@ list endings ("unless replaced by intentional rituals, knowledge platforms, and 
 collaboration windows"), and nominalizations hiding simple verbs ("lower effectiveness,"
 "performance clarity").
 
-## Stage 1 — Grammar and Composition
+## Stage 1, Grammar and Composition
 
 **Status**: NEEDS WORK
 
@@ -41,10 +41,10 @@ collaboration windows"), and nominalizations hiding simple verbs ("lower effecti
 
 **Key fixes applied**:
 
-- Nominalization repair (Issue 7): "lower effectiveness" replaced with "become less effective"
-  — restoring the verb that was buried in the noun form.
+- Nominalization repair (Issue 7): "lower effectiveness" replaced with "become less effective",
+  restoring the verb that was buried in the noun form.
 - Nominalization repair (Issue 8): "performance clarity" replaced with "the clarity of
-  performance expectations" — a partial repair; full restructuring deferred to Stage 3.
+  performance expectations", a partial repair; full restructuring deferred to Stage 3.
 - Participial phrase attachment repair (Issue 9): the trailing clause ", requiring stronger
   work-life boundaries and more disciplined project management" replaced with a finite clause:
   "so organizations need stronger work-life boundaries and more disciplined project management."
@@ -56,18 +56,18 @@ collaboration windows"), and nominalizations hiding simple verbs ("lower effecti
 
 **Deferred to later stages**:
 
-All seven advisory issues — including the three-topic paragraph structure, the 60-word sentence
+All seven advisory issues, including the three-topic paragraph structure, the 60-word sentence
 lengths, the weak sentence-final positions ("and culture," "across locations"), the abstract
-close ("sustainable performance and culture"), and the plain language flags — were held for
+close ("sustainable performance and culture"), and the plain language flags, were held for
 Stage 3. Stage 1 corrected only what was mechanical and unambiguous.
 
-## Stage 2 — Factual Validation
+## Stage 2, Factual Validation
 
 **Status**: CONDITIONAL
 
 **What was found** (counts):
 
-- Claims analyzed: 12 (Verified: 0, Expert Judgment: 7 — 58%, Unverified: 5 — 42%, Suspect: 0)
+- Claims analyzed: 12 (Verified: 0, Expert Judgment: 7, 58%, Unverified: 5, 42%, Suspect: 0)
 - Reasoning errors: 2
 - Hidden assumptions: 3
 
@@ -75,7 +75,7 @@ Stage 3. Stage 1 corrected only what was mechanical and unambiguous.
 
 - Authority appeal without evidence (Issue 1, Reasoning Error 1): "Most longitudinal studies
   report" invokes unnamed research as collective proof. No studies are named; "most" cannot
-  be supported in a summary. Fix: replace with "Research generally shows" — the finding's
+  be supported in a summary. Fix: replace with "Research generally shows", the finding's
   direction is sound; the authority frame is not warranted.
 - Overclaimed empirical rigor (Issue 3): "measurable declines in informal learning" implies
   quantification has been done. The phenomenon is real, but the word "measurable" imports
@@ -83,13 +83,13 @@ Stage 3. Stage 1 corrected only what was mechanical and unambiguous.
 - False causation (Issue 4, Reasoning Error 2): "ties that weaken innovation unless replaced
   by intentional rituals, knowledge platforms, and synchronous collaboration windows" presents
   the three interventions as causally sufficient to restore innovation. The causal mechanism
-  is not established, and the interventions are not defined. Fix: qualify as associative —
+  is not established, and the interventions are not defined. Fix: qualify as associative:
   "which research links to reduced innovation capacity."
 - Undefined comparison (Issue 5): "hybrid or flexible models preserve cultural cohesion better"
   lacks a comparison baseline. Better than what? Fix: add "than fully remote arrangements."
 - Conflated equity claim with mixed evidence (Issue 6): the sentence treats caregivers and
   underrepresented groups as a single category with uniform positive outcomes. Evidence on
-  remote work and underrepresented groups is mixed — some research documents promotion
+  remote work and underrepresented groups is mixed, some research documents promotion
   disadvantage and visibility gaps. Fix: split into two claims with appropriate hedging on
   the underrepresented groups finding.
 
@@ -100,7 +100,7 @@ finding while relegating coordination friction to a subordinate clause, and mode
 cherry-picking on the equity claims by presenting only the positive attrition finding and
 omitting the counter-evidence on promotion disadvantage for underrepresented groups.
 
-## Stage 3 — Voice and Style
+## Stage 3, Voice and Style
 
 **Status**: PASS (input failed on 5 of 8 measures; rewrite passes all)
 
@@ -119,23 +119,23 @@ omitting the counter-evidence on promotion disadvantage for underrepresented gro
   becomes a five-word topic sentence ("Cultural cohesion is harder to sustain.") followed by
   specific elaboration.
 - Abstract noun cluster elimination: "outcome-driven trust" replaced with a concrete
-  description of the mechanism — "a reliance on trust built through outputs rather than
+  description of the mechanism, "a reliance on trust built through outputs rather than
   presence." "Central levers for sustainable performance and culture" replaced with "the
   practical levers for cultures that hold."
 - List-as-remedy construction removed: "unless replaced by intentional rituals, knowledge
   platforms, and synchronous collaboration windows" replaced with "research links their decline
-  to reduced innovation capacity" — resolving Stage 2's false causation flag simultaneously.
+  to reduced innovation capacity", resolving Stage 2's false causation flag simultaneously.
 - All six Stage 2 required fixes incorporated directly into the rewrite. The author does not
   need to apply them separately.
 - Two author judgment calls flagged but not blocking: (1) "than most expect going in" in
   Paragraph 1 adds grounding warmth and can be cut for a crisper close; (2) "for cultures
-  that hold" in Paragraph 3 is compressed and idiomatic — the author may substitute "for
+  that hold" in Paragraph 3 is compressed and idiomatic, the author may substitute "for
   organizations that want distributed models to hold" if the audience calls for more literal
   phrasing.
 
 ## Final State
 
-The output is three focused paragraphs — productivity, culture, equity — each anchored by a
+The output is three focused paragraphs, productivity, culture, equity, each anchored by a
 short topic sentence and developed through specific, varied-length sentences with no AI
 signature patterns remaining. The claims are appropriately hedged where Stage 2 required it
 ("Research generally shows," "tend to," "appear to hold") without over-hedging throughout,
@@ -156,7 +156,7 @@ apply.
   with no grammar errors.
 - How the pipeline handles overclaimed authority: the "Most longitudinal studies" framing
   survived Stage 1 (not a grammar issue) but was caught by Stage 2 as an authority appeal
-  without evidence and then eliminated by Stage 3 in the rewrite — a cross-stage resolution
+  without evidence and then eliminated by Stage 3 in the rewrite, a cross-stage resolution
   path.
 - How Stage 2 and Stage 3 interact: Stage 2 issued six required fixes as author-directed
   instructions; Stage 3 incorporated all six directly into the rewrite rather than waiting
@@ -164,5 +164,5 @@ apply.
 - The distinction between hedging as a style problem and hedging as a semantic preservation
   constraint: the rewrite's 27% hedge density exceeds the 5-10% target, but Stage 3
   documented it as a required preservation of Stage 2 UNVERIFIED tags rather than flagging
-  it as over-hedging — illustrating how pipeline stages respect each other's authority within
+  it as over-hedging, illustrating how pipeline stages respect each other's authority within
   defined limits.

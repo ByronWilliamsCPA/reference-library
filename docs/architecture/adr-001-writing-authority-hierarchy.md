@@ -28,7 +28,7 @@ governing tier depends on the operation being performed, not the document being 
 | User-confirmed preference deviations | PromptCraft Pro defaults | 3 (overrides CMS) |
 
 **Why this order**: EoS provides the most concise and memorable rules for a writer
-starting from a blank page. CMS is more comprehensive and authoritative for editing
+starting from a blank page. CMS covers more cases and is authoritative for editing
 decisions where precision matters more than speed. Tier 3 captures deliberate user
 preferences that deviate from both sources.
 
