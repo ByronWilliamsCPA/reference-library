@@ -43,6 +43,11 @@ reference-library/
 ├── samples/
 │   ├── before/                   # AI-generated before-state samples for pipeline testing
 │   └── after/                    # Post-pipeline output: per-stage transcripts plus recaps
+├── docs/
+│   ├── architecture/             # ADRs (writing authority hierarchy, future architecture decisions)
+│   ├── compliance-reports/       # Generated audit and badge-prep reports (git-ignored)
+│   ├── known-vulnerabilities.md  # CVE log and accepted Scorecard exceptions; 60-day review cycle
+│   └── reusable-workflow-jobs.yaml  # Workflow inventory for CI-024 freshness check
 └── scripts/
     ├── extract_legal_pdfs.py     # PDF → raw text extraction (pdftotext → pymupdf fallback)
     └── generate_before_samples.py  # Generate AI-mechanical before-state samples via OpenRouter
@@ -100,7 +105,7 @@ This is a docs-only repository with no production code. Choose the model based o
 
 For subagents invoked from within this repo, set `model: haiku` for read-only discovery passes and `model: sonnet` for any subagent that writes or rewrites content.
 
-> Global model selection rules and orchestration patterns: see `~/.claude/.claude/rules/supervisor.md`
+> Global model selection rules and orchestration patterns: see `~/.claude/rules/supervisor.md`
 
 ---
 
@@ -123,9 +128,9 @@ Keep agent files free of unverified assumptions about file paths, token counts, 
 
 These global rule files apply to work in this repository:
 
-- Writing rules (em-dash ban, AI pattern blacklist, grammar authority): `~/.claude/.claude/rules/writing.md`
-- Git workflow (branch naming, worktrees, conventional commits): `~/.claude/.claude/rules/git-workflow.md`
-- Supervisor and agent patterns (model assignment, subagent orchestration): `~/.claude/.claude/rules/supervisor.md`
+- Writing rules (em-dash ban, AI pattern blacklist, grammar authority): `~/.claude/rules/writing.md`
+- Git workflow (branch naming, worktrees, conventional commits): `~/.claude/rules/git-workflow.md`
+- Supervisor and agent patterns (model assignment, subagent orchestration): `~/.claude/rules/supervisor.md`
 
 ---
 

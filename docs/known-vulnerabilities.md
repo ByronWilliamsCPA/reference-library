@@ -10,7 +10,8 @@ tags:
 ---
 
 > Tracks CVEs and accepted compliance exceptions. Review quarterly.
-> No entry may age past 90 days without reassessment; escalate or resolve.
+> No entry may age past 60 days without reassessment; escalate or resolve.
+> This mirrors the global standard in `~/.claude/CLAUDE.md` "Unfixed CVEs" section.
 
 ## Current Status
 
@@ -27,8 +28,8 @@ it below using the entry format from the template at
 ## Accepted Architectural Exceptions
 
 These entries document accepted Scorecard findings that are not CVEs but require
-explicit documentation as accepted exceptions. Each entry follows the same 90-day
-reassessment policy; no entry ages past 90 days without a dated review note.
+explicit documentation as accepted exceptions. Each entry follows the same 60-day
+reassessment policy; no entry ages past 60 days without a dated review note.
 
 ---
 
@@ -38,7 +39,7 @@ reassessment policy; no entry ages past 90 days without a dated review note.
 | --- | --- |
 | Finding | OpenSSF Scorecard `publish-results: false` in scorecard.yml |
 | Date documented | 2026-05-16 |
-| Re-review date | 2026-08-16 |
+| Re-review date | 2026-07-15 |
 | Remediation planned | No |
 
 **Reason**: This workflow calls the org-level reusable workflow at
@@ -58,7 +59,7 @@ the OIDC claim scoping for reusable workflow callers.
 | --- | --- |
 | Finding | OpenSSF Scorecard Fuzzing check score 0/10 |
 | Date documented | 2026-05-16 |
-| Re-review date | 2026-08-16 |
+| Re-review date | 2026-07-15 |
 | Remediation planned | No |
 
 **Reason**: This is a docs-only reference library. The only executable code is

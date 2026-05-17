@@ -92,8 +92,8 @@ Each before sample is unmodified model output and should exhibit:
 
 **Note on transition overuse**: The "Additionally/Furthermore/Moreover" overuse pattern
 (listed as a Stage 1 and Stage 3 target in the agent definitions) does not appear in these
-samples because the document formats — paragraph summaries, emails, memos, proposals, and
-analytical reports — produce different AI transition strategies. The minimax model used
+samples because the document formats (paragraph summaries, emails, memos, proposals, and
+analytical reports) produce different AI transition strategies. The minimax model used
 sophisticated echo-openers and causal connectors instead of explicit additive transitions.
 The transition-words-reference.md guide still applies when the pattern appears in other documents.
 

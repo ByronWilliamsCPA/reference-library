@@ -109,14 +109,23 @@ repos:
         entry: "—"
         types: [text]
         stages: [pre-commit]
-        # Tracking: scoped cleanup target 2026-12-31
+        # Tracking reference for each exclude entry:
+        # - PERMANENT (no cleanup; transcribed authority or required pattern illustration):
+        #     legal-style/      Oregon courts and legislature source documents
+        #     writing-style/    Elements of Style, CMS, ai-detection.md reference material
+        #     samples/before/   intentionally AI-mechanical pipeline test fixtures
+        # - SCOPED cleanup target 2026-12-31 (repo-authored content to remediate):
+        #     agents/, samples/after/, .github/, .qlty/, .pre-commit-config.yaml
+        # Annotation supports PC-014: every entry carries a tracked cleanup reference
+        # (either "permanent by design" with rationale, or an explicit cleanup date).
         exclude: |
           (?x)^(
-            agents/|
-            samples/|
-            \.github/|
-            \.qlty/|
             legal-style/|
             writing-style/|
+            samples/before/|
+            agents/|
+            samples/after/|
+            \.github/|
+            \.qlty/|
             \.pre-commit-config\.yaml
           )
