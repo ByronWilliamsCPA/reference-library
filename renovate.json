@@ -67,7 +67,20 @@
     "enabledManagers": [
         "pep621",
         "pip_requirements",
-        "github-actions"
+        "github-actions",
+        "custom.regex"
+    ],
+    "customManagers": [
+        {
+            "customType": "regex",
+            "description": "Keep docs/reusable-workflow-jobs.yaml pins synced with the .github/workflows/ callers Renovate already updates. Without this, the inventory drifts on every digest bump and reviewers flag it.",
+            "managerFilePatterns": [
+                "/^docs/reusable-workflow-jobs\\.yaml$/"
+            ],
+            "matchStrings": [
+                "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) currentValue=(?<currentValue>\\S+)[^\\n]*\\n\\s+pin:\\s+(?<currentDigest>[a-f0-9]{40})"
+            ]
+        }
     ],
     "separateMajorMinor": true,
     "separateMinorPatch": false,
