@@ -9,7 +9,7 @@ tags:
   - dependencies
 ---
 
-> Tracks CVEs and accepted compliance exceptions. Review quarterly.
+> Tracks CVEs and accepted compliance exceptions. Review at least every 60 days.
 > No entry may age past 60 days without reassessment; escalate or resolve.
 > This mirrors the global standard in `~/.claude/CLAUDE.md` "Unfixed CVEs" section.
 

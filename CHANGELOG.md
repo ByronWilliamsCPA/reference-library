@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-05-16
+
 ### Added
 
 - CONTRIBUTING.md with docs-only contribution guidelines
@@ -77,5 +79,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cross-reference files documenting divergences between the three Oregon legal sources
   and 21 EoS/CMS/PromptCraft Pro conflicts
 
-[Unreleased]: https://github.com/ByronWilliamsCPA/reference-library/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/ByronWilliamsCPA/reference-library/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/ByronWilliamsCPA/reference-library/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/ByronWilliamsCPA/reference-library/releases/tag/v1.0.0
