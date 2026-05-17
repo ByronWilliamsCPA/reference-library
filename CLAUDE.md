@@ -46,8 +46,10 @@ reference-library/
 ├── docs/
 │   ├── architecture/             # ADRs (writing authority hierarchy, future architecture decisions)
 │   ├── compliance-reports/       # Generated audit and badge-prep reports (git-ignored)
+│   ├── superpowers/              # Local working directory for plans and scratch notes (git-ignored)
 │   ├── known-vulnerabilities.md  # CVE log and accepted Scorecard exceptions; 60-day review cycle
 │   └── reusable-workflow-jobs.yaml  # Workflow inventory for CI-024 freshness check
+├── LICENSES/                     # REUSE 3.0 licenses (FOUND-025: in lieu of root LICENSE)
 └── scripts/
     ├── extract_legal_pdfs.py     # PDF → raw text extraction (pdftotext → pymupdf fallback)
     └── generate_before_samples.py  # Generate AI-mechanical before-state samples via OpenRouter
@@ -120,7 +122,7 @@ Mandatory categories for this repository:
 
 Keep agent files free of unverified assumptions about file paths, token counts, and model availability. Those are the most common silent failures in this repo.
 
-> Full tagging syntax, verification workflow, and examples: see `~/.claude/docs/response-aware-development.md`
+> Full tagging syntax, verification workflow, and examples: see `~/dev/.claude/docs/response-aware-development.md`
 
 ---
 

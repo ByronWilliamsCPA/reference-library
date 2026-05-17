@@ -32,8 +32,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `docs/known-vulnerabilities.md` reassessment policy tightened from 90 days to
   60 days to align with the global `~/.claude/CLAUDE.md` standard.
 - `SECURITY.md` Secret Rotation Policy now states that `SONAR_TOKEN` and
-  `QLTY_COVERAGE_TOKEN` are fine-grained service-issued credentials; classic
-  GitHub PATs are not used.
+  `QLTY_COVERAGE_TOKEN` are fine-grained service-issued credentials scoped to
+  the minimum permissions required by each service (SonarCloud project-scoped
+  tokens and Qlty repo-scoped tokens); classic GitHub PATs are not used as
+  repository or organization secrets.
 - `GEMINI.md` em-dash rule scope clarified to cover commit messages, code
   comments, and PR descriptions in addition to documentation.
 - `.pre-commit-config.yaml` no-em-dash exclude block annotated to distinguish

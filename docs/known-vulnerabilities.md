@@ -33,7 +33,7 @@ reassessment policy; no entry ages past 60 days without a dated review note.
 
 ---
 
-### SCORECARD:publish_results -- Scorecard publish disabled (architectural)
+### SCORECARD:publish_results: Scorecard publish disabled (architectural)
 
 | Field | Value |
 | --- | --- |
@@ -53,7 +53,7 @@ the OIDC claim scoping for reusable workflow callers.
 
 ---
 
-### SCORECARD:Fuzzing -- Fuzzing score 0/10 (structural exception)
+### SCORECARD:Fuzzing: Fuzzing score 0/10 (structural exception)
 
 | Field | Value |
 | --- | --- |

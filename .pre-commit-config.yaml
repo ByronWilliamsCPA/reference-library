@@ -97,7 +97,7 @@ repos:
   # SCOPED cleanup (repo-authored content with pre-existing em-dashes;
   # targeted for remediation, not permanent exclusion):
   #   - agents/                            agent definition files
-  #   - samples/after/                     post-pipeline transcripts; cleaned in PR #27
+  #   - samples/after/                     post-pipeline transcripts; cleanup target 2026-12-31
   #   - .github/                           workflow and config files
   #   - .qlty/                             qlty config files
   #   - .pre-commit-config.yaml            this file
