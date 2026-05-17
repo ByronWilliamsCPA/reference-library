@@ -2,8 +2,8 @@
 
 > **Purpose**: Base reference files and agents, general, reusable across personal, CPA, and investment
 > projects
-> **Version**: 1.0.0
-> **Last Updated**: 2026-03-15
+> **Version**: 1.1.0
+> **Last Updated**: 2026-05-16
 
 A centralized reference library for authoritative style, drafting, and writing standards. This repository
 contains no project-specific content. Individual project repositories extend what they need.
@@ -148,6 +148,13 @@ reference-library/
 ├── samples/
 │   ├── before/                   # AI-generated before-state samples for pipeline testing
 │   └── after/                    # Post-pipeline output: per-stage transcripts plus recaps
+├── docs/
+│   ├── architecture/             # ADRs
+│   ├── compliance-reports/       # Generated audit reports (git-ignored)
+│   ├── superpowers/              # Local working directory (git-ignored)
+│   ├── known-vulnerabilities.md  # CVE log and accepted Scorecard exceptions
+│   └── reusable-workflow-jobs.yaml
+├── LICENSES/                     # REUSE 3.0 licenses (FOUND-025)
 └── scripts/
     ├── setup.sh                   # Install agents to ~/.claude/agents/
     ├── extract_legal_pdfs.py

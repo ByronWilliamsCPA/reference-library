@@ -28,3 +28,6 @@ Thumbs.db
 
 # Compliance reports (generated, not committed)
 docs/compliance-reports/
+
+# Superpowers working directory (plans, scratch notes; not tracked)
+docs/superpowers/

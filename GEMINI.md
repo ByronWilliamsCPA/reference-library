@@ -28,4 +28,6 @@ by Gemini CLI. For a description of what each agent does and how the pipeline wo
 ## Writing Rule
 
 No em-dashes anywhere in this repository. Use commas, semicolons, colons, or restructured
-sentences. This applies to all content you generate or edit in this project.
+sentences. This applies to all repository content you generate or edit, including
+documentation, code comments, commit messages, and PR descriptions. The `no-em-dash`
+pre-commit hook (PC-011) enforces this mechanically on every commit.

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-05-16
+
 ### Added
 
 - CONTRIBUTING.md with docs-only contribution guidelines
@@ -24,6 +26,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   release upgrades the action runtime from Node 20 to Node 24, which requires
   Actions Runner v2.327.1 or newer. GitHub-hosted runners (`ubuntu-latest`)
   meet this requirement automatically; self-hosted runners may need to update.
+- README.md version metadata refreshed to 1.1.0 / 2026-05-16 to reflect the
+  CONTRIBUTING, CHANGELOG, AGENTS, GEMINI, ADR-001, and known-vulnerabilities
+  additions made since the initial 1.0.0 release.
+- REUSE.toml `SPDX-FileCopyrightText` year updated from 2025 to 2026 to match
+  `LICENSES/MIT.txt`.
+- `docs/known-vulnerabilities.md` reassessment policy tightened from 90 days to
+  60 days to align with the global `~/.claude/CLAUDE.md` standard.
+- `SECURITY.md` Secret Rotation Policy now states that `SONAR_TOKEN` and
+  `QLTY_COVERAGE_TOKEN` are fine-grained service-issued credentials scoped to
+  the minimum permissions required by each service (SonarCloud project-scoped
+  tokens and Qlty repo-scoped tokens); classic GitHub PATs are not used as
+  repository or organization secrets.
+- `GEMINI.md` em-dash rule scope clarified to cover commit messages, code
+  comments, and PR descriptions in addition to documentation.
+- `.pre-commit-config.yaml` no-em-dash exclude block annotated to distinguish
+  permanent exclusions (transcribed authority text) from scoped cleanup paths
+  with a 2026-12-31 target (PC-014).
+- Project `CLAUDE.md` cross-references corrected from `~/.claude/.claude/rules/`
+  to `~/.claude/rules/` (three "See Also" links and one Model Selection link).
+- `CLAUDE.md` and `README.md` repository structure trees now include the
+  `docs/` directory for ADR and known-vulnerabilities findability.
+- `.claude/compliance-overrides.md` expanded with documented exceptions for
+  CI-001, CI-035, CI-042, CI-046, OSSF-011, SCORECARD:publish_results,
+  SCORECARD:Fuzzing, FOUND-024 (em-dash tracking), and FOUND-025 (REUSE 3.0
+  in lieu of root LICENSE).
+- `.gitignore` extended with `.ruff_cache/` and `docs/superpowers/`.
+
+### Fixed
+
+- Two em-dashes in `samples/README.md` (lines 95-96) surfaced by the narrower
+  `samples/before/|samples/after/` exclude pattern in `.pre-commit-config.yaml`.
+  The previous `samples/` exclude was hiding repo-authored content that the
+  global no-em-dash rule should cover.
 
 ## [1.0.0] - 2026-03-15
 
@@ -44,5 +79,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cross-reference files documenting divergences between the three Oregon legal sources
   and 21 EoS/CMS/PromptCraft Pro conflicts
 
-[Unreleased]: https://github.com/ByronWilliamsCPA/reference-library/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/ByronWilliamsCPA/reference-library/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/ByronWilliamsCPA/reference-library/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/ByronWilliamsCPA/reference-library/releases/tag/v1.0.0

@@ -34,8 +34,15 @@ The primary security concern is accidental credential or PII exposure in commits
 
 ## Secret Rotation Policy
 
-This repository uses two GitHub Actions secrets: `SONAR_TOKEN` (SonarCloud analysis) <!-- pragma: allowlist secret -->
-and `QLTY_COVERAGE_TOKEN` (Qlty coverage reporting). Both tokens are rotated annually <!-- pragma: allowlist secret -->
+Two GitHub Actions secrets are used: `SONAR_TOKEN` and `QLTY_COVERAGE_TOKEN`. <!-- pragma: allowlist secret -->
+The first authenticates SonarCloud analysis; the second authenticates Qlty coverage
+reporting. Both tokens must be fine-grained service-issued credentials scoped to the
+minimum permissions required by each service (SonarCloud project-scoped tokens and Qlty
+repo-scoped tokens); classic GitHub PATs must not be used as repository or organization
+secrets. Verify the current values match this requirement at
+**Settings > Secrets and variables > Actions** at least every 60 days, alongside the
+known-vulnerabilities reassessment cadence. If either token is found to be a classic PAT,
+rotate to a fine-grained credential immediately. Both tokens are rotated annually
 or immediately upon any indicator of compromise (unexpected API activity, token exposure
 in logs, or repository access anomaly). To rotate, generate a new token from the
 respective service dashboard and update it at **Settings > Secrets and variables >
