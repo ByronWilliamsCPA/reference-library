@@ -13,10 +13,30 @@ bash scripts/setup.sh
 ```
 
 This installs all seven agents to `~/.claude/agents/` with the correct absolute paths
-substituted for your clone location. Re-run after moving or recloning the repository.
+substituted for your clone location. It also bootstraps `config/profiles.toml` from the
+shipped `config/profiles.example.toml` if no local config exists. Re-run after moving or
+recloning the repository.
 
 New users should run the `style-analyzer` agent first to calibrate the style profile
-before using the generators or editing pipeline.
+before using the generators or editing pipeline. The analyzer writes per-person calibration
+data to `config/profiles/{person}/{style}.md` (gitignored), so calibrating a new person
+never touches the repo's shipped default profile.
+
+## Invocation: Person × Style
+
+Every agent resolves a **person** and **style** at invocation time. Both have defaults from
+`config/profiles.toml`, so calls without parameters still work.
+
+```text
+Use the document-drafter agent.                                      # → defaults
+Use the document-drafter agent. person=byron style=work-email
+Use the writing-style-editor agent with person=ariannah, style=client-memo.
+```
+
+The agent reads the resolved profile by calling `scripts/profile_resolver.py` and uses
+those values for stylometry, palette, legal-source binding, and Tier 3 punctuation
+overrides (e.g., `no-em-dash`). See `CLAUDE.md` for the resolution rules and
+`writing-style/punctuation-preferences.md` for the override catalog.
 
 ## Agent Overview
 

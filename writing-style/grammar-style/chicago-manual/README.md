@@ -30,8 +30,9 @@
 CMS is the **Tier 2 editing authority**. When EoS and CMS conflict, CMS governs. When neither
 addresses a question, prefer plain-English usage.
 
-One user-confirmed Tier 3 override supersedes CMS: **no em-dashes** (PromptCraft Pro default).
-See `../cross-reference.md` #21.
+Tier 3 overrides are profile-driven. The shipped default profile sets
+`tier_3_overrides = ["no-em-dash"]`, but other profiles may omit it or add others. See
+`../cross-reference.md` #21 and `../../punctuation-preferences.md` for the catalog.
 
 ## Note on File Size
 

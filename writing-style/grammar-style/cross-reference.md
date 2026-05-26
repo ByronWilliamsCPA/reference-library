@@ -2,8 +2,10 @@
 
 > Where the three sources diverge. Read this before drafting when you know a rule is contested.
 >
-> **Authority**: CMS always wins over EoS. PCP overrides win only where the user has
-> confirmed the override (currently: em-dashes only).
+> **Authority**: CMS always wins over EoS. PCP overrides win only where the active profile
+> declares them in `tier_3_overrides`. See `writing-style/punctuation-preferences.md` for the
+> catalog and `scripts/profile_resolver.py` for the active profile. The default profile ships
+> with `no-em-dash`; other profiles may omit or extend the list.
 >
 > **Scope**: 26 confirmed divergences. Expanding toward the ~50+ actual EoS/CMS divergence
 > points as high-frequency conflicts emerge in practice.
@@ -32,13 +34,13 @@
 | 12 | **Compound adjective hyphenation** | Limited general guidance: hyphenate compound modifiers before a noun | §7.81–7.85 and hyphenation table (§7.89): detailed rules for permanent compounds, temporary compounds, prefixes, and open compounds; many exceptions | (none) | **CMS governs.** Consult CMS §7.89 hyphenation table for specific compounds. General rule: hyphenate when the compound precedes the noun ("well-known fact") and do not hyphenate after a linking verb ("the fact is well known"). |
 | 13 | **Capitalization of titles** | Not addressed in detail | §8.157–8.167: headline-style — capitalize first word, last word, and all "major words" (nouns, verbs, adjectives, adverbs, some conjunctions); lowercase articles (*a*, *an*, *the*), prepositions (unless first/last), and coordinating conjunctions | (none) | **CMS governs.** Headline-style for titles of works. *The Brief in Support of Summary Judgment*. |
 | 14 | **Quotation mark punctuation placement** | Not explicitly addressed | §6.9: periods and commas always go inside closing quotation marks in U.S. style; colons and semicolons go outside; question marks and exclamation points go inside only when part of the quoted matter | (none) | **CMS governs** (U.S. standard): commas and periods inside; colons and semicolons outside. |
-| 15 | **Parenthetical em-dash** | Sparing use recommended | §6.85–6.87: specific valid uses — parenthetical insertions, abrupt break or shift, amplification after an introductory clause | **PCP ban** | **PCP governs.** No em-dashes. Rewrite: use commas for asides, colons for elaboration, parentheses for insertions, or restructure the sentence. |
+| 15 | **Parenthetical em-dash** | Sparing use recommended | §6.85–6.87: specific valid uses — parenthetical insertions, abrupt break or shift, amplification after an introductory clause | profile-dependent (`no-em-dash`) | **Resolved by active profile.** If `tier_3_overrides` contains `no-em-dash` (default), rewrite using commas for asides, colons for elaboration, parentheses for insertions, or restructure. Otherwise CMS governs. See `punctuation-preferences.md`. |
 | 16 | **Tense in summaries of texts** | Present tense for summaries | §5.130: present tense is standard for discussing the content of a written work (literary present) | (none) | **Both agree.** Use present tense: "The statute provides"; "The court holds." |
 | 17 | ***Shall* vs. *will*** | Not strongly addressed in grammar sections | §5.152: *will* is the standard form in contemporary American English; *shall* is archaic except in legal drafting, first-person questions, and emphatic contexts | (none) | **CMS governs.** Use *will* in general prose. *Shall* remains appropriate in legislative, contractual, and legal contexts where it signals a mandatory obligation. |
 | 18 | **Italics for emphasis** | Use sparingly; rely on word order and sentence structure for emphasis | §7.47–7.49: same counsel — italics for emphasis are legitimate but overuse dilutes their effect | (none) | **Both agree.** Use italics for emphasis sparingly; restructure rather than italicize when possible. |
 | 19 | **Ellipsis form** | Three spaced dots: `. . .` or `...` | §13.51–13.58: three dots for omission within a sentence; four dots (period + ellipsis) when omission follows a complete sentence; square brackets or other notation for changes | (none) | **CMS governs.** Follow CMS §13.51–13.58 bracketing rules when quoting and omitting. In general prose, three dots for trailing off or pause. |
 | 20 | **Paragraph length** | Short paragraphs preferred; one-sentence paragraphs for emphasis | No fixed rule; paragraph length should be proportional to the content and the rhythm of the argument | (none) | **CMS governs.** No length rule; length serves content. Short paragraphs are still a legitimate stylistic tool. |
-| 21 | **Em-dash** | Not addressed as a punctuation mark | §6.85–6.87: em-dash has specific valid uses (parenthetical insertion, abrupt break, amplification, attribution of block quotation) | **PCP ban** | **PCP governs (user-confirmed override).** No em-dashes. Substitute: commas for parenthetical asides, colons for amplification, parentheses for insertions, semicolons or new sentences for breaks. |
+| 21 | **Em-dash** | Not addressed as a punctuation mark | §6.85–6.87: em-dash has specific valid uses (parenthetical insertion, abrupt break, amplification, attribution of block quotation) | profile-dependent (`no-em-dash`) | **Resolved by active profile.** When `tier_3_overrides` contains `no-em-dash` (shipped default): substitute commas for parenthetical asides, colons for amplification, parentheses for insertions, semicolons or new sentences for breaks. When the override is absent, CMS governs. See `punctuation-preferences.md` for the catalog. |
 | 22 | **Abbreviation punctuation** (*e.g.*, *i.e.*, *et al.*, *ibid.*) | Silent; no guidance | §10.4: periods required on each letter of *e.g.* and *i.e.*; period after *al.* in *et al.*; *ibid.* requires its period | (none) | **CMS governs.** Always write *e.g.*, *i.e.*, *et al.*, *ibid.* with periods. Comma follows *e.g.* and *i.e.* in U.S. style. See `elements-of-style/words-expressions.md` abbreviations section. |
 | 23 | **Collective noun agreement** (*jury*, *committee*, *staff*, *team*) | American default: singular | §5.7–5.9: notional agreement — singular when the group acts as a unit ("The committee **was** unanimous"); plural when members act individually ("The committee **were** divided") | (none) | **CMS governs.** Notional agreement applies. Default to singular in American usage when in doubt. |
 | 24 | **Subjunctive mood in *if*-clauses** | Silent; no guidance | §5.121–5.123: use subjunctive (*were*, *be*) for hypothetical, contrary-to-fact, and wished-for conditions: "If this **were** true…"; "I wish it **were** different." | (none) | **CMS governs.** Use *were* (not *was*) in hypothetical *if*-clauses: "If the statute **were** amended…" Use *was* only for factual past conditions: "If the bill **was** filed on time, it proceeded." |
@@ -54,6 +56,6 @@ When you encounter a new EoS/CMS/PCP divergence in practice:
 1. Add a new row at the bottom with the next sequential number.
 2. State what each source says (paraphrase; do not quote CMS verbatim).
 3. Include the CMS section reference.
-4. Note any PCP override only if the user has confirmed it.
+4. Note any Tier 3 override only if it appears in `writing-style/punctuation-preferences.md`.
 5. State the resolution in the final column.
 6. Update `index.md` if the new topic needs a routing entry.

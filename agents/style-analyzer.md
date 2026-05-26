@@ -13,6 +13,43 @@ tools: ["Read", "Write", "Edit", "Glob"]
 > **Scope**: Collect writing samples, compute stylometry, characterize voice, output profile updates
 > **Boundary**: Analysis and recommendation only. Does not edit documents or run the pipeline.
 
+## Resolve Invocation Parameters
+
+Unlike the editing agents, this agent **writes** profile data. It still resolves the active profile to use as a starting baseline, but its output replaces parts of that profile.
+
+### Parse the invocation
+
+Scan for `person` and (optional) `style` parameters. Accept any of these forms:
+
+- `person=ariannah` (calibrate the person's overall profile)
+- `person=ariannah style=client-memo` (calibrate one style for that person)
+- Informal: "Calibrate the profile for Ariannah's client memos."
+
+When `person` is missing, ask the user. Calibration requires a named person; there is no sensible default. When `style` is missing, calibrate at the person level (writes to `config/profiles/{person}/general.md`).
+
+### Run the resolver
+
+```bash
+python3 {{LIBRARY_PATH}}/scripts/profile_resolver.py \
+  --person <person-key> --style <style-key> --format json
+```
+
+On exit 6 (unknown person), proceed anyway — calibration may be the act of *creating* a new person. Inform the user and confirm before writing.
+
+On exit 2 (DomainMismatch), report and ask. Calibration does not bypass domain gating.
+
+### Where output goes
+
+This agent writes to **local, gitignored** files:
+
+- Person-level profile: `{{LIBRARY_PATH}}/config/profiles/<person>/general.md`
+- Style-specific profile (if `style` was provided): `{{LIBRARY_PATH}}/config/profiles/<person>/<style>.md`
+- Person-level `tier_3_overrides`, `ai_extensions`, and metadata: appended/updated in `{{LIBRARY_PATH}}/config/profiles.toml` under `[person.<person>]`
+
+If `config/profiles.toml` does not exist, copy `config/profiles.example.toml` to `config/profiles.toml` first, then make additive edits. Never overwrite the example file. Never write under `[person.default]` — that entry is the public shipped default.
+
+A `--inherit-from <other-person>/<style>` flag in the user's invocation lets the analyzer bootstrap from an existing profile with fewer samples. When present, copy the source profile's values into the new person's profile as starting points, then override with the analyzer's measurements where samples are sufficient.
+
 ## When to Use This Agent
 
 Run this agent when:
@@ -220,11 +257,19 @@ Identify things the user does NOT do (just as revealing as what they do):
 
 Produce three output sections.
 
-### Output A: Updated style-profile.md
+### Output A: Person-specific profile file
 
-Generate a complete replacement for `{{LIBRARY_PATH}}/writing-style/style-profile.md`
-with the user's measured values. Follow the exact structure of the current file but
-replace all targets and descriptions with the user's data.
+Generate a complete profile file at `{{LIBRARY_PATH}}/config/profiles/<person>/<style>.md`
+(or `general.md` if no style was specified). Follow the structure of the shipped
+`{{LIBRARY_PATH}}/writing-style/style-profile.md` but replace all targets and descriptions
+with the user's measured data.
+
+**Never edit `writing-style/style-profile.md`** — that file is the public default and is
+committed to the repo. Person-specific profiles live under `config/profiles/`, which is
+gitignored.
+
+Also produce the corresponding `[person.<person>]` block for `config/profiles.toml`,
+including the `calibration_source` path pointing to the file you just wrote.
 
 **Required sections** (matching current file structure):
 
@@ -261,19 +306,23 @@ does not overlap with the AI blacklist."
 
 For each of the three pipeline agents, note any recommended changes:
 
-**grammar-composition-editor (Stage 1)**:
-- Any punctuation habits that differ from current defaults (e.g., the user uses em-dashes
-  naturally, or avoids serial commas)
-- Readability targets that should shift based on the user's natural grade level
+**Tier 3 overrides for the person's `tier_3_overrides` list**:
+- Punctuation habits that differ from the shipped default. The default profile bans em-dashes
+  via `tier_3_overrides = ["no-em-dash"]`. If the user uses em-dashes naturally, omit
+  `no-em-dash` from their list. If they have other strong preferences (e.g., always avoids
+  the Oxford comma), propose adding a new override entry and document it in
+  `writing-style/punctuation-preferences.md`.
 
 **document-validator (Stage 2)**:
-- Typical no changes needed (factual validation is user-independent)
+- Typically no changes needed (factual validation is user-independent)
 - Note if the user's domain requires specialized fact-checking patterns
 
 **writing-style-editor (Stage 3)**:
-- Updated voice checklist items based on Step 3a
-- Updated persona drift baselines (the new stylometry targets become the drift anchors)
-- Any structural patterns from Step 3b that should be preserved, not flagged
+- The new stylometry targets in the person's profile become the anchors automatically;
+  no per-agent edits are needed once the profile is written
+- Any structural patterns from Step 3b that should be preserved (not flagged as AI tells)
+  should be added to the person's `ai_extensions` list as a small markdown file under
+  `config/profiles/<person>/ai-exceptions.md` (gitignored)
 
 ## Step 5: Present and Confirm
 

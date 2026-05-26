@@ -31,3 +31,7 @@ docs/compliance-reports/
 
 # Superpowers working directory (plans, scratch notes; not tracked)
 docs/superpowers/
+
+# V2 profile config (active values live locally; only profiles.example.toml is committed)
+config/profiles.toml
+config/profiles/

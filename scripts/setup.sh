@@ -35,8 +35,22 @@ for src in "$AGENTS_SRC"/*.md; do
     installed=$((installed + 1))
 done
 
+# Bootstrap the local profiles config from the shipped example if missing.
+# profiles.toml is gitignored; profiles.example.toml is the public default.
+CONFIG_DIR="$LIBRARY_PATH/config"
+ACTIVE_CONFIG="$CONFIG_DIR/profiles.toml"
+EXAMPLE_CONFIG="$CONFIG_DIR/profiles.example.toml"
+if [[ -f "$EXAMPLE_CONFIG" && ! -f "$ACTIVE_CONFIG" ]]; then
+    cp "$EXAMPLE_CONFIG" "$ACTIVE_CONFIG"
+    echo "  bootstrapped: config/profiles.toml (from profiles.example.toml)"
+fi
+
 echo ""
 echo "Done. $installed agent(s) installed to $AGENTS_DEST"
 echo "They are now available in all Claude Code projects."
+echo ""
+echo "Local profile config: $ACTIVE_CONFIG"
+echo "Edit it to add people or styles. Run the style-analyzer agent to"
+echo "calibrate stylometry values for a new person."
 echo ""
 echo "To update after moving the repository, re-run this script."

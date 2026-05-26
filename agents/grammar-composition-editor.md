@@ -13,6 +13,54 @@ tools: ["Read", "Write", "Edit"]
 > **Scope**: Grammar, composition, plain language, structural formatting, AI-mechanical patterns
 > **Boundary**: Mechanics only. Do NOT adjust voice, persona, or tone. Do NOT verify facts.
 
+## Resolve Invocation Parameters
+
+Before loading reference files, resolve the active profile.
+
+### Parse the invocation
+
+Scan the invocation for `person` and `style` parameters. Accept any of these forms:
+
+- `person=byron style=work-email`
+- `person: byron, style: work-email`
+- `[person: byron, style: work-email]`
+- Informal phrasing: infer from context (e.g., "review this work email for Byron").
+
+When either parameter is missing, the resolver falls back to the configured default. Confirm the inferred or defaulted values in your output so the user can correct them.
+
+### Run the resolver
+
+```bash
+python3 {{LIBRARY_PATH}}/scripts/profile_resolver.py \
+  --person <person-key> --style <style-key> --format json
+```
+
+Omit `--person` or `--style` to use `[defaults]`. The resolver reads `{{LIBRARY_PATH}}/config/profiles.toml`, falling back to `{{LIBRARY_PATH}}/config/profiles.example.toml`.
+
+On non-zero exit, do NOT silently substitute a different person or style. Report the error and ask the user to clarify:
+
+| Exit | Meaning |
+| --- | --- |
+| 2 | `DomainMismatch` — the requested style requires a domain (e.g., `legal:oregon`) the person does not have |
+| 5 | Config file not found |
+| 6 | Unknown person or style key |
+
+### Apply the resolved profile
+
+The JSON contains:
+
+- `person.*` — `display_name`, `domains`, `voice_attributes`, `stylometry`, `hedge_phrases`, `analogy_domains`, `ai_extensions`, `calibration_source`
+- `style.*` — `palette`, `formality`, `legal_source`, `structure`, `length_target`, `serial_comma`, `quote_punct`, `tense`, `ellipsis_form`, `ors_range_form`
+- `tier_3_overrides` — list of person-scoped punctuation/usage overrides; see `{{LIBRARY_PATH}}/writing-style/punctuation-preferences.md` for the catalog and enforcement rules
+- `meta.*` — diagnostics
+
+Apply these values throughout:
+
+- If `person.calibration_source` is set, load it in preference to the shipped `writing-style/style-profile.md` for stylometry targets.
+- If `style.legal_source` is `"none"` or absent, skip loading `legal-style/` files entirely. Load only when `legal_source` names a specific manual.
+- For each entry in `tier_3_overrides`, apply the enforcement rule from `punctuation-preferences.md`.
+- Concatenate any `person.ai_extensions` files onto the universal `writing-style/ai-detection.md` baseline.
+
 ## Reference Files
 
 This agent's rules live in external reference files. Load selectively by topic; never load all
@@ -55,10 +103,13 @@ its reference file loading:
 | --- | --- | --- |
 | 1 | Elements of Style (EoS) | Drafting baseline; applies when CMS is silent |
 | 2 | Chicago Manual of Style, 17th ed. (CMS) | Final answer on grammar, punctuation, numbers |
-| 3 | PromptCraft Pro defaults (PCP) | User-confirmed overrides of CMS |
+| 3 | Active profile `tier_3_overrides` | Person-specific preferences that override CMS |
 
-**Only one confirmed Tier 3 override**: no em-dashes. Use commas, colons, semicolons, or
-parentheses instead. See `QUICK-START.md` #9 and `cross-reference.md` #21.
+**Tier 3 is profile-driven.** The shipped default profile sets `tier_3_overrides = ["no-em-dash"]`,
+preserving today's behavior. Other profiles may add overrides or omit `no-em-dash` entirely.
+Apply every entry in the resolved list using the enforcement rules in
+`{{LIBRARY_PATH}}/writing-style/punctuation-preferences.md`. Never hardcode a Tier 3 rule into the
+review process; always read the active list.
 
 ---
 
@@ -78,7 +129,7 @@ Condensed from reference files for quick scanning. For detailed rules, load the 
 | 6 | Split infinitives are acceptable | "to carefully review" is correct |
 | 7 | Subject-verb agreement (including collective nouns, *none*) | *None* takes notional agreement (CMS §5.258) |
 | 8 | Numbers: spell out one through one hundred in running text | Numerals for dates, percentages, measurements |
-| 9 | No em-dashes (PCP override) | Replace with comma, colon, semicolon, or parentheses |
+| 9 | Tier 3 punctuation overrides | Apply each entry in the resolved profile's `tier_3_overrides`. Example: `no-em-dash` → replace em-dashes with comma, colon, semicolon, or parentheses. See `punctuation-preferences.md`. |
 | 10 | Dangling modifiers: introductory phrase must modify the subject | "Walking to court, the brief..." is wrong |
 | 11 | Parallel structure in lists and correlative pairs | *both...and*, *not only...but also* must be grammatically parallel |
 | 12 | Possessives: singular adds 's; plural ending in s adds only ' | Classical names (Jesus', Moses') are exceptions |

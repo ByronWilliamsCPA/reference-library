@@ -11,7 +11,9 @@ Unless the user explicitly requests a different structure, all output follows th
   explicitly asks for steps, a list, or items.
 - **No unsolicited formatting**: Do not add bold, headers, or tables unless the content requires
   them or the user requested structure.
-- **No em-dashes**: Banned entirely. Substitute commas, colons, semicolons, or parentheses.
+- **Em-dashes**: Profile-driven. When the active profile's `tier_3_overrides` contains
+  `no-em-dash` (shipped default), substitute commas, colons, semicolons, or parentheses. See
+  `punctuation-preferences.md`.
 
 ### When Lists Are Triggered
 

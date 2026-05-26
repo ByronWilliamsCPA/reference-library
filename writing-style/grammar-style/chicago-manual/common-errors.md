@@ -18,7 +18,7 @@
 | 4 | *Who* or *whom*? | *Who* = subject; *whom* = object. | `grammar-usage.md` §5.62 |
 | 5 | *None* — singular or plural verb? | Notional agreement: plural when the concept is plural. | `grammar-usage.md` §5.258 |
 | 6 | Spell out "nine" or write "9"? | Spell out one through one hundred in running text. | `numbers.md` §9.2 |
-| 7 | Em-dash OK? | No. PCP override bans em-dashes. Use commas, colons, semicolons, or parentheses. | `cross-reference.md` #21 |
+| 7 | Em-dash OK? | Read the active profile. The shipped default sets `tier_3_overrides = ["no-em-dash"]`; under that override, substitute commas, colons, semicolons, or parentheses. | `cross-reference.md` #21; `../../punctuation-preferences.md` |
 | 8 | Comma after short intro phrase? | Optional for very short phrases (≤4 words); required for longer ones. | `punctuation.md` §6.29 |
 | 9 | Period inside or outside closing quote? | Inside (U.S. style). | `punctuation.md` §6.9 |
 | 10 | *Burns's* or *Burns'*? | *Burns's*. Add *'s* to most names. Exception: classical/biblical names. | `punctuation.md` §7.20 |
@@ -68,8 +68,8 @@ the notional meaning, not a fixed rule.
 
 ### 7. Em-Dash Alternatives
 
-CMS permits em-dashes in several valid constructions (§6.85–6.87). The user-confirmed PCP
-override bans them entirely. Use these substitutes:
+CMS permits em-dashes in several valid constructions (§6.85–6.87). When the active profile's
+`tier_3_overrides` includes `no-em-dash` (the shipped default), use these substitutes:
 
 | Em-dash use | Substitute | Example |
 | --- | --- | --- |
@@ -161,7 +161,7 @@ These errors appear frequently in AI output. When reviewing AI-drafted text, che
 | "at this point in time" | Verbose | "**now**" |
 | "it is important to note that" | Filler | Delete; start the actual point |
 | "it should be noted" | Passive filler | Delete or attribute to a source |
-| Starting sentence with em-dash context | PCP ban | Rewrite using commas, colons, semicolons |
+| Starting sentence with em-dash context | profile-dependent (`no-em-dash`) | When the override is active, rewrite using commas, colons, semicolons |
 
 For a complete list of AI puffery terms and blacklisted phrases, see
 `../../ai-detection.md`.

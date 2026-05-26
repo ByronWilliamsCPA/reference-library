@@ -26,12 +26,17 @@ reference-library/
 │   ├── plain-language-guide.md   # Federal plain language principles, readability, inclusive language
 │   ├── logical-fallacies-guide.md    # Common reasoning errors in professional documents
 │   ├── transition-words-reference.md # Transition categories, usage rules, AI overuse detection
+│   ├── punctuation-preferences.md    # Catalog of person-configurable Tier 3 overrides (em-dash, etc.)
 │   └── grammar-style/            # EoS + CMS grammar reference (14 files)
 │       ├── QUICK-START.md        # 80% of grammar questions: start here
-│       ├── cross-reference.md    # 21 EoS/CMS/PCP divergences with resolution
+│       ├── cross-reference.md    # 26 EoS/CMS divergences with resolution
 │       ├── index.md              # Concept-to-file routing map
 │       ├── elements-of-style/    # EoS base rules (Tier 1, drafting baseline)
 │       └── chicago-manual/       # CMS rules (Tier 2, editing authority)
+├── config/
+│   ├── profiles.example.toml     # Shipped default profile + starter styles (committed)
+│   ├── profiles.toml             # Active per-machine config (gitignored; copied from example on first setup)
+│   └── profiles/                 # Per-person calibration files (gitignored)
 ├── agents/
 │   ├── grammar-composition-editor.md  # Stage 1: Grammar, composition, plain language
 │   ├── document-validator.md          # Stage 2: Factual accuracy, assumptions, bias
@@ -52,8 +57,46 @@ reference-library/
 ├── LICENSES/                     # REUSE 3.0 licenses (FOUND-025: in lieu of root LICENSE)
 └── scripts/
     ├── extract_legal_pdfs.py     # PDF → raw text extraction (pdftotext → pymupdf fallback)
-    └── generate_before_samples.py  # Generate AI-mechanical before-state samples via OpenRouter
+    ├── generate_before_samples.py  # Generate AI-mechanical before-state samples via OpenRouter
+    ├── profile_resolver.py       # Resolve person × style profile from config/profiles.toml
+    └── setup.sh                  # Install agents and bootstrap config/profiles.toml from example
 ```
+
+## Architecture: V2 Person × Style Profiles
+
+Agents resolve a **person × style** profile at invocation time and use it to scope voice,
+stylometry, punctuation overrides, AI-detection extensions, and legal-source bindings.
+
+| Dimension | Examples | Scope |
+| --- | --- | --- |
+| **Person** | `default`, `byron`, `ariannah` | Voice, stylometry, hedge phrases, analogy domains, `tier_3_overrides`, domains, AI extensions |
+| **Style** | `general`, `work-email`, `internal-memo`, `client-memo`, `statutory-drafting`, `court-brief` | Palette, formality, legal source, structural conventions, register-specific punctuation |
+
+**Resolution** (last writer wins on scalars; lists concat-and-dedupe):
+
+```
+base_defaults  →  [person.<p>]  →  [style.<s>]  →  [overrides."<p>:<s>"]  →  call-time args
+```
+
+**Config files**:
+
+- `config/profiles.example.toml` — committed; defines the shipped `[person.default]` and 6
+  starter styles. Always available as a fallback.
+- `config/profiles.toml` — gitignored; the active per-machine config. `scripts/setup.sh`
+  copies the example into this path on first run.
+- `config/profiles/<person>/<style>.md` — gitignored; per-person calibration data written by
+  the `style-analyzer` agent. Referenced by `calibration_source` in the TOML.
+
+**Domain gating**: a style with `required_domain = "legal:oregon"` will not resolve for a
+person whose `domains` list omits that value. The resolver exits with code 2 (`DomainMismatch`)
+and a clear error. Agents must report the error and ask, not silently substitute.
+
+**Invocation**: every agent accepts `person=<key> style=<key>` parameters in the prompt. Both
+default to the `[defaults]` block when omitted. The resolver script (`scripts/profile_resolver.py`)
+is called by agents via the Bash tool and emits a flat JSON profile that drives the rest of
+the run. See `writing-style/punctuation-preferences.md` for the Tier 3 override catalog.
+
+
 
 ## Architecture: Grammar-Style Three-Tier System
 
@@ -64,11 +107,14 @@ governs based on which operation you are performing:
 | --- | --- |
 | Drafting (writing first draft) | Elements of Style (Tier 1 baseline) |
 | Editing (reviewing any draft) | Chicago Manual of Style, 17th ed. (Tier 2; overrides EoS) |
-| User-confirmed preference deviations | PromptCraft Pro defaults (Tier 3; overrides CMS) |
+| Person-specific preferences | Active profile's `tier_3_overrides` (Tier 3; overrides CMS) |
 
-**One confirmed Tier 3 override**: no em-dashes. CMS §6.85–6.87 permits them; the user
-follows the PromptCraft Pro default banning them. Use commas, colons, semicolons, or
-parentheses instead. See `writing-style/grammar-style/cross-reference.md` #21.
+**Tier 3 is profile-driven.** The active person's profile carries a `tier_3_overrides` list
+(e.g., `["no-em-dash"]`). The shipped default profile preserves today's behavior by including
+`no-em-dash`; other profiles may omit it or add additional overrides. See
+`writing-style/punctuation-preferences.md` for the catalog of supported overrides and
+`scripts/profile_resolver.py` for resolution. Never hardcode a Tier 3 rule into agents or
+reference content; always read the resolved list at invocation time.
 
 **Agent file-loading strategy**: Load `grammar-style/QUICK-START.md` first. For conflicts,
 load `cross-reference.md`. For deeper rules, load only the specific source file. Never

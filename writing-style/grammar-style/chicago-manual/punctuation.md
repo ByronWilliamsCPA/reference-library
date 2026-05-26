@@ -3,11 +3,13 @@
 > **Source**: Paraphrased from *The Chicago Manual of Style*, 17th edition (2017), Chapters 6–7.
 > CMS section references are provided for verification. No verbatim CMS prose appears here.
 >
-> **Authority**: CMS Ch. 6–7 governs. The one user-confirmed PCP override applies here:
-> **no em-dashes** (cross-reference.md #21). Substitute commas, colons, semicolons, or parentheses.
+> **Authority**: CMS Ch. 6–7 governs. Tier 3 punctuation overrides come from the active
+> profile's `tier_3_overrides` list; the shipped default includes `no-em-dash`
+> (cross-reference.md #21; `../../punctuation-preferences.md`). When that override is active,
+> substitute commas, colons, semicolons, or parentheses for em-dashes.
 >
 > **Note**: This file covers comma, semicolon, colon, en dash, quotation marks, and apostrophe.
-> Em-dash is documented only as a banned substitute (PCP override).
+> Em-dash is documented below for reference; whether it is permitted depends on the active profile.
 
 ---
 
@@ -245,12 +247,15 @@ without a hyphen) as one of its elements.
 
 ---
 
-### Em Dash (Banned — PCP Override)
+### Em Dash (Profile-Driven)
 
 The em dash has valid uses under CMS §6.85–6.87 (parenthetical insertions, abrupt breaks,
-amplification). However, the user has confirmed a Tier 3 PromptCraft Pro override: **no em-dashes**.
+amplification). Whether to use them depends on the active profile's `tier_3_overrides` list.
+The shipped default profile sets `["no-em-dash"]`, which directs the substitutes below. When
+`no-em-dash` is absent from the active profile, CMS governs and em-dashes are permitted in
+their valid uses.
 
-**Substitutes**:
+**Substitutes when `no-em-dash` is active**:
 
 - For a parenthetical aside: use **commas** — "The motion, filed late, was denied."
 - For elaboration after a clause: use a **colon** — "The result is clear: the motion fails."

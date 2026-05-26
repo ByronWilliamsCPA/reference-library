@@ -32,9 +32,27 @@ Start with [`legal-style/QUICK-START.md`](legal-style/QUICK-START.md) for the mo
 Quantified writing style profile and AI pattern detection reference. Not project-specific; applies to any
 professional document context.
 
-- [`writing-style/style-profile.md`](writing-style/style-profile.md): sentence metrics, rhythm targets, stylometry
+- [`writing-style/style-profile.md`](writing-style/style-profile.md): sentence metrics, rhythm targets, stylometry (shipped default; per-person calibration lives locally under `config/profiles/`)
 - [`writing-style/ai-detection.md`](writing-style/ai-detection.md): blacklisted terms, structural tells,
   rewrite examples
+- [`writing-style/punctuation-preferences.md`](writing-style/punctuation-preferences.md): catalog of person-configurable Tier 3 overrides (em-dash, etc.)
+
+### `config/`: Person × Style Profiles
+
+A V2 layer that lets agents be parameterized by **person** (the maintainer, a colleague, you)
+and **style context** (work email, client memo, statutory drafting, court brief, etc.).
+
+- [`config/profiles.example.toml`](config/profiles.example.toml): shipped default profile plus
+  six starter styles (general, work-email, internal-memo, client-memo, statutory-drafting,
+  court-brief). Committed to the repo.
+- `config/profiles.toml`: your local active config. Gitignored. Created from the example by
+  `scripts/setup.sh` on first run; edit it to add people, styles, or cross-scoped overrides.
+- `config/profiles/{person}/{style}.md`: per-person calibration data written by the
+  `style-analyzer` agent. Gitignored.
+
+The resolver script (`scripts/profile_resolver.py`) merges base defaults → person → style →
+cross-scoped overrides → call-time arguments and emits the active profile as JSON. Agents
+call it at invocation time. See [`CLAUDE.md`](CLAUDE.md) for resolution rules.
 
 ### `agents/`: Base Agent Definitions
 
@@ -128,6 +146,10 @@ reference-library/
 │   ├── document-validator.md
 │   ├── writing-style-editor.md
 │   └── audience-reaction-analyzer.md
+├── config/                          # V2 person × style profiles
+│   ├── profiles.example.toml        # Shipped default (committed)
+│   ├── profiles.toml                # Active local config (gitignored)
+│   └── profiles/                    # Per-person calibration data (gitignored)
 ├── legal-style/
 │   ├── README.md
 │   ├── QUICK-START.md
@@ -144,6 +166,7 @@ reference-library/
 │   ├── plain-language-guide.md
 │   ├── logical-fallacies-guide.md
 │   ├── transition-words-reference.md
+│   ├── punctuation-preferences.md   # Tier 3 override catalog
 │   └── grammar-style/
 ├── samples/
 │   ├── before/                   # AI-generated before-state samples for pipeline testing
@@ -156,7 +179,8 @@ reference-library/
 │   └── reusable-workflow-jobs.yaml
 ├── LICENSES/                     # REUSE 3.0 licenses (FOUND-025)
 └── scripts/
-    ├── setup.sh                   # Install agents to ~/.claude/agents/
+    ├── setup.sh                   # Install agents; bootstrap config/profiles.toml
+    ├── profile_resolver.py        # Resolve a person × style profile (V2)
     ├── extract_legal_pdfs.py
     └── generate_before_samples.py
 ```

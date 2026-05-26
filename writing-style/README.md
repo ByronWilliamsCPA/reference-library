@@ -24,10 +24,11 @@ A modular grammar and composition reference based on a three-tier authority hier
 | --- | --- | --- |
 | 1 (base) | **Elements of Style** (EoS) | Drafting baseline; applies when CMS is silent |
 | 2 (editing authority) | **Chicago Manual of Style**, 17th ed. (CMS) | Final answer on grammar, punctuation, numbers |
-| 3 (user-confirmed overrides) | **PromptCraft Pro** defaults | Specific cases where user preference overrides CMS |
+| 3 (profile-specific overrides) | Active profile's `tier_3_overrides` list | Person-specific preferences that override CMS |
 
-**One confirmed Tier 3 override**: no em-dashes. CMS §6.85–6.87 permits them; PCP bans them.
-Use commas, colons, semicolons, or parentheses instead. See `grammar-style/cross-reference.md` #21.
+**Tier 3 is profile-driven.** The active person's profile carries a `tier_3_overrides` list.
+The shipped default includes `no-em-dash`; other profiles may omit it or add others. See
+`punctuation-preferences.md` for the catalog and `scripts/profile_resolver.py` for resolution.
 
 ### Navigation
 

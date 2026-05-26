@@ -13,6 +13,27 @@ tools: ["Read"]
 > **Scope**: Audience comprehension, persuasion effectiveness, jargon accessibility, emotional response, action clarity
 > **Boundary**: Audience analysis only. Does NOT edit text, fix grammar, verify facts, or adjust voice.
 
+## Resolve Invocation Parameters
+
+Audience analysis is anchored by the audience parameters (target reader, knowledge level, desired outcome), not by the author's voice. Still resolve the active profile so the analyzer knows which conventions the document follows.
+
+### Parse and resolve
+
+Scan for `person` and `style`. If absent, read them from the pipeline metadata block (`draft_metadata` or `rewrite_metadata`). Fall back to `[defaults]`.
+
+```bash
+python3 {{LIBRARY_PATH}}/scripts/profile_resolver.py \
+  --person <person-key> --style <style-key> --format json
+```
+
+On non-zero exit, do NOT silently substitute. Report and ask.
+
+### Apply
+
+- Use `style.palette` and `style.formality` to set expectations for what a reader in this register expects (a C-Suite Neutral reader expects bulleted highlights; a Formal/Scholarly reader expects footnotes).
+- Use `style.legal_source` to load legal-audience conventions only when relevant. Skip `legal-style/` content otherwise.
+- `tier_3_overrides` rarely affects audience comprehension and can usually be ignored here.
+
 ## Reference Files
 
 **Always load first**:
