@@ -44,6 +44,10 @@ if [[ -f "$ACTIVE_CONFIG" ]]; then
     : # local config already present; do not touch
 elif [[ -f "$EXAMPLE_CONFIG" ]]; then
     cp "$EXAMPLE_CONFIG" "$ACTIVE_CONFIG"
+    # Users may add API keys or personal calibration paths to profiles.toml
+    # later. Tighten permissions now so the file is not group-readable on
+    # shared filesystems (umask 022 leaves it world-readable by default).
+    chmod 600 "$ACTIVE_CONFIG"
     echo "  bootstrapped: config/profiles.toml (from profiles.example.toml)"
 else
     echo "  WARNING: neither $ACTIVE_CONFIG nor $EXAMPLE_CONFIG exists." >&2
