@@ -46,7 +46,9 @@ jobs:
       - name: Install test dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install pytest pytest-cov
+          # Pin minimum versions to reduce supply-chain risk on a runner
+          # that holds SONAR_TOKEN. Bump intentionally, not silently.
+          python -m pip install 'pytest>=7.0,<9' 'pytest-cov>=4.0,<7'
 
       - name: Run tests with coverage
         run: |

@@ -3,6 +3,13 @@
 # pytest and coverage so SonarCloud can verify quality gates on the small
 # amount of Python that lives in scripts/.
 
+[project]
+name = "reference-library-scripts"
+version = "0.0.0"
+# scripts/profile_resolver.py uses tomllib (stdlib in 3.11+) with a tomli
+# fallback. CI runs on 3.12; the floor stays at 3.11 to match.
+requires-python = ">=3.11"
+
 [tool.pytest.ini_options]
 minversion = "7.0"
 pythonpath = ["scripts"]

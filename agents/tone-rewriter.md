@@ -15,7 +15,7 @@ tools: ["Read", "Write", "Edit"]
 
 ## Resolve Invocation Parameters
 
-This agent resolves a profile **per style**: one for the source document's register and one for the target. Person stays constant — the same author writing for a different audience.
+This agent resolves a profile **per style**: one for the source document's register and one for the target. Person stays constant; the same author writes for a different audience.
 
 ### Parse the invocation
 
@@ -25,7 +25,7 @@ Scan for `person`, `source_style`, and `target_style` parameters. Accept any of 
 - `person: byron, source: internal-memo, target: client-memo`
 - Informal: "Rewrite this internal memo for a client audience, in Byron's voice."
 
-If `source_style` is missing, infer it from the document's register and confirm the inference. If `target_style` is missing, ask the user — there is no sensible default for a rewrite target.
+If `source_style` is missing, infer it from the document's register and confirm the inference. If `target_style` is missing, ask the user; there is no sensible default for a rewrite target.
 
 ### Run the resolver twice
 
@@ -40,9 +40,9 @@ The resolver reads `{{LIBRARY_PATH}}/config/profiles.toml`, falling back to `{{L
 
 | Exit | Meaning |
 | --- | --- |
-| 2 | `DomainMismatch` — the person lacks a domain the target style requires |
-| 5 | Config file not found |
+| 5 | Config file not found, malformed, or unreadable |
 | 6 | Unknown person or style key |
+| 7 | `DomainMismatch`: the person lacks a domain the target style requires |
 
 ### Apply the resolved profiles
 

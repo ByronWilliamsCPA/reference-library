@@ -42,18 +42,18 @@ On non-zero exit, do NOT silently substitute. Report and ask.
 
 | Exit | Meaning |
 | --- | --- |
-| 2 | `DomainMismatch` — style requires a domain the person does not have |
-| 5 | Config file not found |
+| 5 | Config file not found, malformed, or unreadable |
 | 6 | Unknown person or style key |
+| 7 | `DomainMismatch`: style requires a domain the person does not have |
 
 ### Apply the resolved profile
 
 The JSON contains:
 
-- `person.*` — voice attributes, stylometry targets, hedge phrases, analogy domains, AI extensions, calibration source
-- `style.*` — palette, formality, legal source, structural conventions, register-specific punctuation
-- `tier_3_overrides` — punctuation/usage overrides; see `{{LIBRARY_PATH}}/writing-style/punctuation-preferences.md`
-- `meta.*` — diagnostics
+- `person.*`: voice attributes, stylometry targets, hedge phrases, analogy domains, AI extensions, calibration source
+- `style.*`: palette, formality, legal source, structural conventions, register-specific punctuation
+- `tier_3_overrides`: punctuation/usage overrides; see `{{LIBRARY_PATH}}/writing-style/punctuation-preferences.md`
+- `meta.*`: diagnostics
 
 Stylometry targets, hedge phrases, and analogy domains in the JSON override the shipped defaults in `style-profile.md`. If `person.calibration_source` points to a person-specific calibration file, load it; it represents the person's actual measured voice.
 

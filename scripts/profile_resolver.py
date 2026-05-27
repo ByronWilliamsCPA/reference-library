@@ -13,16 +13,28 @@ at invocation time. Agents call this via the Bash tool:
         --person ariannah --style work-email --format json
 
 Resolution rules:
-    1. Layer order: base → person.<p> → style.<s> → overrides."<p>:<s>"
+    1. Layer order: base -> person.<p> -> style.<s> -> overrides."<p>:<s>".
+       The --person and --style CLI flags SELECT which layers apply; they
+       are not themselves an additional override layer.
     2. Scalars: last writer wins.
     3. Lists: concatenate then dedupe (preserves order of first appearance).
     4. Tables: shallow-merged key by key.
     5. tier_3_overrides is person-scoped only (styles cannot override).
     6. legal_source is style-scoped only (persons cannot override).
-    7. Domain gating: if a style declares required_domain and the resolved
-       person does not list it in domains, exit with code 2 and an error.
+    7. Domain gating runs against the person's resolved domains BEFORE any
+       cross-scoped overrides apply. Cross overrides cannot grant domain
+       access; that protects the gate from being silently bypassed.
     8. Missing person / style fall back to [defaults]. Missing defaults is a
        hard error (exit code 3).
+
+Exit codes:
+    0  success
+    2  argparse usage error (invalid CLI args; argparse default)
+    3  config missing required [defaults] section or keys
+    4  tomllib/tomli not available (pre-3.11 Python without tomli)
+    5  config file not found, malformed, or unreadable
+    6  unknown person or style key
+    7  DomainMismatch: style requires a domain the person does not have
 """
 
 from __future__ import annotations
@@ -99,8 +111,15 @@ def _load_config(explicit: str | None) -> tuple[dict[str, Any], Path]:
 
 
 def _read_toml(path: Path) -> dict[str, Any]:
-    with path.open("rb") as handle:
-        return tomllib.load(handle)
+    try:
+        with path.open("rb") as handle:
+            return tomllib.load(handle)
+    except tomllib.TOMLDecodeError as exc:
+        sys.stderr.write(f"error: malformed TOML in {path}: {exc}\n")
+        sys.exit(5)
+    except OSError as exc:
+        sys.stderr.write(f"error: cannot read {path}: {exc}\n")
+        sys.exit(5)
 
 
 def _merge_lists(*lists: list[Any]) -> list[Any]:
@@ -191,6 +210,9 @@ def resolve(
     person = _split_scoped(people[person_key], PERSON_ONLY_FIELDS, STYLE_ONLY_FIELDS, "person")
     style = _split_scoped(styles[style_key], PERSON_ONLY_FIELDS, STYLE_ONLY_FIELDS, "style")
 
+    # Domain gating happens against the base person record only. Cross
+    # overrides cannot grant access to a domain the person doesn't have;
+    # see rule 7 in the module docstring.
     required_domain = style.get("required_domain")
     person_domains = person.get("domains") or []
     if required_domain and required_domain not in person_domains:
@@ -199,20 +221,16 @@ def resolve(
             f"'{style_key}' (requires domain '{required_domain}'; person has "
             f"{person_domains}).\n"
         )
-        sys.exit(2)
+        sys.exit(7)
 
     cross_key = f"{person_key}:{style_key}"
     cross = overrides.get(cross_key) or {}
 
-    resolved_person = _merge({}, person)
-    resolved_style = _merge({}, style)
-    resolved_cross = _merge({}, cross)
-
     flat: dict[str, Any] = {
         "schema_version": config.get("schema_version", SCHEMA_VERSION),
-        "person": {"key": person_key, **resolved_person},
-        "style": {"key": style_key, **resolved_style},
-        "tier_3_overrides": list(resolved_person.get("tier_3_overrides") or []),
+        "person": {"key": person_key, **person},
+        "style": {"key": style_key, **style},
+        "tier_3_overrides": list(person.get("tier_3_overrides") or []),
         "meta": {
             "resolved_at": _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "person_explicit": person_explicit,
@@ -223,18 +241,30 @@ def resolve(
         },
     }
 
-    if resolved_cross:
-        for key, value in resolved_cross.items():
+    # Cross overrides honor the same merge rules as the other layers
+    # (rule 3: lists concat-dedupe; rule 4: tables shallow-merge; scalars
+    # replace). Route each key to the correct scope first, then merge.
+    if cross:
+        person_overlay: dict[str, Any] = {}
+        style_overlay: dict[str, Any] = {}
+        other_overlay: dict[str, Any] = {}
+        for key, value in cross.items():
             if key in PERSON_ONLY_FIELDS or key in {"voice_attributes", "stylometry"}:
-                flat["person"][key] = value
+                person_overlay[key] = value
             elif key in STYLE_ONLY_FIELDS:
-                flat["style"][key] = value
+                style_overlay[key] = value
             else:
-                flat[key] = value
+                other_overlay[key] = value
+        if person_overlay:
+            flat["person"] = _merge(flat["person"], person_overlay)
+        if style_overlay:
+            flat["style"] = _merge(flat["style"], style_overlay)
+        if other_overlay:
+            flat = _merge(flat, other_overlay)
 
-    # Re-sync the top-level tier_3_overrides convenience field after any cross
-    # override that touched person.tier_3_overrides. Agents read either location
-    # depending on context; they must agree.
+    # Re-sync the top-level tier_3_overrides convenience field after any
+    # cross override that touched person.tier_3_overrides. Agents read
+    # either location depending on context; they must agree.
     flat["tier_3_overrides"] = list(flat["person"].get("tier_3_overrides") or [])
 
     return flat

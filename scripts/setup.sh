@@ -40,9 +40,15 @@ done
 CONFIG_DIR="$LIBRARY_PATH/config"
 ACTIVE_CONFIG="$CONFIG_DIR/profiles.toml"
 EXAMPLE_CONFIG="$CONFIG_DIR/profiles.example.toml"
-if [[ -f "$EXAMPLE_CONFIG" && ! -f "$ACTIVE_CONFIG" ]]; then
+if [[ -f "$ACTIVE_CONFIG" ]]; then
+    : # local config already present; do not touch
+elif [[ -f "$EXAMPLE_CONFIG" ]]; then
     cp "$EXAMPLE_CONFIG" "$ACTIVE_CONFIG"
     echo "  bootstrapped: config/profiles.toml (from profiles.example.toml)"
+else
+    echo "  WARNING: neither $ACTIVE_CONFIG nor $EXAMPLE_CONFIG exists." >&2
+    echo "  Agents will fail until config/profiles.toml or" >&2
+    echo "  config/profiles.example.toml is created." >&2
 fi
 
 echo ""

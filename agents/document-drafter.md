@@ -41,18 +41,18 @@ On non-zero exit, do NOT silently substitute a different person or style. Report
 
 | Exit | Meaning |
 | --- | --- |
-| 2 | `DomainMismatch` — the requested style requires a domain (e.g., `legal:oregon`) the person does not have |
-| 5 | Config file not found |
+| 5 | Config file not found, malformed, or unreadable |
 | 6 | Unknown person or style key |
+| 7 | `DomainMismatch`: the requested style requires a domain (e.g., `legal:oregon`) the person does not have |
 
 ### Apply the resolved profile
 
 The JSON contains:
 
-- `person.*` — `display_name`, `domains`, `voice_attributes`, `stylometry`, `hedge_phrases`, `analogy_domains`, `ai_extensions`, `calibration_source`
-- `style.*` — `palette`, `formality`, `legal_source`, `structure`, `length_target`, `serial_comma`, `quote_punct`, `tense`, `ellipsis_form`, `ors_range_form`
-- `tier_3_overrides` — list of person-scoped punctuation/usage overrides; see `{{LIBRARY_PATH}}/writing-style/punctuation-preferences.md` for the catalog and enforcement rules
-- `meta.*` — diagnostics
+- `person.*`: `display_name`, `domains`, `voice_attributes`, `stylometry`, `hedge_phrases`, `analogy_domains`, `ai_extensions`, `calibration_source`
+- `style.*`: `palette`, `formality`, `legal_source`, `structure`, `length_target`, `serial_comma`, `quote_punct`, `tense`, `ellipsis_form`, `ors_range_form`
+- `tier_3_overrides`: list of person-scoped punctuation/usage overrides; see `{{LIBRARY_PATH}}/writing-style/punctuation-preferences.md` for the catalog and enforcement rules
+- `meta.*`: diagnostics
 
 Apply these values throughout:
 

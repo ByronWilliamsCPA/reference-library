@@ -13,8 +13,9 @@
 # in this example file.
 #
 # Resolution order (last writer wins on scalars; lists concat-and-dedupe):
-#   base_defaults  →  [person.<p>]  →  [style.<s>]  →  [overrides."<p>:<s>"]
-#                                                     →  call-time arguments
+#   base_defaults  ->  [person.<p>]  ->  [style.<s>]  ->  [overrides."<p>:<s>"]
+# The --person and --style CLI flags SELECT which layers apply; they are
+# not themselves an additional override layer.
 # =========================================================================
 
 schema_version = "2.0"

@@ -75,8 +75,11 @@ stylometry, punctuation overrides, AI-detection extensions, and legal-source bin
 **Resolution** (last writer wins on scalars; lists concat-and-dedupe):
 
 ```
-base_defaults  →  [person.<p>]  →  [style.<s>]  →  [overrides."<p>:<s>"]  →  call-time args
+base_defaults  →  [person.<p>]  →  [style.<s>]  →  [overrides."<p>:<s>"]
 ```
+
+The `--person` and `--style` CLI flags select which person/style layers apply; they
+are not themselves an additional override layer.
 
 **Config files**:
 

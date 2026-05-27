@@ -34,9 +34,9 @@ python3 {{LIBRARY_PATH}}/scripts/profile_resolver.py \
   --person <person-key> --style <style-key> --format json
 ```
 
-On exit 6 (unknown person), proceed anyway — calibration may be the act of *creating* a new person. Inform the user and confirm before writing.
+On exit 6 (unknown person), proceed anyway; calibration may be the act of *creating* a new person. Inform the user and confirm before writing.
 
-On exit 2 (DomainMismatch), report and ask. Calibration does not bypass domain gating.
+On exit 7 (DomainMismatch), report and ask. Calibration does not bypass domain gating.
 
 ### Where output goes
 
@@ -46,7 +46,7 @@ This agent writes to **local, gitignored** files:
 - Style-specific profile (if `style` was provided): `{{LIBRARY_PATH}}/config/profiles/<person>/<style>.md`
 - Person-level `tier_3_overrides`, `ai_extensions`, and metadata: appended/updated in `{{LIBRARY_PATH}}/config/profiles.toml` under `[person.<person>]`
 
-If `config/profiles.toml` does not exist, copy `config/profiles.example.toml` to `config/profiles.toml` first, then make additive edits. Never overwrite the example file. Never write under `[person.default]` — that entry is the public shipped default.
+If `config/profiles.toml` does not exist, copy `config/profiles.example.toml` to `config/profiles.toml` first, then make additive edits. Never overwrite the example file. Never write under `[person.default]`; that entry is the public shipped default.
 
 A `--inherit-from <other-person>/<style>` flag in the user's invocation lets the analyzer bootstrap from an existing profile with fewer samples. When present, copy the source profile's values into the new person's profile as starting points, then override with the analyzer's measurements where samples are sufficient.
 
@@ -264,7 +264,7 @@ Generate a complete profile file at `{{LIBRARY_PATH}}/config/profiles/<person>/<
 `{{LIBRARY_PATH}}/writing-style/style-profile.md` but replace all targets and descriptions
 with the user's measured data.
 
-**Never edit `writing-style/style-profile.md`** — that file is the public default and is
+**Never edit `writing-style/style-profile.md`**: that file is the public default and is
 committed to the repo. Person-specific profiles live under `config/profiles/`, which is
 gitignored.
 

@@ -221,18 +221,50 @@ class TestResolve:
         profile = pr.resolve(minimal_config, "bob", "email")
         assert profile["meta"]["cross_override_applied"] is False
 
-    def test_cross_override_resyncs_tier_3_overrides(self, minimal_config):
-        # If a cross override sets tier_3_overrides, the top-level convenience
-        # field must reflect it (must stay in sync with person.tier_3_overrides).
+    def test_cross_override_extends_tier_3_overrides(self, minimal_config):
+        # Cross overrides honor concat-dedupe per rule 3 of the docstring.
+        # A cross-level tier_3_overrides list ADDS to the person's list.
         minimal_config["overrides"]["alice:email"]["tier_3_overrides"] = ["no-oxford"]
         profile = pr.resolve(minimal_config, "alice", "email")
-        assert profile["tier_3_overrides"] == ["no-oxford"]
-        assert profile["person"]["tier_3_overrides"] == ["no-oxford"]
+        assert profile["tier_3_overrides"] == ["no-em-dash", "no-oxford"]
+        assert profile["person"]["tier_3_overrides"] == ["no-em-dash", "no-oxford"]
 
-    def test_domain_mismatch_exits_2(self, minimal_config, capsys):
+    def test_cross_override_routes_style_only_field(self, minimal_config):
+        # A cross-level palette (STYLE_ONLY) lands in flat["style"], not "person".
+        minimal_config["overrides"]["alice:email"]["palette"] = "Formal/Scholarly"
+        profile = pr.resolve(minimal_config, "alice", "email")
+        assert profile["style"]["palette"] == "Formal/Scholarly"
+        assert "palette" not in profile["person"]
+
+    def test_cross_override_shallow_merges_voice_attributes(self, minimal_config):
+        # voice_attributes is a PERSON_ONLY table; a cross override merges
+        # key-by-key per rule 4 (existing keys not in the override survive).
+        minimal_config["overrides"]["alice:email"]["voice_attributes"] = {
+            "precision": "high",
+        }
+        profile = pr.resolve(minimal_config, "alice", "email")
+        assert profile["person"]["voice_attributes"] == {
+            "tone": "warm",         # preserved from person.alice
+            "precision": "high",    # added by cross override
+        }
+
+    def test_cross_override_with_only_tier_3_overrides(self):
+        # Isolated scenario: a cross block whose only key is tier_3_overrides.
+        config = {
+            "schema_version": "2.0",
+            "defaults": {"person": "p", "style": "s"},
+            "person": {"p": {"domains": ["x"], "tier_3_overrides": ["a"]}},
+            "style": {"s": {"palette": "Warm/Conversational"}},
+            "overrides": {"p:s": {"tier_3_overrides": ["b"]}},
+        }
+        profile = pr.resolve(config, "p", "s")
+        assert profile["tier_3_overrides"] == ["a", "b"]
+        assert profile["meta"]["cross_override_applied"] is True
+
+    def test_domain_mismatch_exits_7(self, minimal_config, capsys):
         with pytest.raises(SystemExit) as exc_info:
             pr.resolve(minimal_config, "bob", "brief")
-        assert exc_info.value.code == 2
+        assert exc_info.value.code == 7
         captured = capsys.readouterr()
         assert "DomainMismatch" in captured.err
         assert "legal:oregon" in captured.err
@@ -385,10 +417,18 @@ class TestMain:
         data = json.loads(capsys.readouterr().out)
         assert data["person"]["key"] == "bob"
 
-    def test_domain_mismatch_propagates_exit_2(self, config_file):
+    def test_domain_mismatch_propagates_exit_7(self, config_file):
         with pytest.raises(SystemExit) as exc_info:
             pr.main(["--config", str(config_file), "--person", "bob", "--style", "brief"])
-        assert exc_info.value.code == 2
+        assert exc_info.value.code == 7
+
+    def test_malformed_toml_exits_5(self, tmp_path, capsys):
+        bad = tmp_path / "bad.toml"
+        bad.write_text("this is not valid TOML = = =\n")
+        with pytest.raises(SystemExit) as exc_info:
+            pr._load_config(str(bad))
+        assert exc_info.value.code == 5
+        assert "malformed" in capsys.readouterr().err.lower()
 
     def test_shipped_example_config_resolves(self):
         """End-to-end check against the real shipped example file."""

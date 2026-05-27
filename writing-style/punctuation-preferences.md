@@ -50,8 +50,8 @@ Do not introduce overrides that contradict the grammar-style three-tier hierarch
 
 Some punctuation rules vary by *style context*, not by person. These are governed by the resolved `style.legal_source` and related fields, not by `tier_3_overrides`. See:
 
-- `legal-style/cross-reference.md` — serial comma, quote punctuation, ellipsis, tense, ORS ranges (LC vs. Appellate)
-- `writing-style/grammar-style/cross-reference.md` — EoS/CMS divergences resolved by tier
+- `legal-style/cross-reference.md`: serial comma, quote punctuation, ellipsis, tense, ORS ranges (LC vs. Appellate)
+- `writing-style/grammar-style/cross-reference.md`: EoS/CMS divergences resolved by tier
 
 If a person wants a style-level rule applied universally (e.g., always use the serial comma regardless of legal context), that's a separate concept from a Tier 3 override and should be handled by setting the appropriate style as the default rather than by adding an override here.
 
