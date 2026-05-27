@@ -110,6 +110,10 @@ def _load_config(explicit: str | None) -> tuple[dict[str, Any], Path]:
     sys.exit(5)
 
 
+# #CRITICAL: TOML files read here are external resources. Malformed input
+# or filesystem failures must produce a documented exit code (5), not a raw
+# Python traceback that breaks the agent's exit-code contract.
+# #VERIFY: every except branch ends in sys.exit(5).
 def _read_toml(path: Path) -> dict[str, Any]:
     try:
         with path.open("rb") as handle:
@@ -143,7 +147,9 @@ def _merge(base: dict[str, Any], overlay: dict[str, Any]) -> dict[str, Any]:
     for key, value in overlay.items():
         if key in result and isinstance(result[key], list) and isinstance(value, list):
             result[key] = _merge_lists(result[key], value)
-        elif key in result and isinstance(result[key], dict) and isinstance(value, dict):
+        elif (
+            key in result and isinstance(result[key], dict) and isinstance(value, dict)
+        ):
             merged = {**result[key]}
             for sub_key, sub_value in value.items():
                 merged[sub_key] = sub_value
@@ -159,12 +165,107 @@ def _split_scoped(
     style_only: set[str],
     source: str,
 ) -> dict[str, Any]:
-    """Drop person-only fields from a style section (or vice versa)."""
+    """Drop person-only fields from a style section (or vice versa).
+
+    `source` must be "person" or "style"; any other value raises
+    ValueError. The previous silent passthrough was a foot-gun: a typo
+    bypassed the scope enforcement that this function exists to apply.
+    """
     if source == "style":
         return {k: v for k, v in section.items() if k not in person_only}
     if source == "person":
         return {k: v for k, v in section.items() if k not in style_only}
-    return dict(section)
+    raise ValueError(f"source must be 'person' or 'style', got {source!r}")
+
+
+def _resolve_defaults(config: dict[str, Any]) -> tuple[str, str]:
+    """Validate the [defaults] block and return (default_person, default_style)."""
+    defaults = config.get("defaults") or {}
+    if not defaults:
+        sys.stderr.write("error: config is missing a [defaults] section.\n")
+        sys.exit(3)
+    default_person = defaults.get("person")
+    default_style = defaults.get("style")
+    if not default_person or not default_style:
+        sys.stderr.write("error: [defaults] must declare both 'person' and 'style'.\n")
+        sys.exit(3)
+    return default_person, default_style
+
+
+def _require_key(label: str, key: str, known: dict[str, Any]) -> None:
+    """Exit 6 if `key` is not in `known`."""
+    if key in known:
+        return
+    sys.stderr.write(
+        f"error: {label} '{key}' is not defined. Known {label}s: {sorted(known)}\n"
+    )
+    sys.exit(6)
+
+
+def _check_domain_gate(
+    person_key: str,
+    person: dict[str, Any],
+    style_key: str,
+    style: dict[str, Any],
+) -> None:
+    """Exit 7 if the style's required_domain is not in the person's domains.
+
+    Runs against the base person record only. Cross overrides cannot grant
+    access to a domain the person does not have; see rule 7 in the module
+    docstring.
+    """
+    required_domain = style.get("required_domain")
+    person_domains = person.get("domains") or []
+    if not required_domain or required_domain in person_domains:
+        return
+    sys.stderr.write(
+        f"error: DomainMismatch: person '{person_key}' cannot use style "
+        f"'{style_key}' (requires domain '{required_domain}'; person has "
+        f"{person_domains}).\n"
+    )
+    sys.exit(7)
+
+
+def _route_cross_overrides(
+    cross: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """Partition cross-override keys by scope (person, style, other).
+
+    PERSON_ONLY_FIELDS already includes voice_attributes and stylometry, so
+    only one membership check is needed.
+    """
+    # #ASSUME: cross-override keys are strings; TOML guarantees this.
+    person_overlay: dict[str, Any] = {}
+    style_overlay: dict[str, Any] = {}
+    other_overlay: dict[str, Any] = {}
+    for key, value in cross.items():
+        if key in PERSON_ONLY_FIELDS:
+            person_overlay[key] = value
+        elif key in STYLE_ONLY_FIELDS:
+            style_overlay[key] = value
+        else:
+            other_overlay[key] = value
+    return person_overlay, style_overlay, other_overlay
+
+
+def _apply_cross_overrides(
+    flat: dict[str, Any], cross: dict[str, Any]
+) -> dict[str, Any]:
+    """Merge a cross-override block into the resolved profile.
+
+    Honors the same merge rules as the other layers (rule 3: lists
+    concat-dedupe; rule 4: tables shallow-merge; scalars replace).
+    """
+    if not cross:
+        return flat
+    person_overlay, style_overlay, other_overlay = _route_cross_overrides(cross)
+    if person_overlay:
+        flat["person"] = _merge(flat["person"], person_overlay)
+    if style_overlay:
+        flat["style"] = _merge(flat["style"], style_overlay)
+    if other_overlay:
+        flat = _merge(flat, other_overlay)
+    return flat
 
 
 def resolve(
@@ -172,18 +273,10 @@ def resolve(
     person_key: str | None,
     style_key: str | None,
 ) -> dict[str, Any]:
-    defaults = config.get("defaults") or {}
-    if not defaults:
-        sys.stderr.write("error: config is missing a [defaults] section.\n")
-        sys.exit(3)
-
-    default_person = defaults.get("person")
-    default_style = defaults.get("style")
-    if not default_person or not default_style:
-        sys.stderr.write(
-            "error: [defaults] must declare both 'person' and 'style'.\n"
-        )
-        sys.exit(3)
+    # #CRITICAL: this function is the public resolution contract. Every exit
+    # code (3, 6, 7) emitted here is documented in the module docstring and
+    # consumed by agents that branch on the return code.
+    default_person, default_style = _resolve_defaults(config)
 
     person_explicit = person_key is not None
     style_explicit = style_key is not None
@@ -194,37 +287,21 @@ def resolve(
     styles = config.get("style") or {}
     overrides = config.get("overrides") or {}
 
-    if person_key not in people:
-        sys.stderr.write(
-            f"error: person '{person_key}' is not defined. Known persons: "
-            f"{sorted(people)}\n"
-        )
-        sys.exit(6)
-    if style_key not in styles:
-        sys.stderr.write(
-            f"error: style '{style_key}' is not defined. Known styles: "
-            f"{sorted(styles)}\n"
-        )
-        sys.exit(6)
+    _require_key("person", person_key, people)
+    _require_key("style", style_key, styles)
 
-    person = _split_scoped(people[person_key], PERSON_ONLY_FIELDS, STYLE_ONLY_FIELDS, "person")
-    style = _split_scoped(styles[style_key], PERSON_ONLY_FIELDS, STYLE_ONLY_FIELDS, "style")
+    person = _split_scoped(
+        people[person_key], PERSON_ONLY_FIELDS, STYLE_ONLY_FIELDS, "person"
+    )
+    style = _split_scoped(
+        styles[style_key], PERSON_ONLY_FIELDS, STYLE_ONLY_FIELDS, "style"
+    )
 
-    # Domain gating happens against the base person record only. Cross
-    # overrides cannot grant access to a domain the person doesn't have;
-    # see rule 7 in the module docstring.
-    required_domain = style.get("required_domain")
-    person_domains = person.get("domains") or []
-    if required_domain and required_domain not in person_domains:
-        sys.stderr.write(
-            f"error: DomainMismatch: person '{person_key}' cannot use style "
-            f"'{style_key}' (requires domain '{required_domain}'; person has "
-            f"{person_domains}).\n"
-        )
-        sys.exit(7)
+    _check_domain_gate(person_key, person, style_key, style)
 
     cross_key = f"{person_key}:{style_key}"
     cross = overrides.get(cross_key) or {}
+    resolved_at = _dt.datetime.now(_dt.UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     flat: dict[str, Any] = {
         "schema_version": config.get("schema_version", SCHEMA_VERSION),
@@ -232,7 +309,7 @@ def resolve(
         "style": {"key": style_key, **style},
         "tier_3_overrides": list(person.get("tier_3_overrides") or []),
         "meta": {
-            "resolved_at": _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "resolved_at": resolved_at,
             "person_explicit": person_explicit,
             "style_explicit": style_explicit,
             "default_person": default_person,
@@ -241,26 +318,7 @@ def resolve(
         },
     }
 
-    # Cross overrides honor the same merge rules as the other layers
-    # (rule 3: lists concat-dedupe; rule 4: tables shallow-merge; scalars
-    # replace). Route each key to the correct scope first, then merge.
-    if cross:
-        person_overlay: dict[str, Any] = {}
-        style_overlay: dict[str, Any] = {}
-        other_overlay: dict[str, Any] = {}
-        for key, value in cross.items():
-            if key in PERSON_ONLY_FIELDS or key in {"voice_attributes", "stylometry"}:
-                person_overlay[key] = value
-            elif key in STYLE_ONLY_FIELDS:
-                style_overlay[key] = value
-            else:
-                other_overlay[key] = value
-        if person_overlay:
-            flat["person"] = _merge(flat["person"], person_overlay)
-        if style_overlay:
-            flat["style"] = _merge(flat["style"], style_overlay)
-        if other_overlay:
-            flat = _merge(flat, other_overlay)
+    flat = _apply_cross_overrides(flat, cross)
 
     # Re-sync the top-level tier_3_overrides convenience field after any
     # cross override that touched person.tier_3_overrides. Agents read
@@ -270,34 +328,62 @@ def resolve(
     return flat
 
 
-def _format_text(profile: dict[str, Any]) -> str:
-    lines: list[str] = []
+def _scalar_line(label: str, value: Any, fallback: str = "(none)") -> str:
+    """Render a single scalar field as a left-aligned label/value line."""
+    rendered = value if value not in (None, "", []) else fallback
+    return f"  {label:<22}{rendered}"
+
+
+def _list_line(label: str, values: list[Any] | None) -> str:
+    """Render a list field as a comma-joined value line."""
+    joined = ", ".join(values) if values else ""
+    return _scalar_line(label, joined)
+
+
+def _format_table_block(label: str, table: dict[str, Any]) -> list[str]:
+    """Format a nested table (e.g., stylometry, voice_attributes) as lines.
+
+    Returns an empty list when the table is empty so the caller can skip
+    the header.
+    """
+    if not table:
+        return []
+    out = [f"  {label}:"]
+    for key, value in table.items():
+        out.append(f"    {key:<28}{value}")
+    return out
+
+
+def _format_summary(profile: dict[str, Any]) -> list[str]:
+    """Build the scalar summary section of the formatted profile."""
     person = profile["person"]
     style = profile["style"]
+    display = person.get("display_name", "(unnamed)")
+    return [
+        "Resolved profile",
+        "================",
+        f"  person:               {person['key']} ({display})",
+        f"  style:                {style['key']}",
+        _scalar_line("palette:", style.get("palette")),
+        _scalar_line("formality:", style.get("formality")),
+        _scalar_line("legal_source:", style.get("legal_source"), fallback="none"),
+        _list_line("domains:", person.get("domains")),
+        _list_line("tier_3_overrides:", profile.get("tier_3_overrides")),
+        _list_line("hedge_phrases:", person.get("hedge_phrases")),
+        _list_line("analogy_domains:", person.get("analogy_domains")),
+        _list_line("ai_extensions:", person.get("ai_extensions")),
+        _scalar_line("calibration_source:", person.get("calibration_source")),
+    ]
+
+
+def _format_text(profile: dict[str, Any]) -> str:
+    person = profile["person"]
     meta = profile["meta"]
-    lines.append("Resolved profile")
-    lines.append("================")
-    lines.append(f"  person:               {person['key']} ({person.get('display_name', '(unnamed)')})")
-    lines.append(f"  style:                {style['key']}")
-    lines.append(f"  palette:              {style.get('palette', '(none)')}")
-    lines.append(f"  formality:            {style.get('formality', '(none)')}")
-    lines.append(f"  legal_source:         {style.get('legal_source', 'none')}")
-    lines.append(f"  domains:              {', '.join(person.get('domains') or []) or '(none)'}")
-    lines.append(f"  tier_3_overrides:     {', '.join(profile.get('tier_3_overrides') or []) or '(none)'}")
-    lines.append(f"  hedge_phrases:        {', '.join(person.get('hedge_phrases') or []) or '(none)'}")
-    lines.append(f"  analogy_domains:      {', '.join(person.get('analogy_domains') or []) or '(none)'}")
-    lines.append(f"  ai_extensions:        {', '.join(person.get('ai_extensions') or []) or '(none)'}")
-    lines.append(f"  calibration_source:   {person.get('calibration_source') or '(none)'}")
-    stylometry = person.get("stylometry") or {}
-    if stylometry:
-        lines.append("  stylometry:")
-        for key, value in stylometry.items():
-            lines.append(f"    {key:<28}{value}")
-    voice = person.get("voice_attributes") or {}
-    if voice:
-        lines.append("  voice_attributes:")
-        for key, value in voice.items():
-            lines.append(f"    {key:<28}{value}")
+    lines: list[str] = _format_summary(profile)
+    lines.extend(_format_table_block("stylometry", person.get("stylometry") or {}))
+    lines.extend(
+        _format_table_block("voice_attributes", person.get("voice_attributes") or {})
+    )
     lines.append("")
     lines.append("Resolution metadata")
     lines.append("-------------------")
@@ -328,9 +414,9 @@ def _list_inventory(config: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def main(argv: list[str] | None = None) -> int:
+def _build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Resolve a person × style profile for reference-library agents.",
+        description="Resolve a person x style profile for reference-library agents.",
     )
     parser.add_argument("--person", help="Person key (default: from [defaults].person)")
     parser.add_argument("--style", help="Style key (default: from [defaults].style)")
@@ -350,13 +436,22 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="List available persons and styles instead of resolving.",
     )
-    args = parser.parse_args(argv)
+    return parser
 
+
+def main(argv: list[str] | None = None) -> None:
+    """CLI entry point. Either writes output and returns, or calls sys.exit().
+
+    Successful completion falls through to a natural process exit (code 0).
+    Error paths inside resolve() / _load_config() call sys.exit() directly
+    with the documented exit code.
+    """
+    args = _build_arg_parser().parse_args(argv)
     config, config_path = _load_config(args.config)
 
     if args.list:
         sys.stdout.write(_list_inventory(config))
-        return 0
+        return
 
     profile = resolve(config, args.person, args.style)
     profile["meta"]["config_source"] = str(config_path)
@@ -366,8 +461,7 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.write("\n")
     else:
         sys.stdout.write(_format_text(profile))
-    return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

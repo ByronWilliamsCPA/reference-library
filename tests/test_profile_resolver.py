@@ -14,7 +14,6 @@ import pytest
 
 import profile_resolver as pr
 
-
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
@@ -66,8 +65,9 @@ def minimal_config() -> dict:
 @pytest.fixture
 def config_file(tmp_path: Path, minimal_config: dict) -> Path:
     """Write minimal_config to a real TOML file and return the path."""
-    body = textwrap.dedent(
-        """
+    body = (
+        textwrap.dedent(
+            """
         schema_version = "2.0"
 
         [defaults]
@@ -108,7 +108,9 @@ def config_file(tmp_path: Path, minimal_config: dict) -> Path:
         [overrides."alice:email"]
         hedge_density = [0.03, 0.07]
         """
-    ).strip() + "\n"
+        ).strip()
+        + "\n"
+    )
     target = tmp_path / "profiles.toml"
     target.write_text(body, encoding="utf-8")
     return target
@@ -177,11 +179,11 @@ class TestSplitScoped:
         assert "domains" in result
         assert "legal_source" not in result
 
-    def test_unknown_source_returns_copy(self):
-        section = {"a": 1}
-        result = pr._split_scoped(section, set(), set(), "other")
-        assert result == section
-        assert result is not section
+    def test_unknown_source_raises(self):
+        # A typo in source must not silently bypass the scope enforcement
+        # that _split_scoped exists to apply. Unknown values raise.
+        with pytest.raises(ValueError, match=r"must be 'person' or 'style'"):
+            pr._split_scoped({"a": 1}, set(), set(), "other")
 
 
 # ---------------------------------------------------------------------------
@@ -244,8 +246,8 @@ class TestResolve:
         }
         profile = pr.resolve(minimal_config, "alice", "email")
         assert profile["person"]["voice_attributes"] == {
-            "tone": "warm",         # preserved from person.alice
-            "precision": "high",    # added by cross override
+            "tone": "warm",  # preserved from person.alice
+            "precision": "high",  # added by cross override
         }
 
     def test_cross_override_with_only_tier_3_overrides(self):
@@ -338,7 +340,9 @@ class TestLoadConfig:
         active = tmp_path / "active.toml"
         active.write_text(config_file.read_text())
         example = tmp_path / "example.toml"
-        example.write_text('schema_version = "2.0"\n[defaults]\nperson = "OTHER"\nstyle = "OTHER"\n')
+        example.write_text(
+            'schema_version = "2.0"\n[defaults]\nperson = "OTHER"\nstyle = "OTHER"\n'
+        )
         monkeypatch.setattr(pr, "_default_config_paths", lambda: (active, example))
 
         config, path = pr._load_config(None)
@@ -391,35 +395,37 @@ class TestListInventory:
 
 
 class TestMain:
+    # main() returns None on success; non-success paths call sys.exit()
+    # with a documented exit code. The contract is "no SystemExit means
+    # success," not a return value check.
+
     def test_default_invocation_emits_json(self, config_file, capsys):
-        rc = pr.main(["--config", str(config_file)])
-        assert rc == 0
+        pr.main(["--config", str(config_file)])
         captured = capsys.readouterr()
         data = json.loads(captured.out)
         assert data["person"]["key"] == "alice"
         assert data["meta"]["config_source"] == str(config_file)
 
     def test_text_format(self, config_file, capsys):
-        rc = pr.main(["--config", str(config_file), "--format", "text"])
-        assert rc == 0
+        pr.main(["--config", str(config_file), "--format", "text"])
         assert "Resolved profile" in capsys.readouterr().out
 
     def test_list_flag(self, config_file, capsys):
-        rc = pr.main(["--config", str(config_file), "--list"])
-        assert rc == 0
+        pr.main(["--config", str(config_file), "--list"])
         out = capsys.readouterr().out
         assert "alice" in out
         assert "bob" in out
 
     def test_explicit_person_and_style(self, config_file, capsys):
-        rc = pr.main(["--config", str(config_file), "--person", "bob", "--style", "email"])
-        assert rc == 0
+        pr.main(["--config", str(config_file), "--person", "bob", "--style", "email"])
         data = json.loads(capsys.readouterr().out)
         assert data["person"]["key"] == "bob"
 
     def test_domain_mismatch_propagates_exit_7(self, config_file):
         with pytest.raises(SystemExit) as exc_info:
-            pr.main(["--config", str(config_file), "--person", "bob", "--style", "brief"])
+            pr.main(
+                ["--config", str(config_file), "--person", "bob", "--style", "brief"]
+            )
         assert exc_info.value.code == 7
 
     def test_malformed_toml_exits_5(self, tmp_path, capsys):
