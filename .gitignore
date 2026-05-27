@@ -9,6 +9,10 @@ __pycache__/
 *.pyc
 .venv/
 *.egg-info/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
 
 # Qlty runtime artifacts (only qlty.toml belongs in the repo)
 .qlty/logs/

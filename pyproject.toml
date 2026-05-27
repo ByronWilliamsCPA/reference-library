@@ -1,0 +1,25 @@
+# Python tooling for the reference-library scripts/ directory.
+# This is a docs-first repository; pyproject.toml exists only to configure
+# pytest and coverage so SonarCloud can verify quality gates on the small
+# amount of Python that lives in scripts/.
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+pythonpath = ["scripts"]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+
+[tool.coverage.run]
+source = ["scripts"]
+# Only profile_resolver.py participates in the V2 invocation flow today.
+# The other scripts are operational utilities (one-shot PDF extraction,
+# one-shot sample generation) without test coverage; omit them so the
+# Sonar gate evaluates against what we actually exercise.
+omit = [
+    "scripts/extract_legal_pdfs.py",
+    "scripts/generate_before_samples.py",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
