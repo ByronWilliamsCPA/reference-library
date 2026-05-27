@@ -61,6 +61,10 @@ except ModuleNotFoundError:  # pragma: no cover
 
 SCHEMA_VERSION = "2.0"
 
+# Rendered in formatted output when a field is unset. Centralized so the
+# placeholder string lives in exactly one place (resolves python:S1192).
+_NONE_PLACEHOLDER = "(none)"
+
 PERSON_ONLY_FIELDS = {
     "domains",
     "tier_3_overrides",
@@ -328,7 +332,7 @@ def resolve(
     return flat
 
 
-def _scalar_line(label: str, value: Any, fallback: str = "(none)") -> str:
+def _scalar_line(label: str, value: Any, fallback: str = _NONE_PLACEHOLDER) -> str:
     """Render a single scalar field as a left-aligned label/value line."""
     rendered = value if value not in (None, "", []) else fallback
     return f"  {label:<22}{rendered}"
@@ -399,11 +403,11 @@ def _list_inventory(config: dict[str, Any]) -> str:
     lines = [
         "Available profiles",
         "==================",
-        f"  default person: {defaults.get('person', '(none)')}",
-        f"  default style:  {defaults.get('style', '(none)')}",
+        f"  default person: {defaults.get('person', _NONE_PLACEHOLDER)}",
+        f"  default style:  {defaults.get('style', _NONE_PLACEHOLDER)}",
         "",
-        "  persons: " + (", ".join(people) if people else "(none)"),
-        "  styles:  " + (", ".join(styles) if styles else "(none)"),
+        "  persons: " + (", ".join(people) if people else _NONE_PLACEHOLDER),
+        "  styles:  " + (", ".join(styles) if styles else _NONE_PLACEHOLDER),
         "",
     ]
     overrides = config.get("overrides") or {}
