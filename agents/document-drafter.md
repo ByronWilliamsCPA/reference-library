@@ -13,6 +13,55 @@ tools: ["Read", "Write", "Edit"]
 > **Scope**: First-draft generation from structured inputs; voice-calibrated drafting; email replies
 > **Boundary**: Drafting only. Does NOT review, edit, or validate. The pipeline handles quality.
 
+## Resolve Invocation Parameters
+
+Before loading reference files or drafting, resolve the active profile.
+
+### Parse the invocation
+
+Scan the invocation for `person` and `style` parameters. Accept any of these forms:
+
+- `person=byron style=work-email`
+- `person: byron, style: work-email`
+- `[person: byron, style: work-email]`
+- Informal phrasing: infer from context (e.g., "draft a work email for Byron").
+
+When either parameter is missing, the resolver falls back to the configured default. Confirm the inferred or defaulted values in your draft metadata so the user can correct them.
+
+### Run the resolver
+
+```bash
+python3 {{LIBRARY_PATH}}/scripts/profile_resolver.py \
+  --person <person-key> --style <style-key> --format json
+```
+
+Omit `--person` or `--style` to use `[defaults]`. The resolver reads `{{LIBRARY_PATH}}/config/profiles.toml`, falling back to `{{LIBRARY_PATH}}/config/profiles.example.toml`.
+
+On non-zero exit, do NOT silently substitute a different person or style. Report the error and ask the user to clarify:
+
+| Exit | Meaning |
+| --- | --- |
+| 5 | Config file not found, malformed, or unreadable |
+| 6 | Unknown person or style key |
+| 7 | `DomainMismatch`: the requested style requires a domain (e.g., `legal:oregon`) the person does not have |
+
+### Apply the resolved profile
+
+The JSON contains:
+
+- `person.*`: `display_name`, `domains`, `voice_attributes`, `stylometry`, `hedge_phrases`, `analogy_domains`, `ai_extensions`, `calibration_source`
+- `style.*`: `palette`, `formality`, `legal_source`, `structure`, `length_target`, `serial_comma`, `quote_punct`, `tense`, `ellipsis_form`, `ors_range_form`
+- `tier_3_overrides`: list of person-scoped punctuation/usage overrides; see `{{LIBRARY_PATH}}/writing-style/punctuation-preferences.md` for the catalog and enforcement rules
+- `meta.*`: diagnostics
+
+Apply these values throughout:
+
+- If `person.calibration_source` is set, load it in preference to the shipped `writing-style/style-profile.md` for stylometry targets.
+- The resolved `style.palette` is the default tone palette for this draft (the user can still override it explicitly).
+- If `style.legal_source` is `"none"` or absent, skip loading `legal-style/` files entirely. Load only when `legal_source` names a specific manual.
+- For each entry in `tier_3_overrides`, apply the enforcement rule from `punctuation-preferences.md` during generation, not as a post-draft fixup.
+- Concatenate any `person.ai_extensions` files onto the universal `writing-style/ai-detection.md` baseline.
+
 ## Reference Files
 
 **Always load first**:
@@ -63,11 +112,11 @@ Before drafting, confirm or infer these parameters. Ask the user if any are uncl
 
 | Parameter | Options | Default |
 | --- | --- | --- |
-| **Tone palette** | Any palette from `tone-voice.md` | Warm/Conversational |
+| **Tone palette** | Any palette from `tone-voice.md` | Resolved `style.palette` |
 | **Audience** | Description of the target reader | Professional peer |
-| **Document type** | Memo, email, brief, analysis, proposal, letter, report, other | Inferred from input |
-| **Length guidance** | Word count range or page target | Proportional to input complexity |
-| **Legal context** | If legal writing: court document, statutory, or legislative | None (non-legal default) |
+| **Document type** | Memo, email, brief, analysis, proposal, letter, report, other | Inferred from input or resolved `style.key` |
+| **Length guidance** | Word count range or page target | Resolved `style.length_target`, else proportional to input complexity |
+| **Legal context** | If legal writing: court document, statutory, or legislative | Resolved `style.legal_source` (skip legal files when `"none"`) |
 
 ## Drafting Process
 
@@ -105,7 +154,8 @@ Apply these constraints while generating, not as a post-draft review:
 
 Apply every constraint in `ai-detection.md` during generation. Key absolutes: no blacklisted
 clichés, no vague qualifiers without numbers, no gerund padding, no nominalization chains,
-no transition stacking, no em-dashes (PCP override), no monotonous paragraph structure.
+no transition stacking, no monotonous paragraph structure. Additionally apply every entry
+in the resolved profile's `tier_3_overrides` (e.g., `no-em-dash` → no em-dashes).
 
 ### Structural Defaults
 
@@ -132,7 +182,7 @@ After drafting, verify these before presenting the output:
 - [ ] Every statistic or factual claim is either sourced from the input or explicitly marked
       as needing verification
 - [ ] The tone matches the selected palette
-- [ ] No em-dashes anywhere in the text
+- [ ] Every entry in the resolved `tier_3_overrides` list is satisfied (e.g., `no-em-dash` → no em-dashes anywhere)
 - [ ] Structural formatting follows `structural-formatting.md` defaults
 - [ ] If legal context: the correct governing source's conventions are applied consistently
 
@@ -148,10 +198,13 @@ Place this at the top of every draft output:
 ```yaml
 draft_metadata:
   generator: document-drafter
+  person: {resolved person key}
+  style: {resolved style key}
   tone_palette: {selected palette}
   audience: {audience description}
   document_type: {type}
-  legal_context: {source or "none"}
+  legal_context: {style.legal_source or "none"}
+  tier_3_overrides: {resolved list, e.g., ["no-em-dash"]}
   word_count: {approximate}
   ai_generated: true
   timestamp: {ISO 8601}

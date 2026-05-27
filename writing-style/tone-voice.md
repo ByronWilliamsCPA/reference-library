@@ -29,7 +29,7 @@ When combining palettes, use a **Tone Hierarchy** directive to resolve conflicts
 These defaults apply to all palettes unless a specific palette or user instruction overrides:
 
 - **Contractions**: Permitted ("it's," "don't," "we'll")
-- **Em-dashes**: **Banned.** Use commas, colons, semicolons, or parentheses instead
+- **Em-dashes**: Person-configurable. The default profile sets `tier_3_overrides = ["no-em-dash"]`; under that override, use commas, colons, semicolons, or parentheses instead. See `punctuation-preferences.md` for the full catalog of overrides and `scripts/profile_resolver.py` for the active profile.
 - **Lists**: Use only when the user explicitly requests steps or a list; otherwise use narrative prose
 - **Commas**: For asides and parenthetical insertions
 - **Colons**: For expansion, elaboration, and introducing examples

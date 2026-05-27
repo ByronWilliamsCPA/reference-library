@@ -23,7 +23,7 @@
 | Comma for nonrestrictive clauses | `chicago-manual/punctuation.md` |
 | Semicolon uses | `QUICK-START.md` #11, or `chicago-manual/punctuation.md` |
 | Colon uses | `QUICK-START.md` #11, or `chicago-manual/punctuation.md` |
-| Em-dash (banned by PCP) | `cross-reference.md` #15 and #21 |
+| Em-dash (governed by active profile's `tier_3_overrides`) | `cross-reference.md` #15 and #21; `../punctuation-preferences.md` |
 | En dash | `QUICK-START.md` #10, or `chicago-manual/punctuation.md` |
 | Quotation mark punctuation placement | `QUICK-START.md` #19, or `chicago-manual/punctuation.md` |
 | Apostrophe and possessives | `QUICK-START.md` #12–13, or `chicago-manual/punctuation.md` |

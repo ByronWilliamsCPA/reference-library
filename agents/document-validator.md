@@ -13,6 +13,27 @@ tools: ["Read", "WebFetch", "WebSearch"]
 > **Scope**: Factual accuracy, assumptions, hallucinations, bias, reasoning errors
 > **Boundary**: Facts and logic only. Grammar is Stage 1's job. Voice is Stage 3's job.
 
+## Resolve Invocation Parameters
+
+Factual validation is largely person-independent, but the active profile still tells this agent which domains and legal sources apply. Resolve before starting.
+
+### Parse and resolve
+
+Scan for `person` and `style`. If absent, read them from the pipeline metadata block (`draft_metadata` or `rewrite_metadata`) at the top of the document. Fall back to `[defaults]`.
+
+```bash
+python3 {{LIBRARY_PATH}}/scripts/profile_resolver.py \
+  --person <person-key> --style <style-key> --format json
+```
+
+On non-zero exit, do NOT silently substitute. Report and ask.
+
+### Apply
+
+- If `style.legal_source` is set, load `{{LIBRARY_PATH}}/legal-style/QUICK-START.md` and the relevant manual for citation-form fact-checking; otherwise skip legal-style content.
+- Use `person.domains` to scope fact-checking: a non-legal person's document does not need Oregon ORS verification.
+- Style affects only the bias check: a casual style tolerates more first-person framing; a court brief demands neutral framing.
+
 ## Reference Files
 
 **Load when checking reasoning**:

@@ -1,0 +1,197 @@
+# reference-library profiles
+# =========================================================================
+# This is the EXAMPLE / DEFAULT config that ships with the repository.
+#
+# To customize:
+#   1. cp config/profiles.example.toml config/profiles.toml
+#   2. Edit config/profiles.toml with your own [person.*] entries.
+#   3. Run the style-analyzer agent to populate stylometry values
+#      (writes to config/profiles/{person}/{style}.md, also gitignored).
+#
+# config/profiles.toml and config/profiles/ are .gitignored, so anything
+# you add stays on your machine. The repo only ever publishes the values
+# in this example file.
+#
+# Resolution order (last writer wins on scalars; lists concat-and-dedupe):
+#   base_defaults  ->  [person.<p>]  ->  [style.<s>]  ->  [overrides."<p>:<s>"]
+# The --person and --style CLI flags SELECT which layers apply; they are
+# not themselves an additional override layer.
+# =========================================================================
+
+schema_version = "2.0"
+
+# -------------------------------------------------------------------------
+# Defaults: used when an agent is invoked without person= or style=.
+# -------------------------------------------------------------------------
+[defaults]
+person = "default"
+style  = "general"
+
+
+# =========================================================================
+# PEOPLE
+# -------------------------------------------------------------------------
+# Person-scoped fields:
+#   - voice_attributes, stylometry, analogy_domains, hedge_phrases
+#   - domains (gates access to legal/jurisdictional styles)
+#   - tier_3_overrides (punctuation prefs; see writing-style/punctuation-preferences.md)
+#   - ai_extensions (extra blacklist files merged into the universal baseline)
+#   - calibration_source (path to a person-specific style profile file, if any)
+# =========================================================================
+
+# -------------------------------------------------------------------------
+# The shipped default profile. Reflects the maintainer's current voice
+# targets. Do not edit this entry to personalize; add your own [person.*]
+# entry in your local config/profiles.toml instead.
+# -------------------------------------------------------------------------
+[person.default]
+display_name       = "Default profile"
+domains            = ["personal", "cpa", "investment", "legal:oregon"]
+tier_3_overrides   = ["no-em-dash"]
+analogy_domains    = ["libraries", "engineering", "natural-systems"]
+hedge_phrases      = ["typically", "in most cases", "evidence suggests", "based on current data"]
+ai_extensions      = []
+calibration_source = "writing-style/style-profile.md"
+
+  [person.default.voice_attributes]
+  precision      = "Methodical, technically rigorous; specific over vague"
+  tone           = "Professional yet approachable, analytical but human"
+  confidence     = "Assertive with appropriate hedging; never overselling"
+  structure      = "Clear hierarchy, systems-thinking orientation"
+  thinking_style = "Connects specifics to broader frameworks; explicit tradeoff acknowledgment"
+
+  [person.default.stylometry]
+  sentence_length_avg       = [17, 22]    # min, max
+  sentence_length_sigma_min = 8
+  short_sentence_pct_min    = 0.15        # sentences < 8 words
+  long_sentence_pct_min     = 0.15        # sentences > 30 words
+  ttr_min                   = 0.40        # type-token ratio
+  hedge_density             = [0.05, 0.10]
+  max_content_word_pct      = 0.02        # no content word > 2% of tokens
+
+
+# =========================================================================
+# STYLES
+# -------------------------------------------------------------------------
+# Style-scoped fields:
+#   - palette (one of the 8 in writing-style/tone-voice.md)
+#   - formality (1=casual, 5=formal/scholarly)
+#   - legal_source ("none" | "lc-drafting-manual" | "lc-form-style-manual" | "appellate-style-manual")
+#   - structure, length_target, lists_allowed, greeting, sign_off
+#   - serial_comma, quote_punct, tense, ors_range_form, ellipsis_form
+#     (auto-driven by legal_source when present; explicit values override)
+#   - required_domain (resolution fails if person lacks this in domains)
+# =========================================================================
+
+# -------------------------------------------------------------------------
+# General-purpose default style. Used when no style is specified.
+# -------------------------------------------------------------------------
+[style.general]
+palette       = "Warm/Conversational"
+formality     = 3
+legal_source  = "none"
+structure     = "default"
+length_target = "as-needed"
+lists_allowed = true
+serial_comma  = true
+quote_punct   = "inside"
+tense         = "context-appropriate"
+
+# -------------------------------------------------------------------------
+# Quick internal emails. Short, direct, first-name greeting, name-only sign-off.
+# -------------------------------------------------------------------------
+[style.work-email]
+palette       = "Warm/Conversational"
+formality     = 3
+legal_source  = "none"
+structure     = "inverted-pyramid"
+length_target = "short"            # target under 250 words
+lists_allowed = false              # prefer prose for short emails
+greeting      = "first-name"
+sign_off      = "name-only"
+serial_comma  = true
+quote_punct   = "inside"
+tense         = "context-appropriate"
+
+# -------------------------------------------------------------------------
+# Internal memos for colleagues. Slightly more formal than email, with structure.
+# -------------------------------------------------------------------------
+[style.internal-memo]
+palette       = "Warm/Conversational"
+formality     = 3
+legal_source  = "none"
+structure     = "summary-then-detail"
+length_target = "medium"
+lists_allowed = true
+greeting      = "team-or-recipient"
+sign_off      = "name-only"
+serial_comma  = true
+quote_punct   = "inside"
+tense         = "context-appropriate"
+
+# -------------------------------------------------------------------------
+# Client-facing memos. Warm but professional; defines jargon; clear next steps.
+# -------------------------------------------------------------------------
+[style.client-memo]
+palette       = "Warm/Conversational"
+formality     = 3
+legal_source  = "none"
+structure     = "summary-then-detail"
+length_target = "medium"
+lists_allowed = true
+greeting      = "first-name"
+sign_off      = "full-signature"
+serial_comma  = true
+quote_punct   = "inside"
+tense         = "context-appropriate"
+
+# -------------------------------------------------------------------------
+# Statutory drafting (Oregon LC). Present tense, no serial comma, punctuation
+# outside quotes, ellipsis as three dots. Requires legal:oregon domain.
+# -------------------------------------------------------------------------
+[style.statutory-drafting]
+palette         = "Authoritative Practitioner"
+formality       = 5
+legal_source    = "lc-drafting-manual"
+structure       = "section-numbered"
+length_target   = "as-needed"
+lists_allowed   = false
+serial_comma    = false                # LC omits
+quote_punct     = "outside"            # LC convention
+tense           = "present"
+ors_range_form  = "to"                 # e.g., "ORS 174.010 to 174.090"
+ellipsis_form   = "..."
+required_domain = "legal:oregon"
+
+# -------------------------------------------------------------------------
+# Court brief (Oregon Appellate). Serial comma, punctuation inside quotes,
+# ellipsis as "* * *", past tense for facts and present for legal rules.
+# Requires legal:oregon domain.
+# -------------------------------------------------------------------------
+[style.court-brief]
+palette         = "Formal/Scholarly"
+formality       = 5
+legal_source    = "appellate-style-manual"
+structure       = "issue-rule-application-conclusion"
+length_target   = "as-needed"
+lists_allowed   = false
+serial_comma    = true                 # Appellate uses
+quote_punct     = "inside"             # Appellate convention
+tense           = "past-for-facts,present-for-rules"
+ors_range_form  = "hyphen-spaced"      # e.g., "ORS 174.010 - 174.090"
+ellipsis_form   = "* * *"
+required_domain = "legal:oregon"
+
+
+# =========================================================================
+# CROSS-SCOPED OVERRIDES
+# -------------------------------------------------------------------------
+# Person × style cells that need values different from the merged result of
+# [person.<p>] + [style.<s>]. Key is "<person>:<style>".
+#
+# Example: hedge density is normally a person trait, but the same person
+# uses fewer hedges in quick emails than in analytical memos.
+# -------------------------------------------------------------------------
+
+# [overrides."default:work-email"]
+# hedge_density = [0.03, 0.07]    # tighter than the person's general 0.05-0.10

@@ -13,6 +13,56 @@ tools: ["Read", "Write", "Edit"]
 > **Scope**: Voice alignment, AI pattern detection, stylometry enforcement
 > **Boundary**: Voice and persona only. Grammar is Stage 1's job. Facts are Stage 2's job.
 
+## Resolve Invocation Parameters
+
+This agent is the most profile-sensitive of the seven. Resolve before any loading or review.
+
+### Parse the invocation
+
+Scan for `person` and `style` parameters. Accept any of these forms:
+
+- `person=byron style=work-email`
+- `person: byron, style: work-email`
+- `[person: byron, style: work-email]`
+- If a pipeline metadata block (`draft_metadata` or `rewrite_metadata`) is present, read `person` and `style` from there.
+- Informal phrasing: infer from context and confirm in the report.
+
+When either parameter is missing, the resolver falls back to the configured default.
+
+### Run the resolver
+
+```bash
+python3 {{LIBRARY_PATH}}/scripts/profile_resolver.py \
+  --person <person-key> --style <style-key> --format json
+```
+
+Omit `--person` or `--style` to use `[defaults]`. The resolver reads `{{LIBRARY_PATH}}/config/profiles.toml`, falling back to `{{LIBRARY_PATH}}/config/profiles.example.toml`.
+
+On non-zero exit, do NOT silently substitute. Report and ask.
+
+| Exit | Meaning |
+| --- | --- |
+| 5 | Config file not found, malformed, or unreadable |
+| 6 | Unknown person or style key |
+| 7 | `DomainMismatch`: style requires a domain the person does not have |
+
+### Apply the resolved profile
+
+The JSON contains:
+
+- `person.*`: voice attributes, stylometry targets, hedge phrases, analogy domains, AI extensions, calibration source
+- `style.*`: palette, formality, legal source, structural conventions, register-specific punctuation
+- `tier_3_overrides`: punctuation/usage overrides; see `{{LIBRARY_PATH}}/writing-style/punctuation-preferences.md`
+- `meta.*`: diagnostics
+
+Stylometry targets, hedge phrases, and analogy domains in the JSON override the shipped defaults in `style-profile.md`. If `person.calibration_source` points to a person-specific calibration file, load it; it represents the person's actual measured voice.
+
+Concatenate any `person.ai_extensions` files onto the universal `writing-style/ai-detection.md` baseline.
+
+For each entry in `tier_3_overrides`, apply the enforcement rule from `punctuation-preferences.md`. Do not hardcode any Tier 3 rule into the review process; always read the resolved list.
+
+If `style.legal_source` is `"none"` or absent, skip legal-style content entirely.
+
 ## Reference Files
 
 This agent's style rules and AI detection patterns live in external reference files. Load files
@@ -161,7 +211,7 @@ Quick check, instantly flag any of:
 - Filler: delve into, crucial, robust, seamless, holistic
 - AI tells: it's important to note, in conclusion, in summary, moving forward
 - Puffery: pivotal, vital, groundbreaking, testament, transformative, unparalleled
-- Em-dash formulaic patterns: multiple "X, insertion, Y" constructions with identical structure
+- Active `tier_3_overrides`: apply each one per `punctuation-preferences.md`. When `no-em-dash` is active, also flag formulaic "X, insertion, Y" comma constructions that read as em-dash substitutes.
 
 **Structural tells** (flag these patterns):
 

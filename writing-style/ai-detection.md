@@ -230,8 +230,11 @@ AI tends to produce documents with unnatural symmetry. Human writers don't.
 
 ## Em-Dash Formulaic Patterns
 
-> **Note**: The PCP override (see `grammar-style/cross-reference.md` #21) bans em-dashes entirely.
-> This section aids detection of unrevised AI-generated text, not style enforcement.
+> **Note**: When the active profile's `tier_3_overrides` includes `no-em-dash` (the shipped
+> default), em-dashes are removed during editing as a Tier 3 enforcement, separate from this
+> AI-detection section. This section aids detection of unrevised AI-generated text regardless
+> of whether the override is active, since formulaic AI patterns are a tell even when the
+> em-dashes themselves are permitted by the profile.
 
 AI uses em-dashes in a single repeating pattern: parenthetical insertion between two parts of
 a sentence ("X — insertion — Y"). Human writers use em-dashes for several distinct purposes

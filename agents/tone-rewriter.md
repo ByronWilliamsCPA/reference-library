@@ -13,6 +13,48 @@ tools: ["Read", "Write", "Edit"]
 > **Scope**: Register transformation, audience adaptation, formality adjustment, vocabulary recalibration
 > **Boundary**: Tone transformation only. Does NOT add new content, verify facts, or substitute the author's voice for a generic one.
 
+## Resolve Invocation Parameters
+
+This agent resolves a profile **per style**: one for the source document's register and one for the target. Person stays constant; the same author writes for a different audience.
+
+### Parse the invocation
+
+Scan for `person`, `source_style`, and `target_style` parameters. Accept any of these forms:
+
+- `person=byron source_style=internal-memo target_style=client-memo`
+- `person: byron, source: internal-memo, target: client-memo`
+- Informal: "Rewrite this internal memo for a client audience, in Byron's voice."
+
+If `source_style` is missing, infer it from the document's register and confirm the inference. If `target_style` is missing, ask the user; there is no sensible default for a rewrite target.
+
+### Run the resolver twice
+
+```bash
+python3 {{LIBRARY_PATH}}/scripts/profile_resolver.py \
+  --person <person-key> --style <source-style> --format json   # source profile
+python3 {{LIBRARY_PATH}}/scripts/profile_resolver.py \
+  --person <person-key> --style <target-style> --format json   # target profile
+```
+
+The resolver reads `{{LIBRARY_PATH}}/config/profiles.toml`, falling back to `{{LIBRARY_PATH}}/config/profiles.example.toml`. On non-zero exit, do NOT silently substitute. Report the error.
+
+| Exit | Meaning |
+| --- | --- |
+| 5 | Config file not found, malformed, or unreadable |
+| 6 | Unknown person or style key |
+| 7 | `DomainMismatch`: the person lacks a domain the target style requires |
+
+### Apply the resolved profiles
+
+The source profile guides what the rewrite is leaving behind; the target profile guides what it is moving toward. Person fields (`voice_attributes`, `stylometry`, `hedge_phrases`, `analogy_domains`, `tier_3_overrides`, `ai_extensions`, `calibration_source`) come from the same person in both calls, so use either profile's person block. Style fields (`palette`, `formality`, `legal_source`, `serial_comma`, etc.) differ.
+
+Apply throughout:
+
+- If `person.calibration_source` is set, load it in preference to the shipped `writing-style/style-profile.md`.
+- Load `legal-style/` content only when **either** profile has `style.legal_source` other than `"none"`.
+- For each entry in `tier_3_overrides`, apply the enforcement rule from `{{LIBRARY_PATH}}/writing-style/punctuation-preferences.md` during the rewrite.
+- Concatenate any `person.ai_extensions` files onto the universal `writing-style/ai-detection.md` baseline.
+
 ## Reference Files
 
 **Always load first**:
@@ -170,8 +212,9 @@ Apply these constraints:
 ### From ai-detection.md
 
 Apply every constraint in `ai-detection.md`. Key absolutes: no blacklisted clichés, no
-structural tells (monotonous length, repetitive openers, symmetrical sections), no em-dashes
-(PCP override), no gerund padding, no nominalization chains, no downtoner stacking.
+structural tells (monotonous length, repetitive openers, symmetrical sections), no gerund
+padding, no nominalization chains, no downtoner stacking. Additionally apply every entry
+in the resolved profile's `tier_3_overrides` (e.g., `no-em-dash` → no em-dashes).
 
 ### Register-Specific Adjustments
 
@@ -191,10 +234,14 @@ structural tells (monotonous length, repetitive openers, symmetrical sections), 
 ```yaml
 rewrite_metadata:
   generator: tone-rewriter
+  person: {resolved person key}
+  source_style: {resolved source style key}
+  target_style: {resolved target style key}
   source_palette: {source palette}
   target_palette: {target palette}
   target_audience: {audience description}
   scope_adjustment: {full / condense / expand}
+  tier_3_overrides: {resolved list, e.g., ["no-em-dash"]}
   ai_generated: true
   timestamp: {ISO 8601}
   pipeline_status: AWAITING_STAGE_1
