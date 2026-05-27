@@ -20,7 +20,7 @@
 schema_version = "2.0"
 
 # -------------------------------------------------------------------------
-# Defaults — used when an agent is invoked without person= or style=.
+# Defaults: used when an agent is invoked without person= or style=.
 # -------------------------------------------------------------------------
 [defaults]
 person = "default"
@@ -40,7 +40,7 @@ style  = "general"
 
 # -------------------------------------------------------------------------
 # The shipped default profile. Reflects the maintainer's current voice
-# targets. Do not edit this entry to personalize — add your own [person.*]
+# targets. Do not edit this entry to personalize; add your own [person.*]
 # entry in your local config/profiles.toml instead.
 # -------------------------------------------------------------------------
 [person.default]
@@ -53,9 +53,9 @@ ai_extensions      = []
 calibration_source = "writing-style/style-profile.md"
 
   [person.default.voice_attributes]
-  precision      = "Methodical, technically rigorous — specific over vague"
+  precision      = "Methodical, technically rigorous; specific over vague"
   tone           = "Professional yet approachable, analytical but human"
-  confidence     = "Assertive with appropriate hedging — never overselling"
+  confidence     = "Assertive with appropriate hedging; never overselling"
   structure      = "Clear hierarchy, systems-thinking orientation"
   thinking_style = "Connects specifics to broader frameworks; explicit tradeoff acknowledgment"
 

@@ -80,11 +80,11 @@ base_defaults  →  [person.<p>]  →  [style.<s>]  →  [overrides."<p>:<s>"]  
 
 **Config files**:
 
-- `config/profiles.example.toml` — committed; defines the shipped `[person.default]` and 6
+- `config/profiles.example.toml`: committed; defines the shipped `[person.default]` and 6
   starter styles. Always available as a fallback.
-- `config/profiles.toml` — gitignored; the active per-machine config. `scripts/setup.sh`
+- `config/profiles.toml`: gitignored; the active per-machine config. `scripts/setup.sh`
   copies the example into this path on first run.
-- `config/profiles/<person>/<style>.md` — gitignored; per-person calibration data written by
+- `config/profiles/<person>/<style>.md`: gitignored; per-person calibration data written by
   the `style-analyzer` agent. Referenced by `calibration_source` in the TOML.
 
 **Domain gating**: a style with `required_domain = "legal:oregon"` will not resolve for a

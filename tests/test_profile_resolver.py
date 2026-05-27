@@ -221,6 +221,14 @@ class TestResolve:
         profile = pr.resolve(minimal_config, "bob", "email")
         assert profile["meta"]["cross_override_applied"] is False
 
+    def test_cross_override_resyncs_tier_3_overrides(self, minimal_config):
+        # If a cross override sets tier_3_overrides, the top-level convenience
+        # field must reflect it (must stay in sync with person.tier_3_overrides).
+        minimal_config["overrides"]["alice:email"]["tier_3_overrides"] = ["no-oxford"]
+        profile = pr.resolve(minimal_config, "alice", "email")
+        assert profile["tier_3_overrides"] == ["no-oxford"]
+        assert profile["person"]["tier_3_overrides"] == ["no-oxford"]
+
     def test_domain_mismatch_exits_2(self, minimal_config, capsys):
         with pytest.raises(SystemExit) as exc_info:
             pr.resolve(minimal_config, "bob", "brief")

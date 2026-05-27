@@ -30,7 +30,6 @@ from __future__ import annotations
 import argparse
 import datetime as _dt
 import json
-import os
 import sys
 from pathlib import Path
 from typing import Any
@@ -233,6 +232,11 @@ def resolve(
             else:
                 flat[key] = value
 
+    # Re-sync the top-level tier_3_overrides convenience field after any cross
+    # override that touched person.tier_3_overrides. Agents read either location
+    # depending on context; they must agree.
+    flat["tier_3_overrides"] = list(flat["person"].get("tier_3_overrides") or [])
+
     return flat
 
 
@@ -243,17 +247,17 @@ def _format_text(profile: dict[str, Any]) -> str:
     meta = profile["meta"]
     lines.append("Resolved profile")
     lines.append("================")
-    lines.append(f"  person:               {person['key']} ({person.get('display_name', '—')})")
+    lines.append(f"  person:               {person['key']} ({person.get('display_name', '(unnamed)')})")
     lines.append(f"  style:                {style['key']}")
-    lines.append(f"  palette:              {style.get('palette', '—')}")
-    lines.append(f"  formality:            {style.get('formality', '—')}")
+    lines.append(f"  palette:              {style.get('palette', '(none)')}")
+    lines.append(f"  formality:            {style.get('formality', '(none)')}")
     lines.append(f"  legal_source:         {style.get('legal_source', 'none')}")
-    lines.append(f"  domains:              {', '.join(person.get('domains') or []) or '—'}")
-    lines.append(f"  tier_3_overrides:     {', '.join(profile.get('tier_3_overrides') or []) or '—'}")
-    lines.append(f"  hedge_phrases:        {', '.join(person.get('hedge_phrases') or []) or '—'}")
-    lines.append(f"  analogy_domains:      {', '.join(person.get('analogy_domains') or []) or '—'}")
-    lines.append(f"  ai_extensions:        {', '.join(person.get('ai_extensions') or []) or '—'}")
-    lines.append(f"  calibration_source:   {person.get('calibration_source') or '—'}")
+    lines.append(f"  domains:              {', '.join(person.get('domains') or []) or '(none)'}")
+    lines.append(f"  tier_3_overrides:     {', '.join(profile.get('tier_3_overrides') or []) or '(none)'}")
+    lines.append(f"  hedge_phrases:        {', '.join(person.get('hedge_phrases') or []) or '(none)'}")
+    lines.append(f"  analogy_domains:      {', '.join(person.get('analogy_domains') or []) or '(none)'}")
+    lines.append(f"  ai_extensions:        {', '.join(person.get('ai_extensions') or []) or '(none)'}")
+    lines.append(f"  calibration_source:   {person.get('calibration_source') or '(none)'}")
     stylometry = person.get("stylometry") or {}
     if stylometry:
         lines.append("  stylometry:")
@@ -279,11 +283,11 @@ def _list_inventory(config: dict[str, Any]) -> str:
     lines = [
         "Available profiles",
         "==================",
-        f"  default person: {defaults.get('person', '—')}",
-        f"  default style:  {defaults.get('style', '—')}",
+        f"  default person: {defaults.get('person', '(none)')}",
+        f"  default style:  {defaults.get('style', '(none)')}",
         "",
-        "  persons: " + (", ".join(people) if people else "—"),
-        "  styles:  " + (", ".join(styles) if styles else "—"),
+        "  persons: " + (", ".join(people) if people else "(none)"),
+        "  styles:  " + (", ".join(styles) if styles else "(none)"),
         "",
     ]
     overrides = config.get("overrides") or {}
