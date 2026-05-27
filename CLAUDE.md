@@ -74,8 +74,8 @@ stylometry, punctuation overrides, AI-detection extensions, and legal-source bin
 
 **Resolution** (last writer wins on scalars; lists concat-and-dedupe):
 
-```
-base_defaults  →  [person.<p>]  →  [style.<s>]  →  [overrides."<p>:<s>"]
+```text
+base_defaults  ->  [person.<p>]  ->  [style.<s>]  ->  [overrides."<p>:<s>"]
 ```
 
 The `--person` and `--style` CLI flags select which person/style layers apply; they
@@ -91,15 +91,13 @@ are not themselves an additional override layer.
   the `style-analyzer` agent. Referenced by `calibration_source` in the TOML.
 
 **Domain gating**: a style with `required_domain = "legal:oregon"` will not resolve for a
-person whose `domains` list omits that value. The resolver exits with code 2 (`DomainMismatch`)
+person whose `domains` list omits that value. The resolver exits with code 7 (`DomainMismatch`)
 and a clear error. Agents must report the error and ask, not silently substitute.
 
 **Invocation**: every agent accepts `person=<key> style=<key>` parameters in the prompt. Both
 default to the `[defaults]` block when omitted. The resolver script (`scripts/profile_resolver.py`)
 is called by agents via the Bash tool and emits a flat JSON profile that drives the rest of
 the run. See `writing-style/punctuation-preferences.md` for the Tier 3 override catalog.
-
-
 
 ## Architecture: Grammar-Style Three-Tier System
 
