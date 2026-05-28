@@ -43,6 +43,8 @@ jobs:
             registry-1.docker.io:443
             auth.docker.io:443
             production.cloudflare.docker.com:443
+            pypi.org:443
+            files.pythonhosted.org:443
 
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
@@ -53,7 +55,8 @@ jobs:
       - name: Generate REUSE SPDX
         if: success()
         run: |
-          docker run --pull=never --rm --volume $(pwd):/data fsfe/reuse:6 spdx --output /data/reuse-spdx.json
+          pip install reuse
+          reuse spdx --output reuse-spdx.json
 
       - name: Upload REUSE SPDX
         if: success()
