@@ -29,7 +29,6 @@ jobs:
     uses: ByronWilliamsCPA/.github/.github/workflows/python-security-analysis.yml@74c633acfdd5f707ab154fd59bd212c6df663dd6 # main
     with:
       python-version: "3.12"
-      run-safety: false
       run-codeql: false
       run-dependency-review: false
       run-osv: false
