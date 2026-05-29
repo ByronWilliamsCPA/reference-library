@@ -42,11 +42,9 @@ import argparse
 import datetime as _dt
 import json
 import sys
+import tomllib  # stdlib on Python 3.11+; the requires-python floor is >=3.11
 from pathlib import Path
 from typing import Any
-
-import tomllib  # stdlib on Python 3.11+; the requires-python floor is >=3.11
-
 
 SCHEMA_VERSION = "2.0"
 
