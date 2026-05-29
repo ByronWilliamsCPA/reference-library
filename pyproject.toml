@@ -1,14 +1,26 @@
 # Python tooling for the reference-library scripts/ directory.
 # This is a docs-first repository; pyproject.toml exists only to configure
-# pytest and coverage so SonarCloud can verify quality gates on the small
+# the dev toolchain (pytest, coverage, ruff, type checking) for the small
 # amount of Python that lives in scripts/.
 
 [project]
 name = "reference-library-scripts"
 version = "0.0.0"
-# scripts/profile_resolver.py uses tomllib (stdlib in 3.11+) with a tomli
-# fallback. CI runs on 3.12; the floor stays at 3.11 to match.
+# scripts/profile_resolver.py uses tomllib (stdlib in 3.11+).
+# CI runs on 3.12; the floor stays at 3.11 to match.
 requires-python = ">=3.11"
+
+# Dev toolchain. Declared here and locked in uv.lock so local runs, CI, and
+# pre-commit resolve identical versions. There are no runtime dependencies;
+# the scripts use only the standard library.
+[dependency-groups]
+dev = [
+    "pytest>=8,<9",
+    "pytest-cov>=5,<7",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "basedpyright>=1.18",
+]
 
 [tool.pytest.ini_options]
 minversion = "7.0"
@@ -18,10 +30,12 @@ addopts = "-ra --strict-markers"
 
 [tool.coverage.run]
 source = ["scripts"]
-# Only profile_resolver.py participates in the V2 invocation flow today.
-# The other scripts are operational utilities (one-shot PDF extraction,
-# one-shot sample generation) without test coverage; omit them so the
-# Sonar gate evaluates against what we actually exercise.
+# Only profile_resolver.py participates in the V2 invocation flow today and
+# carries tests. The other two scripts are operational utilities (one-shot
+# PDF extraction, one-shot sample generation) that are linted and type-aware
+# but not yet unit-tested; omit them from coverage until tests land so the
+# gate evaluates against what we actually exercise. Adding those tests is a
+# tracked follow-up (audit finding CQ-03).
 omit = [
     "scripts/extract_legal_pdfs.py",
     "scripts/generate_before_samples.py",
@@ -38,14 +52,8 @@ skip_covered = false
 line-length = 88
 target-version = "py311"
 src = ["scripts", "tests"]
-# extract_legal_pdfs.py and generate_before_samples.py are pre-V2
-# operational utilities with their own existing review baseline (see the
-# qlty-ignore comments in each). Excluding them keeps the new linting
-# config scoped to V2 code without forcing an unrelated cleanup sweep.
-extend-exclude = [
-    "scripts/extract_legal_pdfs.py",
-    "scripts/generate_before_samples.py",
-]
+# All of scripts/ and tests/ is linted. The repository is docs-first; the
+# rest of the tree is reference material not authored under these rules.
 
 [tool.ruff.lint]
 # PyStrict-aligned subset: pycodestyle errors and warnings, pyflakes,

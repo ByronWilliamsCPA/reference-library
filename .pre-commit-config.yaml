@@ -135,3 +135,21 @@ repos:
     hooks:
       - id: renovate-config-validator
         additional_dependencies: ["renovate@42.92.14"]
+
+  # ----------------------------------------------------------------------
+  # Python quality (lint + tests) via the uv-locked toolchain
+  # ----------------------------------------------------------------------
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff (scripts and tests)
+        entry: uv run ruff check
+        language: system
+        files: ^(scripts|tests)/.*\.py$
+        pass_filenames: false
+      - id: pytest
+        name: pytest
+        entry: uv run pytest
+        language: system
+        files: ^(scripts|tests)/.*\.py$
+        pass_filenames: false

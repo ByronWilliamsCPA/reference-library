@@ -31,7 +31,6 @@ Exit codes:
     0  success
     2  argparse usage error (invalid CLI args; argparse default)
     3  config missing required [defaults] section or keys
-    4  tomllib/tomli not available (pre-3.11 Python without tomli)
     5  config file not found, malformed, or unreadable
     6  unknown person or style key
     7  DomainMismatch: style requires a domain the person does not have
@@ -46,17 +45,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-try:
-    import tomllib  # Python 3.11+
-except ModuleNotFoundError:  # pragma: no cover
-    try:
-        import tomli as tomllib  # type: ignore[no-redef]
-    except ModuleNotFoundError:
-        sys.stderr.write(
-            "error: this script needs Python 3.11+ (for tomllib) or the "
-            "'tomli' package on older versions.\n"
-        )
-        sys.exit(4)
+import tomllib  # stdlib on Python 3.11+; the requires-python floor is >=3.11
 
 
 SCHEMA_VERSION = "2.0"

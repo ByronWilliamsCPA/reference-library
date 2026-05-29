@@ -25,7 +25,7 @@ import json
 import sys
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import TypedDict
 
@@ -62,7 +62,8 @@ SAMPLES: list[Sample] = [
         "topic": "Remote work long-term effects on productivity and culture",
         "system_prompt": None,
         "user_prompt": (
-            "Write a single paragraph executive summary (120-180 words) of current research "
+            "Write a single paragraph executive summary (120-180 words) of "
+            "current research "
             "findings on remote work's long-term effects on employee productivity and "
             "organizational culture. Use no headers, subheadings, or bullet points. "
             "Plain prose only."
@@ -77,9 +78,12 @@ SAMPLES: list[Sample] = [
             "operational efficiency."
         ),
         "user_prompt": (
-            "Write a professional project-status email to a mid-size manufacturing client. "
-            "The project is a 6-month operational efficiency review, currently in month 4. "
-            "Include a greeting, 3-4 body paragraphs covering status, risks, and next steps, "
+            "Write a professional project-status email to a mid-size "
+            "manufacturing client. "
+            "The project is a 6-month operational efficiency review, "
+            "currently in month 4. "
+            "Include a greeting, 3-4 body paragraphs covering status, "
+            "risks, and next steps, "
             "and a professional closing. 250-400 words."
         ),
     },
@@ -87,10 +91,15 @@ SAMPLES: list[Sample] = [
         "filename": "03-expense-policy-memo.md",
         "format_label": "memo",
         "topic": "Employee expense reimbursement policy update recommendation",
-        "system_prompt": "You are the HR Director at a 200-person professional services firm.",
+        "system_prompt": (
+            "You are the HR Director at a 200-person "
+            "professional services firm."
+        ),
         "user_prompt": (
-            "Write an internal memo recommending that the firm update its employee expense "
-            "reimbursement policy. Use a standard memo header (To / From / Date / Subject), "
+            "Write an internal memo recommending that the firm update "
+            "its employee expense "
+            "reimbursement policy. Use a standard memo header "
+            "(To / From / Date / Subject), "
             "followed by Executive Summary, Background, Analysis, Recommendation, and "
             "Implementation Steps sections. 500-800 words."
         ),
@@ -101,24 +110,35 @@ SAMPLES: list[Sample] = [
         "topic": "New-hire onboarding program restructure for regional accounting firm",
         "system_prompt": None,
         "user_prompt": (
-            "Write a short internal proposal recommending a restructured new-hire onboarding "
-            "program for a regional accounting firm. Include a problem statement, proposed "
-            "solution, expected benefits, and a brief implementation outline. 350-500 words. "
+            "Write a short internal proposal recommending a "
+            "restructured new-hire onboarding "
+            "program for a regional accounting firm. Include a "
+            "problem statement, proposed "
+            "solution, expected benefits, and a brief "
+            "implementation outline. 350-500 words. "
             "Prose paragraphs, not bullet lists."
         ),
     },
     {
         "filename": "05-workforce-planning-analysis.md",
         "format_label": "analytical-report",
-        "topic": "Automation impact on workforce planning for mid-market professional services firms",
+        "topic": (
+            "Automation impact on workforce planning for "
+            "mid-market professional services firms"
+        ),
         "system_prompt": None,
         "user_prompt": (
-            "Write an analytical report (400-550 words) examining how automation is affecting "
-            "workforce planning for mid-market professional services firms. Analyze four "
-            "distinct dimensions: (1) productivity and output effects, (2) role displacement "
+            "Write an analytical report (400-550 words) examining "
+            "how automation is affecting "
+            "workforce planning for mid-market professional "
+            "services firms. Analyze four "
+            "distinct dimensions: (1) productivity and output "
+            "effects, (2) role displacement "
             "and skill evolution, (3) talent acquisition and retention shifts, and "
-            "(4) implementation costs and return on investment. Write in continuous prose "
-            "paragraphs: no bullet points, no numbered lists, no subheadings. Each dimension "
+            "(4) implementation costs and return on investment. "
+            "Write in continuous prose "
+            "paragraphs: no bullet points, no numbered lists, "
+            "no subheadings. Each dimension "
             "should be its own paragraph, connected by transitions between them."
         ),
     },
@@ -231,7 +251,7 @@ def build_frontmatter(sample: Sample) -> str:
         trailing blank line before the content body.
     """
     system_label = "none" if sample["system_prompt"] is None else "sme-role"
-    timestamp = datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    timestamp = datetime.now(tz=UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     lines = [
         "---",
@@ -271,7 +291,10 @@ def main() -> None:
     parser.add_argument(
         "--only",
         metavar="FILENAME",
-        help="Generate only the sample with this filename (e.g. 05-workforce-planning-analysis.md)",
+        help=(
+            "Generate only the sample with this filename "
+            "(e.g. 05-workforce-planning-analysis.md)"
+        ),
     )
     args = parser.parse_args()
 
@@ -311,7 +334,8 @@ def main() -> None:
 
     print()
     print(
-        f"Done. {len(samples_to_run)} sample(s) written to {SAMPLES_DIR.relative_to(REPO_ROOT)}/"
+        f"Done. {len(samples_to_run)} sample(s) written to "
+        f"{SAMPLES_DIR.relative_to(REPO_ROOT)}/"
     )
 
 
