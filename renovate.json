@@ -64,7 +64,7 @@
       ]
     },
     {
-      "description": "Track org workflow floating v1 tag for SHA pin updates",
+      "description": "Track org workflow floating v1 tag for SHA pin updates. NOTE: the callers in .github/workflows/ currently SHA-pin against the main branch; this rule takes effect once the org repo publishes a v1 release and the callers are repointed to it. Until then digests advance with main HEAD.",
       "matchManagers": [
         "github-actions"
       ],
@@ -80,6 +80,7 @@
     "pep621",
     "pip_requirements",
     "github-actions",
+    "pre-commit",
     "custom.regex"
   ],
   "customManagers": [
