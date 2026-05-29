@@ -8,6 +8,15 @@ A centralized reference library: authoritative style, drafting, and writing stan
 personal, CPA, and investment projects. No project-specific content lives here. Individual project
 repositories extend what they need.
 
+## Canonical Source
+
+This file (CLAUDE.md) is the single source of truth for architecture, conventions,
+and model selection. `AGENTS.md`, `GEMINI.md`, and `.github/copilot-instructions.md`
+are derived pointers for other tools: they carry quick-reference operational facts
+and tool-specific guidance only, and defer here for anything normative. When a rule,
+table, or version number changes, change it here; do not restate version-sensitive
+detail in the derived files, so they cannot drift.
+
 ## Repository Structure
 
 ```text
@@ -110,12 +119,16 @@ governs based on which operation you are performing:
 | Editing (reviewing any draft) | Chicago Manual of Style, 17th ed. (Tier 2; overrides EoS) |
 | Person-specific preferences | Active profile's `tier_3_overrides` (Tier 3; overrides CMS) |
 
-**Tier 3 is profile-driven.** The active person's profile carries a `tier_3_overrides` list
-(e.g., `["no-em-dash"]`). The shipped default profile preserves today's behavior by including
-`no-em-dash`; other profiles may omit it or add additional overrides. See
-`writing-style/punctuation-preferences.md` for the catalog of supported overrides and
-`scripts/profile_resolver.py` for resolution. Never hardcode a Tier 3 rule into agents or
-reference content; always read the resolved list at invocation time.
+**Tier 3 is profile-driven, with one universal exception.** The active person's profile
+carries a `tier_3_overrides` list that layers person-specific punctuation and usage choices
+on top of CMS. One entry, `no-em-dash`, is a universal house rule rather than an optional
+preference: it is enforced repo-wide by the `no-em-dash` pre-commit hook and restated in
+every assistant-instruction file, so it applies to all output regardless of profile, and the
+default profile always includes it. Every other Tier 3 override is genuinely optional and may
+differ per person. See `writing-style/punctuation-preferences.md` for the catalog and
+`scripts/profile_resolver.py` for resolution. Beyond the universal `no-em-dash` rule, never
+hardcode a Tier 3 override into agents or reference content; always read the resolved list at
+invocation time.
 
 **Agent file-loading strategy**: Load `grammar-style/QUICK-START.md` first. For conflicts,
 load `cross-reference.md`. For deeper rules, load only the specific source file. Never
@@ -148,7 +161,7 @@ This is a docs-only repository with no production code. Choose the model based o
 
 | Task type | Model | When |
 | --- | --- | --- |
-| Complex writing analysis, agent design, ADRs | Opus 4.7 | Reasoning about agent pipeline architecture, deep style analysis |
+| Complex writing analysis, agent design, ADRs | Opus 4.8 | Reasoning about agent pipeline architecture, deep style analysis |
 | Standard edits, CLAUDE.md updates, agent file edits | Sonnet 4.6 | Most authoring and editing work in this repo |
 | Read-only exploration of style or legal content | Haiku 4.5 | File scanning, structure mapping, quick lookups |
 
@@ -284,10 +297,20 @@ intermediates in `legal-style/source-pdfs/raw-text/` are also git-ignored (repro
 To download the source PDFs:
 
 ```bash
+# #CRITICAL: These three URLs are the sole authoritative sources for Oregon
+# legal style content. If a URL rots, the extracted text cannot be replaced
+# from an equivalent source; keep the downloaded PDFs in a durable backup.
+# #VERIFY: Re-test all three URLs annually and after any Oregon court or
+# legislature website redesign.
 cd legal-style/source-pdfs
 curl -O "https://www.courts.oregon.gov/publications/Documents/UpdatedStyleManual2002.pdf"
 curl -O "https://www.oregonlegislature.gov/lc/PDFs/draftingmanual.pdf"
 curl -O "https://www.oregonlegislature.gov/lc/PDFs/form-stylemanual.pdf"
+
+# Record checksums so future extractions can detect a changed or tampered file.
+# #CRITICAL: a silently changed PDF would propagate into drafting guidance.
+# #VERIFY: re-run after any intentional source update and re-review the output.
+sha256sum *.pdf > checksums.sha256
 ```
 
 To re-extract text (tries `pdftotext` first, falls back to `pymupdf`):
