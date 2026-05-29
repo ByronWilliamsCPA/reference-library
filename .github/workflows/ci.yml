@@ -18,7 +18,7 @@ jobs:
   ci-gate:
     name: CI Gate
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411  # v2.19.4
@@ -29,6 +29,8 @@ jobs:
             github.com:443
             objects.githubusercontent.com:443
             codeload.github.com:443
+            pypi.org:443
+            files.pythonhosted.org:443
 
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
@@ -50,3 +52,23 @@ jobs:
             exit 1
           fi
           echo "All required documentation files are present."
+
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405  # v6
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Sync the locked dev toolchain
+        run: uv sync --frozen --group dev
+
+      - name: Lint (ruff)
+        run: uv run ruff check scripts/ tests/
+
+      - name: Type-check (mypy)
+        run: uv run mypy scripts/profile_resolver.py
+
+      - name: Test (pytest)
+        run: uv run pytest
