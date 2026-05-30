@@ -30,16 +30,11 @@ addopts = "-ra --strict-markers"
 
 [tool.coverage.run]
 source = ["scripts"]
-# Only profile_resolver.py participates in the V2 invocation flow today and
-# carries tests. The other two scripts are operational utilities (one-shot
-# PDF extraction, one-shot sample generation) that are linted and type-aware
-# but not yet unit-tested; omit them from coverage until tests land so the
-# gate evaluates against what we actually exercise. Adding those tests is a
-# tracked follow-up (audit finding CQ-03).
-omit = [
-    "scripts/extract_legal_pdfs.py",
-    "scripts/generate_before_samples.py",
-]
+# All three scripts are measured. The extraction and sample-generation
+# scripts have unit tests covering their pure helpers (checksum parsing and
+# verification, frontmatter building, .env key parsing); the functions that
+# shell out to external binaries or the network are not exercised and show
+# as missing, which is expected.
 
 [tool.coverage.report]
 show_missing = true

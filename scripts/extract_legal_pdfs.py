@@ -75,6 +75,48 @@ def verify_checksum(pdf_path: Path, expected: str) -> bool:
     return actual == expected.lower()
 
 
+def run_integrity_check(
+    expected: dict[str, str], source_dir: Path, pdf_names: list[str]
+) -> bool:
+    """Verify each PDF against its recorded checksum.
+
+    Prints a warning for any PDF without a recorded digest and an error for
+    any digest mismatch. Returns False when at least one PDF fails
+    verification (the caller must then halt), True otherwise. An empty
+    `expected` mapping means no checksum file was recorded; the check is
+    skipped with a warning and the function returns True.
+    """
+    if not expected:
+        if CHECKSUMS_FILE.exists():
+            print(
+                f"\nWARNING: {CHECKSUMS_FILE.name} has no recorded digests "
+                "(template only); skipping integrity check."
+            )
+        else:
+            print(
+                f"\nWARNING: no {CHECKSUMS_FILE.name} found; skipping integrity check."
+            )
+        print(
+            f"  Record it with: (cd {source_dir} && sha256sum *.pdf > checksums.sha256)"
+        )
+        return True
+
+    ok = True
+    for pdf_name in pdf_names:
+        digest = expected.get(pdf_name)
+        if digest is None:
+            print(f"\nWARNING: no checksum recorded for {pdf_name}; not verified.")
+        elif not verify_checksum(source_dir / pdf_name, digest):
+            print(f"\nFAILED: checksum mismatch for {pdf_name}.", file=sys.stderr)
+            print(
+                "  The PDF differs from the recorded SHA-256. Refusing to "
+                "extract a possibly tampered source.",
+                file=sys.stderr,
+            )
+            ok = False
+    return ok
+
+
 def extract_with_pdftotext(pdf_path: Path, output_path: Path) -> str | None:
     """Attempt extraction using pdftotext CLI. Returns text or None if unavailable."""
     if not shutil.which("pdftotext"):
@@ -227,26 +269,8 @@ def main() -> None:
         sys.exit(1)
 
     expected = load_expected_checksums()
-    if not expected:
-        print(
-            f"\nWARNING: no {CHECKSUMS_FILE.name} found; skipping integrity check."
-        )
-        print(
-            f"  Record it with: (cd {SOURCE_DIR} && sha256sum *.pdf > checksums.sha256)"
-        )
-    else:
-        for pdf_name in PDFS:
-            digest = expected.get(pdf_name)
-            if digest is None:
-                print(f"\nWARNING: no checksum recorded for {pdf_name}; not verified.")
-            elif not verify_checksum(SOURCE_DIR / pdf_name, digest):
-                print(f"\nFAILED: checksum mismatch for {pdf_name}.", file=sys.stderr)
-                print(
-                    "  The PDF differs from the recorded SHA-256. Refusing to "
-                    "extract a possibly tampered source.",
-                    file=sys.stderr,
-                )
-                sys.exit(1)
+    if not run_integrity_check(expected, SOURCE_DIR, PDFS):
+        sys.exit(1)
 
     for pdf_name in PDFS:
         process_pdf(pdf_name)

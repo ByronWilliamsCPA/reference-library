@@ -59,7 +59,9 @@ jobs:
           python-version: "3.12"
 
       - name: Install uv
-        run: pip install uv
+        # Pin the installer itself so the workflow stays reproducible even when
+        # uv.lock is unchanged. Bump in lockstep with local/dev uv upgrades.
+        run: pip install "uv==0.8.17"
 
       - name: Sync the locked dev toolchain
         run: uv sync --frozen --group dev
