@@ -70,7 +70,10 @@ jobs:
         run: uv run ruff check scripts/ tests/
 
       - name: Type-check (mypy)
-        run: uv run mypy scripts/profile_resolver.py
+        run: uv run mypy scripts/
+
+      - name: Type-check (basedpyright)
+        run: uv run basedpyright
 
       - name: Test (pytest)
         run: uv run pytest

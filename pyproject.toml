@@ -63,3 +63,5 @@ select = ["E", "F", "W", "I", "B", "C4", "SIM", "UP"]
 include = ["scripts/profile_resolver.py", "tests/"]
 pythonVersion = "3.11"
 typeCheckingMode = "standard"
+# Mirrors pytest's pythonpath so that test imports of scripts resolve.
+extraPaths = ["scripts"]

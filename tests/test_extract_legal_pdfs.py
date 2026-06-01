@@ -83,17 +83,13 @@ def test_run_integrity_check_all_match(tmp_path):
 def test_run_integrity_check_missing_digest_warns_but_passes(capsys, tmp_path):
     (tmp_path / "a.pdf").write_bytes(b"content a")
     # "a.pdf" is requested but only "b.pdf" has a recorded digest.
-    assert (
-        mod.run_integrity_check({"b.pdf": "0" * 64}, tmp_path, ["a.pdf"]) is True
-    )
+    assert mod.run_integrity_check({"b.pdf": "0" * 64}, tmp_path, ["a.pdf"]) is True
     assert "no checksum recorded for a.pdf" in capsys.readouterr().out
 
 
 def test_run_integrity_check_mismatch_fails(capsys, tmp_path):
     _write(tmp_path / "a.pdf", b"content a")
-    assert (
-        mod.run_integrity_check({"a.pdf": "0" * 64}, tmp_path, ["a.pdf"]) is False
-    )
+    assert mod.run_integrity_check({"a.pdf": "0" * 64}, tmp_path, ["a.pdf"]) is False
     assert "checksum mismatch for a.pdf" in capsys.readouterr().err
 
 
@@ -124,9 +120,7 @@ def test_process_pdf_reports_good_yield(monkeypatch, capsys, tmp_path):
     pdf.write_bytes(b"x" * 1000)
     monkeypatch.setattr(mod, "SOURCE_DIR", tmp_path)
     monkeypatch.setattr(mod, "RAW_TEXT_DIR", tmp_path / "raw-text")
-    monkeypatch.setattr(
-        mod, "extract_with_pdftotext", lambda p, o: "word " * 200
-    )
+    monkeypatch.setattr(mod, "extract_with_pdftotext", lambda p, o: "word " * 200)
     mod.process_pdf("a.pdf")
     out = capsys.readouterr().out
     assert "Processing: a.pdf" in out

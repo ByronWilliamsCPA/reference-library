@@ -55,6 +55,10 @@ def load_expected_checksums() -> dict[str, str]:
         line = raw_line.strip()
         if not line or line.startswith("#"):
             continue
+        # sha256sum text-mode output uses TWO spaces: "<digest>  <filename>"
+        # Binary-mode output uses one space and a "*" prefix; that format is
+        # not supported here. Single-space lines will produce an empty name
+        # and be silently skipped.
         digest, _, name = line.partition("  ")
         if digest and name:
             sums[name.strip()] = digest.strip().lower()
@@ -140,7 +144,7 @@ def extract_with_pdftotext(pdf_path: Path, output_path: Path) -> str | None:
 def extract_with_pymupdf(pdf_path: Path, output_path: Path) -> str | None:
     """Attempt extraction using pymupdf. Returns text or None if unavailable."""
     try:
-        import pymupdf  # type: ignore[import-untyped]  # noqa: PLC0415
+        import pymupdf  # type: ignore[import-untyped, import-not-found]  # noqa: PLC0415
     except ImportError:
         print("  pymupdf not installed; skipping (run: pip install pymupdf)")
         return None
@@ -262,9 +266,7 @@ def main() -> None:
         print(
             "  curl -O https://www.oregonlegislature.gov/lc/PDFs/form-stylemanual.pdf"
         )
-        print(
-            "\nThen record checksums so future runs can detect tampering:"
-        )
+        print("\nThen record checksums so future runs can detect tampering:")
         print(f"  (cd {SOURCE_DIR} && sha256sum *.pdf > checksums.sha256)")
         sys.exit(1)
 

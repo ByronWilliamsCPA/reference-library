@@ -92,8 +92,7 @@ SAMPLES: list[Sample] = [
         "format_label": "memo",
         "topic": "Employee expense reimbursement policy update recommendation",
         "system_prompt": (
-            "You are the HR Director at a 200-person "
-            "professional services firm."
+            "You are the HR Director at a 200-person professional services firm."
         ),
         "user_prompt": (
             "Write an internal memo recommending that the firm update "
