@@ -7,6 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `uv.lock` committed with a full dev toolchain: pytest, pytest-cov, ruff, mypy, and
+  basedpyright pinned via `[dependency-groups] dev` in `pyproject.toml`. Local and CI
+  runs now resolve identical versions.
+- `docs/audit/2026-05-29/`: holistic repo audit covering dependencies, code quality,
+  architecture, security, CI/CD, and documentation. Six domain reports, a synthesis
+  document, and machine-readable `findings.json` / `findings.csv`.
+- `legal-style/source-pdfs/checksums.sha256`: template file with instructions for
+  recording SHA-256 digests of the three authoritative Oregon source PDFs.
+  `scripts/extract_legal_pdfs.py` now verifies checksums before extraction and halts
+  on a mismatch; the check is non-fatal when no digests have been recorded yet.
+- `tests/test_extract_legal_pdfs.py` and `tests/test_generate_before_samples.py`:
+  unit tests for the checksum verification surface and the pure helpers in the
+  sample-generation script.
+
+### Changed
+
+- CI gate now runs ruff, mypy (all of `scripts/`), basedpyright, and pytest in addition
+  to the existing documentation presence check. Python 3.12, uv 0.8.17 (pip-pinned,
+  Renovate-tracked), and the locked dev toolchain are installed on each run.
+- `pyproject.toml`: `ruff extend-exclude` removed; all of `scripts/` and `tests/` is
+  now linted. `tool.coverage.run` no longer omits `extract_legal_pdfs.py` and
+  `generate_before_samples.py`. `basedpyright` config updated with `extraPaths =
+  ["scripts"]` so test-file imports resolve correctly.
+- `.pre-commit-config.yaml`: ruff and pytest hooks added for the `scripts/` surface.
+- `renovate.json`: `pre-commit` added to `enabledManagers`; custom regex manager added
+  to track the uv version pin in `.github/workflows/ci.yml`.
+- `CLAUDE.md`: designated the single source of truth for architecture, conventions, and
+  model selection; derived files (`AGENTS.md`, `GEMINI.md`,
+  `.github/copilot-instructions.md`) now defer here for normative content. `no-em-dash`
+  documented as a universal house rule rather than an optional Tier 3 example. Opus
+  model updated from 4.7 to 4.8. RAD tags and checksum workflow added to the PDF
+  extraction section.
+- `scripts/profile_resolver.py`: `tomli` fallback removed; `tomllib` is imported
+  directly from the 3.11+ standard library. Exit code 4 (tomli unavailable) retired.
+- `.gitignore` and `.qlty/` symlinks: qlty runtime artifacts corrected from
+  trailing-slash directory patterns to non-trailing-slash patterns so symlinks are
+  properly matched.
+- `sbom.yml` comment corrected to describe the Python-only SBOM surface.
+
 ## [1.1.0] - 2026-05-16
 
 ### Added
