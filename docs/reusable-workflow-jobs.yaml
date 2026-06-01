@@ -26,7 +26,7 @@ reusable_workflows:
     org_workflow: ByronWilliamsCPA/.github/.github/workflows/python-qlty-coverage.yml
     caller: .github/workflows/qlty.yml
     # renovate: datasource=git-refs depName=https://github.com/ByronWilliamsCPA/.github currentValue=main
-    pin: 74c633acfdd5f707ab154fd59bd212c6df663dd6  # main  # pragma: allowlist secret
+    pin: 40ff5b5615e786ee0867e1b9e8f21a4735036e63  # main  # pragma: allowlist secret
     internal_jobs:
       - check-configuration
       - upload-coverage
@@ -38,7 +38,7 @@ reusable_workflows:
     org_workflow: ByronWilliamsCPA/.github/.github/workflows/python-scorecard.yml
     caller: .github/workflows/scorecard.yml
     # renovate: datasource=git-refs depName=https://github.com/ByronWilliamsCPA/.github currentValue=main
-    pin: 74c633acfdd5f707ab154fd59bd212c6df663dd6  # main  # pragma: allowlist secret
+    pin: 40ff5b5615e786ee0867e1b9e8f21a4735036e63  # main  # pragma: allowlist secret
     internal_jobs:
       - scorecard
     notes: >
