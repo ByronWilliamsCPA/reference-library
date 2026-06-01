@@ -21,7 +21,7 @@ No live secrets, no exploitable injection, and a strong Actions posture (SHA-pin
 - Severity: Low
 - Effort: S
 - Affected files: `.secrets.baseline`
-- Evidence: `.secrets.baseline` exists and the detect-secrets pre-commit hook is SHA-pinned (`.pre-commit-config.yaml:17-20`). The `detect-secrets` CLI is not installed here, so baseline-vs-tree drift (stale entries, or live secrets not baselined) could not be recomputed. A manual grep for `api_key`/`secret`/`token`/`password`/`BEGIN PRIVATE KEY`/`sk-` across `scripts/` and `config/` surfaced only the OpenRouter key-loading code (see clean areas), no literal secret values.
+- Evidence: `.secrets.baseline` exists and the detect-secrets pre-commit hook is SHA-pinned (`.pre-commit-config.yaml:17-20`). The `detect-secrets` CLI is not installed here, so baseline-vs-tree drift (stale entries, or live secrets not baselined) could not be recomputed. A manual grep for `api_key`/`secret`/`token`/`password`/`BEGIN PRIVATE KEY`/`sk-` across `scripts/` and `config/` surfaced only the OpenRouter key-loading code (see clean areas), no literal secret values. <!-- pragma: allowlist secret -->
 - Recommendation: Confirm in CI (where detect-secrets runs) that `detect-secrets scan --baseline .secrets.baseline` reports no new findings and no orphaned baseline entries; this audit could not run that check locally.
 
 ## Clean areas

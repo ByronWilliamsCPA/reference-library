@@ -93,6 +93,18 @@
       "matchStrings": [
         "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) currentValue=(?<currentValue>\\S+)[^\\n]*\\n\\s+pin:\\s+(?<currentDigest>[a-f0-9]{40})"
       ]
+    },
+    {
+      "customType": "regex",
+      "description": "Track uv version pinned via pip install in the CI workflow so Renovate can open bump PRs when a new release is available.",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/ci\\.yml$/"
+      ],
+      "matchStrings": [
+        "pip install \"uv==(?<currentValue>[0-9][^\"]+)\""
+      ],
+      "datasourceTemplate": "pypi",
+      "depNameTemplate": "uv"
     }
   ],
   "separateMajorMinor": true,

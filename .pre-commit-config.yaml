@@ -75,6 +75,7 @@ repos:
           (?x)^(
             samples/|
             agents/|
+            docs/audit/|
             CLAUDE\.md
           )
 
