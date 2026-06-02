@@ -1,6 +1,8 @@
 # SBOM Generation Workflow
-# Generates a CycloneDX SBOM for the repository on push to main and on a weekly schedule.
-# Captures the GitHub Actions and pre-commit hook dependency surface.
+# Generates a CycloneDX SBOM of the Python dependency surface (cataloged by
+# syft from pyproject.toml and uv.lock) on push to main and weekly. It does
+# not enumerate GitHub Actions or pre-commit hooks; those are SHA-pinned and
+# tracked by Renovate instead.
 # Documentation: https://github.com/anchore/sbom-action
 name: SBOM Generation
 
