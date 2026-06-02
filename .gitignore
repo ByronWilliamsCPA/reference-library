@@ -14,12 +14,14 @@ __pycache__/
 coverage.xml
 htmlcov/
 
-# Qlty runtime artifacts (only qlty.toml belongs in the repo)
-.qlty/logs/
-.qlty/out/
-.qlty/plugin_cachedir/
-.qlty/results/
-.qlty/sources/
+# Qlty runtime artifacts (only qlty.toml belongs in the repo).
+# No trailing slash: qlty creates these as symlinks, and a trailing-slash
+# pattern matches directories only, so the symlinks would slip through.
+.qlty/logs
+.qlty/out
+.qlty/plugin_cachedir
+.qlty/results
+.qlty/sources
 
 # OS
 .DS_Store

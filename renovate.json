@@ -64,7 +64,7 @@
       ]
     },
     {
-      "description": "Track org workflow floating v1 tag for SHA pin updates",
+      "description": "Track org workflow floating v1 tag for SHA pin updates. NOTE: the callers in .github/workflows/ currently SHA-pin against the main branch; this rule takes effect once the org repo publishes a v1 release and the callers are repointed to it. Until then digests advance with main HEAD.",
       "matchManagers": [
         "github-actions"
       ],
@@ -80,6 +80,7 @@
     "pep621",
     "pip_requirements",
     "github-actions",
+    "pre-commit",
     "custom.regex"
   ],
   "customManagers": [
@@ -92,6 +93,18 @@
       "matchStrings": [
         "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) currentValue=(?<currentValue>\\S+)[^\\n]*\\n\\s+pin:\\s+(?<currentDigest>[a-f0-9]{40})"
       ]
+    },
+    {
+      "customType": "regex",
+      "description": "Track uv version pinned via pip install in the CI workflow so Renovate can open bump PRs when a new release is available.",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/ci\\.yml$/"
+      ],
+      "matchStrings": [
+        "pip install \"uv==(?<currentValue>[0-9][^\"]+)\""
+      ],
+      "datasourceTemplate": "pypi",
+      "depNameTemplate": "uv"
     }
   ],
   "separateMajorMinor": true,
