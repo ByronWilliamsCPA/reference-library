@@ -12,9 +12,10 @@ Outputs: legal-style/source-pdfs/raw-text/{name}.txt
 
 from __future__ import annotations
 
+import hashlib
 import shutil
 
-# qlty-ignore: bandit:B404 -- subprocess is used only to call trusted system binaries (pdftotext)
+# qlty-ignore: bandit:B404 -- subprocess calls trusted system binaries only
 import subprocess
 import sys
 from pathlib import Path
@@ -22,6 +23,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).parent.parent
 SOURCE_DIR = REPO_ROOT / "legal-style" / "source-pdfs"
 RAW_TEXT_DIR = SOURCE_DIR / "raw-text"
+CHECKSUMS_FILE = SOURCE_DIR / "checksums.sha256"
 
 PDFS = [
     "appellate-style-manual.pdf",
@@ -38,12 +40,93 @@ PDFS = [
 MIN_CHARS_PER_PAGE = 100
 
 
+def load_expected_checksums() -> dict[str, str]:
+    """Read recorded SHA-256 sums from checksums.sha256.
+
+    Format is the standard `sha256sum` output: "<hex>  <filename>" per line.
+    Returns a mapping of filename to lowercase hex digest. Missing file yields
+    an empty mapping (verification is then skipped with a warning).
+    """
+    if not CHECKSUMS_FILE.exists():
+        return {}
+
+    sums: dict[str, str] = {}
+    for raw_line in CHECKSUMS_FILE.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        # sha256sum text-mode output uses TWO spaces: "<digest>  <filename>"
+        # Binary-mode output uses one space and a "*" prefix; that format is
+        # not supported here. Single-space lines will produce an empty name
+        # and be silently skipped.
+        digest, _, name = line.partition("  ")
+        if digest and name:
+            sums[name.strip()] = digest.strip().lower()
+    return sums
+
+
+def verify_checksum(pdf_path: Path, expected: str) -> bool:
+    """Return True when pdf_path hashes to the expected SHA-256 digest.
+
+    #CRITICAL: The source PDFs are the sole authoritative input for all
+    legal-style reference content. A silently changed or tampered upstream
+    file would propagate into drafting guidance undetected, so a mismatch
+    must halt processing rather than warn.
+    #VERIFY: Re-record checksums (and re-review the extracted text) whenever
+    a source PDF is intentionally updated.
+    """
+    actual = hashlib.sha256(pdf_path.read_bytes()).hexdigest()
+    return actual == expected.lower()
+
+
+def run_integrity_check(
+    expected: dict[str, str], source_dir: Path, pdf_names: list[str]
+) -> bool:
+    """Verify each PDF against its recorded checksum.
+
+    Prints a warning for any PDF without a recorded digest and an error for
+    any digest mismatch. Returns False when at least one PDF fails
+    verification (the caller must then halt), True otherwise. An empty
+    `expected` mapping means no checksum file was recorded; the check is
+    skipped with a warning and the function returns True.
+    """
+    if not expected:
+        if CHECKSUMS_FILE.exists():
+            print(
+                f"\nWARNING: {CHECKSUMS_FILE.name} has no recorded digests "
+                "(template only); skipping integrity check."
+            )
+        else:
+            print(
+                f"\nWARNING: no {CHECKSUMS_FILE.name} found; skipping integrity check."
+            )
+        print(
+            f"  Record it with: (cd {source_dir} && sha256sum *.pdf > checksums.sha256)"
+        )
+        return True
+
+    ok = True
+    for pdf_name in pdf_names:
+        digest = expected.get(pdf_name)
+        if digest is None:
+            print(f"\nWARNING: no checksum recorded for {pdf_name}; not verified.")
+        elif not verify_checksum(source_dir / pdf_name, digest):
+            print(f"\nFAILED: checksum mismatch for {pdf_name}.", file=sys.stderr)
+            print(
+                "  The PDF differs from the recorded SHA-256. Refusing to "
+                "extract a possibly tampered source.",
+                file=sys.stderr,
+            )
+            ok = False
+    return ok
+
+
 def extract_with_pdftotext(pdf_path: Path, output_path: Path) -> str | None:
     """Attempt extraction using pdftotext CLI. Returns text or None if unavailable."""
     if not shutil.which("pdftotext"):
         return None
 
-    # qlty-ignore: bandit:B603, bandit:B607 -- pdftotext is a trusted system binary; no user input
+    # qlty-ignore: bandit:B603, bandit:B607 -- pdftotext is trusted; no user input
     result = subprocess.run(  # noqa: S603
         ["pdftotext", "-layout", str(pdf_path), str(output_path)],
         capture_output=True,
@@ -61,7 +144,7 @@ def extract_with_pdftotext(pdf_path: Path, output_path: Path) -> str | None:
 def extract_with_pymupdf(pdf_path: Path, output_path: Path) -> str | None:
     """Attempt extraction using pymupdf. Returns text or None if unavailable."""
     try:
-        import pymupdf  # type: ignore[import-untyped]  # noqa: PLC0415
+        import pymupdf  # type: ignore[import-untyped, import-not-found]  # noqa: PLC0415
     except ImportError:
         print("  pymupdf not installed; skipping (run: pip install pymupdf)")
         return None
@@ -149,7 +232,8 @@ def process_pdf(pdf_name: str) -> None:
 
     if metrics["needs_ocr"]:
         print(
-            f"\n  WARNING: Low character yield ({metrics['chars_per_page']} chars/page)."
+            f"\n  WARNING: Low character yield "
+            f"({metrics['chars_per_page']} chars/page)."
         )
         print("  This PDF appears to be image-based (scanned).")
         print("  Use the Claude Code Read tool for OCR extraction:")
@@ -182,6 +266,12 @@ def main() -> None:
         print(
             "  curl -O https://www.oregonlegislature.gov/lc/PDFs/form-stylemanual.pdf"
         )
+        print("\nThen record checksums so future runs can detect tampering:")
+        print(f"  (cd {SOURCE_DIR} && sha256sum *.pdf > checksums.sha256)")
+        sys.exit(1)
+
+    expected = load_expected_checksums()
+    if not run_integrity_check(expected, SOURCE_DIR, PDFS):
         sys.exit(1)
 
     for pdf_name in PDFS:

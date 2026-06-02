@@ -1,0 +1,19 @@
+# SHA-256 checksums for the three authoritative Oregon source PDFs.
+#
+# The PDFs themselves are gitignored (large binaries). This file pins their
+# content so scripts/extract_legal_pdfs.py can detect a changed or tampered
+# upstream file before extracting from it. A mismatch halts extraction.
+#
+# Populate it once, after downloading the PDFs, by running from this directory:
+#
+#     sha256sum *.pdf > checksums.sha256
+#
+# then re-add this header. Format is standard `sha256sum` output:
+# "<64-hex-digest><two spaces><filename>", one entry per line. Example:
+#
+#   0000000000000000000000000000000000000000000000000000000000000000  appellate-style-manual.pdf
+#
+# Until real digests are recorded below, the extractor prints a warning and
+# skips the integrity check (it does not fail). Record the digests to enable
+# verification. Re-record only when a source PDF is intentionally updated, and
+# re-review the extracted text at the same time.
