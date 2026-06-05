@@ -1,0 +1,5 @@
+[bandit]
+# B101 (assert usage) is a false positive in pytest test files.
+# pytest relies on assert rewriting; tests are never run with -O.
+# All other bandit rules remain active for both scripts/ and tests/.
+skips = B101

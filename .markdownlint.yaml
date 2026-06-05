@@ -1,0 +1,20 @@
+# Markdownlint configuration for reference-library.
+# Extends the qlty-managed defaults at .qlty/configs/.markdownlint.yaml;
+# this file takes priority when both exist.
+default: true
+
+# MD013 (line-length): disabled for a documentation-only repository
+# where prose and table rows routinely exceed any fixed column limit.
+MD013: false
+
+# Changelogs legitimately repeat ### Added, ### Changed, etc. across versions.
+MD024: false
+
+# Emphasis and strong-style consistency: source content was extracted from
+# PDFs and legal documents; enforcing a single style would require mass rewrites
+# of reference material that cannot be changed.
+MD049: false
+MD050: false
+
+# Table column style: same rationale as MD049/MD050.
+MD060: false
