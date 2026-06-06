@@ -1,20 +1,21 @@
 # Markdownlint configuration for reference-library.
-# Extends the qlty-managed defaults at .qlty/configs/.markdownlint.yaml;
-# this file takes priority when both exist.
-default: true
+#
+# This file inherits the qlty-managed ruleset at
+# .qlty/configs/.markdownlint.yaml through the `extends` key below, then
+# overrides MD013 (line length). It is the config the VS Code markdownlint
+# extension and manual `markdownlint-cli` runs discover at the repo root.
+#
+# Deliberate divergence from the pre-commit gate: the pre-commit markdownlint
+# hook is pinned to `--config .qlty/configs/.markdownlint.yaml`, so the hook
+# does NOT read this file. The net effect is intentional:
+#   - pre-commit gate: MD013 line_length 120 (enforced via the qlty config)
+#   - editor / manual: MD013 disabled (this file's override)
+# All other rule states (MD024, MD049, MD050, MD060, etc.) are inherited from
+# the qlty config so there is a single source of truth for them.
+extends: .qlty/configs/.markdownlint.yaml
 
-# MD013 (line-length): disabled for a documentation-only repository
-# where prose and table rows routinely exceed any fixed column limit.
+# MD013 (line-length): disabled for editor and manual runs in this
+# documentation repository, where prose and extracted legal tables routinely
+# exceed any fixed column limit. The pre-commit gate still enforces 120 via
+# the qlty config inherited above.
 MD013: false
-
-# Changelogs legitimately repeat ### Added, ### Changed, etc. across versions.
-MD024: false
-
-# Emphasis and strong-style consistency: source content was extracted from
-# PDFs and legal documents; enforcing a single style would require mass rewrites
-# of reference material that cannot be changed.
-MD049: false
-MD050: false
-
-# Table column style: same rationale as MD049/MD050.
-MD060: false
