@@ -86,6 +86,27 @@ an agent:
 - Keep agents free of project-specific content. Project-specific extensions belong in
   the consuming project's `.claude/agents/` directory.
 
+## Editor and Tooling Configuration
+
+The repository commits a small set of shared tooling configs so behavior is
+consistent across contributors:
+
+- **`.vscode/settings.json`** binds SonarLint to the SonarCloud project in
+  connected mode. The `connectionId` field (`byronwilliamscpa`) is a local
+  identifier that must match a connection you define in your own SonarLint
+  global settings (Command Palette: "SonarLint: Add SonarCloud Connection").
+  If your local connection uses a different ID, update it there or connected
+  mode will silently fail to bind; the committed value is not changed per
+  contributor.
+- **`.markdownlint.yaml`** (repo root) configures the VS Code markdownlint
+  extension and manual `markdownlint-cli` runs. It inherits
+  `.qlty/configs/.markdownlint.yaml` and disables MD013 (line length). The
+  pre-commit markdownlint hook is pinned to the qlty config directly, so it
+  still enforces a 120-character limit; this divergence is intentional.
+- **Bandit** is configured under `[tool.bandit]` in `pyproject.toml` but is
+  not run in CI or pre-commit (this is a docs-first repo). Run it on demand
+  with `uv tool run --from bandit bandit -c pyproject.toml -r scripts tests`.
+
 ## Local Setup
 
 No build step is required. To install the agents locally for testing:
