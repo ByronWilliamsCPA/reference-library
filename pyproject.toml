@@ -65,3 +65,18 @@ pythonVersion = "3.11"
 typeCheckingMode = "standard"
 # Mirrors pytest's pythonpath so that test imports of scripts resolve.
 extraPaths = ["scripts"]
+
+# Bandit is not wired into CI or pre-commit for this docs-first repository:
+# .pre-commit-config.yaml omits the bandit hook and
+# .github/workflows/security-analysis.yml sets run-bandit: false. This block
+# governs on-demand local scans, invoked with an explicit config path:
+#   uv tool run --from bandit bandit -c pyproject.toml -r scripts tests
+[tool.bandit]
+# No global skips: every check stays active for scripts/ and tests/.
+# Per-check exclusions live in the plugin sub-tables below.
+
+[tool.bandit.assert_used]
+# B101 (assert usage) is a false positive in pytest test files: pytest
+# rewrites asserts and never runs the suite with -O. Skip B101 for test
+# files only, so it remains active for scripts/.
+skips = ["*_test.py", "*/test_*.py"]
