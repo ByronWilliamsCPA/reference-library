@@ -2,7 +2,7 @@
 name: document-validator
 description: Deep factual review agent that verifies claims, identifies assumptions, detects hallucinations, checks for bias, and flags reasoning errors. Stage 2 of the three-agent writing quality pipeline.
 version: 2.0.0
-model: sonnet
+model: opus
 tools: ["Read", "WebFetch", "WebSearch"]
 ---
 
