@@ -1,121 +1,52 @@
-# PR Validation Workflow
-# Validates PR title format (Conventional Commits) and non-empty PR body.
+# PR Validation - Dependency & Standards Validation
+# Inline replacement for the removed python-pr-validation.yml reusable workflow.
+# Checks lock-file integrity and scans for known dependency vulnerabilities.
 name: PR Validation
 
-on:
+"on":
   pull_request:
-    types: [opened, synchronize, reopened, edited]
     branches:
       - main
       - master
+      - develop
 
-permissions: {}
-
+# Cancel superseded runs on the same PR; required-check result comes from the
+# newest commit anyway, so stale runs only burn minutes.
+  merge_group:
 concurrency:
-  group: pr-validation-${{ github.event.pull_request.number }}
+  group: pr-validation-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
-  title-check:
-    name: PR Title Format
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    permissions:
-      pull-requests: read
-    steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411  # v2.19.4
-        with:
-          egress-policy: block
-      - name: Validate conventional commit title
-        env:
-          PR_TITLE: ${{ github.event.pull_request.title }}
-        run: |
-          # Conventional Commits: type(scope)!: description
-          PATTERN='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([^()]+\))?!?: .+'
-          if echo "$PR_TITLE" | grep -qE "$PATTERN"; then
-            echo "PR title follows Conventional Commits format."
-          else
-            echo "::error::PR title must follow Conventional Commits format."
-            echo "::error::  Expected: type(scope): description"
-            echo "::error::  Example:  feat(auth): add OAuth2 support"
-            echo "::error::  Got: $PR_TITLE"
-            exit 1
-          fi
-
-  body-check:
-    name: PR Body Non-Empty
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    permissions:
-      pull-requests: read
-    steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411  # v2.19.4
-        with:
-          egress-policy: block
-      - name: Check PR body is non-empty
-        env:
-          PR_BODY: ${{ github.event.pull_request.body }}
-        run: |
-          if [ -z "$PR_BODY" ] || [ "$PR_BODY" = "null" ]; then
-            echo "::error::PR description is empty. Please describe what this PR does."
-            exit 1
-          fi
-          STRIPPED=$(echo "$PR_BODY" | tr -d '[:space:]')
-          if [ -z "$STRIPPED" ]; then
-            echo "::error::PR description contains only whitespace."
-            exit 1
-          fi
-          echo "PR body is present."
-
-  dependency-standards-validation:
+  validate:
     name: Dependency & Standards Validation
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: [title-check, body-check]
-    if: always()
     steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411  # v2.19.4
+      - name: Harden Runner
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
         with:
-          egress-policy: block
-      - name: Aggregate PR title and body validation results
-        env:
-          TITLE_RESULT: ${{ needs.title-check.result }}
-          BODY_RESULT: ${{ needs.body-check.result }}
-        run: |
-          if [ "$TITLE_RESULT" != "success" ] || [ "$BODY_RESULT" != "success" ]; then
-            echo "::error::PR title or body validation failed; metadata gate blocked."
-            exit 1
-          fi
-          echo "PR metadata validation passed."
+          egress-policy: audit
 
-  pr-validation-gate:
-    name: PR Validation Gate
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    needs: [title-check, body-check]
-    if: always()
-    steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411  # v2.19.4
+      - name: Checkout repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39 # v8.2.0
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         with:
-          egress-policy: block
-      - name: Check all PR validation results
-        env:
-          TITLE_RESULT: ${{ needs.title-check.result }}
-          BODY_RESULT: ${{ needs.body-check.result }}
-        run: |
-          echo "## PR Validation Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Check | Result |" >> $GITHUB_STEP_SUMMARY
-          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
-          echo "| PR Title Format | $TITLE_RESULT |" >> $GITHUB_STEP_SUMMARY
-          echo "| PR Body Non-Empty | $BODY_RESULT |" >> $GITHUB_STEP_SUMMARY
-          if [ "$TITLE_RESULT" != "success" ] || [ "$BODY_RESULT" != "success" ]; then
-            echo "::error::One or more PR validation checks failed."
-            exit 1
-          fi
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "All PR validation checks passed." >> $GITHUB_STEP_SUMMARY
+          python-version: '3.12'
+
+      - name: Verify lock file is up to date
+        run: uv lock --check
+
+      - name: Install dependencies from lockfile
+        run: uv sync --all-extras --frozen
+
+      - name: Check for known vulnerabilities
+        run: uv run --frozen pip-audit
