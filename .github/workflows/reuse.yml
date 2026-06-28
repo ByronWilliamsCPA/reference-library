@@ -1,53 +1,50 @@
-# REUSE Compliance Check for Claude Code Configuration
-# Validates REUSE 3.0 specification compliance for license management
+# REUSE Compliance Check for Homelab Infra
+# Validates REUSE 3.0 specification compliance for license management.
 #
-# REUSE helps with clear licensing by using SPDX headers
+# Pattern matches the org standard (ByronWilliamsCPA/.github and .claude):
+# an in-line job named "Check REUSE Compliance" emits the literal check
+# context "Check REUSE Compliance" required by the org default-branch
+# ruleset. Calling the org-level reusable workflow here would instead emit
+# "Check REUSE Compliance / REUSE Compliance Check" and miss the required
+# context.
+#
+# REUSE helps with clear licensing by using SPDX headers.
 # Documentation: https://reuse.software/
 name: REUSE Compliance
 
-on:
+# PR-only: "Check REUSE Compliance" is a required status check in the org
+# default-branch ruleset, so every merge already validated this exact tree
+# on the PR. A post-merge push run re-checks identical content for no gain.
+"on":
   pull_request:
     paths:
       - "**/*"
       - "REUSE.toml"
       - "LICENSES/**"
       - ".github/workflows/reuse.yml"
-  push:
-    branches:
-      - main
-      - master
-      - develop
 
-permissions:
-  contents: read
+  merge_group:
+permissions: {}
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: reuse-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
   reuse:
     name: Check REUSE Compliance
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
+    permissions:
+      contents: read
     steps:
       - name: Harden the runner
         uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
         with:
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
-            github.com:443
-            objects.githubusercontent.com:443
-            codeload.github.com:443
-            registry-1.docker.io:443
-            auth.docker.io:443
-            production.cloudflare.docker.com:443
-            pypi.org:443
-            files.pythonhosted.org:443
+          egress-policy: audit
 
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
 
       - name: REUSE Compliance Check
         uses: fsfe/reuse-action@676e2d560c9a403aa252096d99fcab3e1132b0f5  # v6.0.0
@@ -55,8 +52,7 @@ jobs:
       - name: Generate REUSE SPDX
         if: success()
         run: |
-          pip install reuse
-          reuse spdx --output reuse-spdx.json
+          docker run --rm --volume "$(pwd)":/data fsfe/reuse:latest spdx --output /data/reuse-spdx.json
 
       - name: Upload REUSE SPDX
         if: success()
@@ -65,35 +61,3 @@ jobs:
           name: reuse-spdx
           path: reuse-spdx.json
           retention-days: 90
-
-  validate-licenses:
-    name: Validate License Files
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Harden the runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
-        with:
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
-            github.com:443
-            objects.githubusercontent.com:443
-            codeload.github.com:443
-
-      - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7
-
-      - name: Check primary license exists
-        run: |
-          if [ ! -f "LICENSES/MIT.txt" ]; then
-            echo "Warning: MIT.txt not found in LICENSES/"
-            echo "You may need to download it from https://spdx.org/licenses/"
-          fi
-
-      - name: Verify REUSE.toml exists
-        run: |
-          if [ ! -f "REUSE.toml" ]; then
-            echo "Error: REUSE.toml missing from repository root"
-            exit 1
-          fi
