@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- CI: Claude Tier 0 baseline PR review caller (`.github/workflows/claude-baseline-review.yml`), a thin
+  caller of the org reusable in `ByronWilliamsCPA/.github`. Part of the org-wide tiered-pr-review rollout.
 - `uv.lock` committed with a full dev toolchain: pytest, pytest-cov, ruff, mypy, and
   basedpyright pinned via `[dependency-groups] dev` in `pyproject.toml`. Local and CI
   runs now resolve identical versions.
