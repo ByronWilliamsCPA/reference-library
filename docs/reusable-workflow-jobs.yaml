@@ -9,7 +9,7 @@ reusable_workflows:
     org_workflow: ByronWilliamsCPA/.github/.github/workflows/python-security-analysis.yml
     caller: .github/workflows/security-analysis.yml
     # renovate: datasource=git-refs depName=https://github.com/ByronWilliamsCPA/.github currentValue=main
-    pin: 671ea6d3bad0d0df346b6b401144e05a48172202  # main  # pragma: allowlist secret
+    pin: 4b12bfe9a94a312be1f23cf7a591e6259ea96118  # main  # pragma: allowlist secret
     internal_jobs:
       - detect-changes
       - codeql
@@ -26,7 +26,7 @@ reusable_workflows:
     org_workflow: ByronWilliamsCPA/.github/.github/workflows/python-qlty-coverage.yml
     caller: .github/workflows/qlty.yml
     # renovate: datasource=git-refs depName=https://github.com/ByronWilliamsCPA/.github currentValue=main
-    pin: 671ea6d3bad0d0df346b6b401144e05a48172202  # main  # pragma: allowlist secret
+    pin: 4b12bfe9a94a312be1f23cf7a591e6259ea96118  # main  # pragma: allowlist secret
     internal_jobs:
       - check-configuration
       - upload-coverage
@@ -38,7 +38,7 @@ reusable_workflows:
     org_workflow: ByronWilliamsCPA/.github/.github/workflows/python-scorecard.yml
     caller: .github/workflows/scorecard.yml
     # renovate: datasource=git-refs depName=https://github.com/ByronWilliamsCPA/.github currentValue=main
-    pin: 671ea6d3bad0d0df346b6b401144e05a48172202  # main  # pragma: allowlist secret
+    pin: 4b12bfe9a94a312be1f23cf7a591e6259ea96118  # main  # pragma: allowlist secret
     internal_jobs:
       - scorecard
     notes: >
