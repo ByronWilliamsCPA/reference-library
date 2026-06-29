@@ -9,11 +9,14 @@ name: PR Validation
       - main
       - master
       - develop
-
-# Cancel superseded runs on the same PR; required-check result comes from the
-# newest commit anyway, so stale runs only burn minutes.
+  # merge_group: GitHub merge queues fire this event, not pull_request, so the
+  # required "Dependency & Standards Validation" context must trigger on it or
+  # the queue stalls waiting for a status that never reports.
   merge_group:
+
 concurrency:
+  # Cancel superseded runs; the required-check result comes from the newest
+  # commit anyway, so stale runs only burn minutes.
   group: pr-validation-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 

@@ -12,9 +12,10 @@
 # Documentation: https://reuse.software/
 name: REUSE Compliance
 
-# PR-only: "Check REUSE Compliance" is a required status check in the org
-# default-branch ruleset, so every merge already validated this exact tree
-# on the PR. A post-merge push run re-checks identical content for no gain.
+# Triggers on pull_request and merge_group. "Check REUSE Compliance" is a
+# required status check in the org default-branch ruleset, so it must report on
+# merge_group or the merge queue stalls. The post-merge push run was dropped:
+# the PR already validated this exact tree, so a push re-check adds no value.
 "on":
   pull_request:
     paths:
@@ -22,7 +23,6 @@ name: REUSE Compliance
       - "REUSE.toml"
       - "LICENSES/**"
       - ".github/workflows/reuse.yml"
-
   merge_group:
 permissions: {}
 

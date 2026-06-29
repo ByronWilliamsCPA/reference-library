@@ -15,11 +15,17 @@ requires-python = ">=3.11"
 # the scripts use only the standard library.
 [dependency-groups]
 dev = [
-    "pytest>=8,<9",
-    "pytest-cov>=5,<7",
+    # Floor at 9.0.3: fixes CVE-2025-71176 (flagged by the pip-audit gate below).
+    "pytest>=9.0.3,<10",
+    "pytest-cov>=5,<8",
     "ruff>=0.6",
     "mypy>=1.11",
     "basedpyright>=1.18",
+    # Dependency vulnerability scanner. Invoked by the "Dependency & Standards
+    # Validation" required check (.github/workflows/pr-validation.yml) via
+    # `uv run --frozen pip-audit`, and by the standard `uv run pip-audit`
+    # workflow. Must be locked so the --frozen invocation can spawn it.
+    "pip-audit>=2.7",
 ]
 
 [tool.pytest.ini_options]
