@@ -23,7 +23,7 @@ jobs:
   # Coverage upload after merges to main only.
   qlty:
     if: github.event_name == 'push'
-    uses: ByronWilliamsCPA/.github/.github/workflows/python-qlty-coverage.yml@4b12bfe9a94a312be1f23cf7a591e6259ea96118  # main
+    uses: ByronWilliamsCPA/.github/.github/workflows/python-qlty-coverage.yml@1502ecdde74ba30e2db1c91778f98b550bcf100e  # main
     permissions:
       contents: read
       actions: read
@@ -38,7 +38,7 @@ jobs:
   # Check name: "qlty-gate / Qlty Gate" -- required by org baseline ruleset.
   qlty-gate:
     if: github.event_name == 'pull_request'
-    uses: ByronWilliamsCPA/.github/.github/workflows/python-qlty-gate.yml@4b12bfe9a94a312be1f23cf7a591e6259ea96118  # main
+    uses: ByronWilliamsCPA/.github/.github/workflows/python-qlty-gate.yml@1502ecdde74ba30e2db1c91778f98b550bcf100e  # main
     permissions:
       contents: read
     with:
@@ -50,7 +50,7 @@ jobs:
   # Remove no-fail once the existing 100-issue backlog is resolved.
   qlty-health:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-    uses: ByronWilliamsCPA/.github/.github/workflows/python-qlty-gate.yml@4b12bfe9a94a312be1f23cf7a591e6259ea96118  # main
+    uses: ByronWilliamsCPA/.github/.github/workflows/python-qlty-gate.yml@1502ecdde74ba30e2db1c91778f98b550bcf100e  # main
     permissions:
       contents: read
     with:
