@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- ci(security): remove `codeql.yml` and `dependency-review.yml`. GitHub now
+  bills Advanced Security (Code Security), so CodeQL code scanning, the
+  dependency-review action, and SARIF ingestion into the Security tab no
+  longer function. `security-analysis.yml` already passed
+  `run-codeql: false` and `run-dependency-review: false` to the shared org
+  reusable workflow (both scan types were disabled for this docs-only repo
+  before this change), so no follow-up input change is needed here.
+
 ### Added
 
 - CI: Claude Tier 0 baseline PR review caller (`.github/workflows/claude-baseline-review.yml`), a thin
